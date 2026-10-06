@@ -93,12 +93,24 @@ GitHub's OAuth needs a small server to hold the client secret. Use the official
 4. In `public/admin/config.yml`, update `site_url`, `display_url` and `logo.src`.
 5. Set the domain under *Settings → Pages → Custom domain* and enable *Enforce HTTPS*.
 
-## Moving the repo to the editor's account (later)
+## Moving the repo to another account
 
-*Settings → Transfer ownership*. Then update `backend.repo` in `public/admin/config.yml`
-and the URLs above. GitHub Pages from a **private** repo needs GitHub Pro on the owning
-account. Students get Pro for free with the
-[GitHub Student Developer Pack](https://education.github.com/pack).
+`Sven-vh` is a temporary home. To move:
+
+1. Check that the new account has **GitHub Pro**, which Pages from a private repo requires.
+   Students get it free with the [GitHub Student Developer Pack](https://education.github.com/pack).
+2. *Settings → General → Transfer ownership*.
+3. Replace the account name (`grep -rn "sven-vh" --exclude-dir=node_modules -i .`). Only two files
+   matter for the site to work:
+   - `astro.config.mjs`: `SITE` (and `BASE` if the repo is renamed)
+   - `public/admin/config.yml`: `backend.repo`, `site_url`, `display_url`, `logo.src`
+
+   The rest are links in the docs.
+4. On the new repo, *Settings → Pages → Source: GitHub Actions*, then re-run the
+   *Deploy site* workflow.
+5. Editors sign in again. With OAuth, update the OAuth app URLs and `ALLOWED_DOMAINS`.
+
+With a custom domain, the public URL stays the same through a move.
 
 ## Updating Sveltia CMS
 
