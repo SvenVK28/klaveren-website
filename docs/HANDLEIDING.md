@@ -79,6 +79,6 @@ Links in het menu vind je ook:
 ## 5. Hulp nodig?
 
 - **Niks veranderd na een paar minuten?** Ververs de pagina. Krijg je een mail van GitHub over een
-  mislukte "Deploy site"? Stuur die door naar Sven.
-- **Per ongeluk iets verwijderd?** Geen paniek, alles wordt bewaard en is terug te zetten. Vraag het Sven.
+  mislukte "Deploy site"? Stuur die door naar degene die de site voor je gebouwd heeft.
+- **Per ongeluk iets verwijderd?** Geen paniek, alles wordt bewaard en is terug te zetten. Vraag het aan degene die de site voor je gebouwd heeft.
 - **Uitgelogd of token kwijt?** Maak een nieuwe token (stap 1.3) en log opnieuw in.
