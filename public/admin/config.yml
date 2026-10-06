@@ -32,6 +32,8 @@ media_folder: /public/files
 public_folder: /files
 
 media_libraries:
+  # No stock photo libraries: everything on a journalism portfolio should be his own work.
+  stock_assets: false
   default:
     config:
       max_file_size: 20971520 # 20 MB
