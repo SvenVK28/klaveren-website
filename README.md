@@ -1,0 +1,107 @@
+# Klaveren website
+
+Portfolio site for a journalism student: articles, video, audio and photo work.
+It's a static [Astro](https://astro.build) site with [Sveltia CMS](https://sveltiacms.app) at
+`/admin/` for editing, published to GitHub Pages by GitHub Actions.
+
+- **Site:** https://sven-vh.github.io/klaveren-website/
+- **Admin:** https://sven-vh.github.io/klaveren-website/admin/
+- **Plan and decisions:** [docs/PLAN.md](docs/PLAN.md)
+- **Guide for the editor (Dutch):** [docs/HANDLEIDING.md](docs/HANDLEIDING.md)
+
+## How it works
+
+```
+editor ──► /admin (Sveltia CMS) ──► commit to main ──► GitHub Actions build ──► GitHub Pages
+```
+
+Each save in the CMS is a commit with Markdown and photos. The `Deploy site` workflow rebuilds
+the site, and it's live about 1–2 minutes later. There's no server or database.
+
+## Local development
+
+```sh
+npm install
+npm run dev        # http://localhost:4321/klaveren-website/
+npm run build      # production build into dist/
+npm run check      # TypeScript + Astro diagnostics
+npm run check:cms  # validate public/admin/config.yml against the Sveltia schema
+```
+
+To use the CMS locally, open http://localhost:4321/klaveren-website/admin/index.html in
+Chrome or Edge, choose **Werken met een lokale repository**, and pick this folder. Edits are
+written straight to your working copy, and you commit them yourself.
+
+Drafts (`draft: true`) show up in `npm run dev` with a "Concept" label but are never built.
+
+## Project layout
+
+| Path | What |
+| --- | --- |
+| `src/content/work/<slug>/index.md` | One production per folder. Its photos sit next to it. |
+| `src/content/site/` | Singletons: `settings.yaml`, `home.yaml`, `about.md` (+ `images/`) |
+| `src/content.config.ts` | Content schemas (Zod) |
+| `public/admin/config.yml` | CMS fields. **Keep in sync with `content.config.ts`.** |
+| `public/files/` | Downloads uploaded through the CMS (PDFs, CV) |
+| `src/styles/global.css` | Design tokens (colours, fonts, spacing) and base styles |
+| `src/lib/embed.ts` | Turns YouTube/Vimeo/Spotify/SoundCloud links into players |
+| `.github/workflows/deploy.yml` | Build and deploy to Pages |
+
+**Adding a field:** add it to `public/admin/config.yml` (`required: false` unless every entry
+has it), add it to the schema in `src/content.config.ts`, and render it. Keep schemas lenient. A
+failing build means the editor's changes silently don't appear. GitHub emails the person who
+triggered the run (the editor, for CMS saves) when it fails.
+
+**Example content:** everything starting with `voorbeeld-` in `src/content/work/` is placeholder
+content. It can be deleted from the CMS.
+
+## Giving the editor access
+
+1. He creates a free GitHub account.
+2. Add him as a collaborator: *Settings → Collaborators → Add people*, or
+   `gh api -X PUT repos/Sven-vh/klaveren-website/collaborators/<username> -f permission=push`.
+3. He signs in at `/admin/`:
+   - **Today: access token.** GitHub doesn't allow *fine-grained* tokens for collaborators on
+     another user's repo, so he needs a **classic** token with the `repo` scope:
+     https://github.com/settings/tokens/new?scopes=repo&description=Portfolio%20CMS.
+     The steps are in the [handleiding](docs/HANDLEIDING.md). For yourself, a fine-grained token
+     with *Contents: read and write* on this repo is enough.
+   - **Better: "Sign in with GitHub"** (see below). No tokens to manage.
+
+## Inloggen met GitHub (OAuth, optional, free)
+
+GitHub's OAuth needs a small server to hold the client secret. Use the official
+[Sveltia CMS Authenticator](https://github.com/sveltia/sveltia-cms-auth) on Cloudflare Workers
+(free tier):
+
+1. Deploy the worker: use the *Deploy to Cloudflare* button in its README, or clone it and run
+   `npx wrangler deploy`. Note the URL, e.g. `https://sveltia-cms-auth.<you>.workers.dev`.
+2. Create a GitHub OAuth app at https://github.com/settings/applications/new:
+   - Homepage URL: `https://sven-vh.github.io/klaveren-website/`
+   - Authorization callback URL: `https://sveltia-cms-auth.<you>.workers.dev/callback`
+3. In the worker's settings, add `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` (as a secret) and
+   `ALLOWED_DOMAINS=sven-vh.github.io`.
+4. In `public/admin/config.yml`, set `backend.base_url` to the worker URL and remove
+   `auth_methods: [token]`.
+
+## Custom domain (later)
+
+1. Buy the domain, e.g. at mijndomein.nl, and point DNS at GitHub Pages:
+   [docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site).
+2. Create `public/CNAME` containing the domain.
+3. In `astro.config.mjs`, set `SITE = 'https://domein.nl'` and `BASE = '/'`.
+4. In `public/admin/config.yml`, update `site_url`, `display_url` and `logo.src`.
+5. Set the domain under *Settings → Pages → Custom domain* and enable *Enforce HTTPS*.
+
+## Moving the repo to the editor's account (later)
+
+*Settings → Transfer ownership*. Then update `backend.repo` in `public/admin/config.yml`
+and the URLs above. GitHub Pages from a **private** repo needs GitHub Pro on the owning
+account. Students get Pro for free with the
+[GitHub Student Developer Pack](https://education.github.com/pack).
+
+## Updating Sveltia CMS
+
+The version is pinned in `public/admin/index.html` and `scripts/check-cms-config.mjs`.
+Bump both, run `npm run check:cms` and `npm run dev`, and check `/admin/`.
+[Releases](https://github.com/sveltia/sveltia-cms/releases).

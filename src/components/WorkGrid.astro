@@ -1,0 +1,42 @@
+---
+import WorkCard from './WorkCard.astro';
+import type { Work } from '../lib/content';
+
+interface Props {
+  entries: Work[];
+  /** How many of the first cards load their image eagerly. */
+  eager?: number;
+}
+
+const { entries, eager = 0 } = Astro.props;
+---
+
+{
+  entries.length > 0 ? (
+    <ul class="grid">
+      {entries.map((entry, i) => (
+        <li>
+          <WorkCard entry={entry} eager={i < eager} />
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p class="empty">Hier verschijnt binnenkort nieuw werk.</p>
+  )
+}
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+    gap: 3rem 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .empty {
+    color: var(--color-muted);
+    font-style: italic;
+  }
+</style>

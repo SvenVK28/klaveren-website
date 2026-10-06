@@ -1,0 +1,74 @@
+---
+import { Font } from 'astro:assets';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getSettings } from '../lib/content';
+import { url } from '../lib/url';
+import '../styles/global.css';
+
+interface Props {
+  /** Page title; the site name is appended automatically. */
+  title?: string;
+  description?: string;
+  /** Absolute or site-relative URL of the image shown when the page is shared. */
+  image?: string;
+  type?: 'website' | 'article';
+}
+
+const settings = await getSettings();
+const { title, description = settings.description ?? settings.tagline, image, type = 'website' } = Astro.props;
+const fullTitle = title ? `${title} | ${settings.name}` : `${settings.name}${settings.tagline ? ` | ${settings.tagline}` : ''}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const imageUrl = image ? new URL(image, Astro.site).href : undefined;
+---
+
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title={settings.name} href={url('rss.xml')} />
+    <link rel="sitemap" href={url('sitemap-index.xml')} />
+
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title ?? settings.name} />
+    <meta property="og:site_name" content={settings.name} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="nl_NL" />
+    {description && <meta property="og:description" content={description} />}
+    {imageUrl && <meta property="og:image" content={imageUrl} />}
+    <meta name="twitter:card" content={imageUrl ? 'summary_large_image' : 'summary'} />
+
+    <Font cssVariable="--font-newsreader" preload />
+    <Font cssVariable="--font-inter" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Naar de inhoud</a>
+    <Header name={settings.name} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer settings={settings} />
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -3rem;
+    padding: 0.5rem 1rem;
+    background: var(--color-text);
+    color: var(--color-bg);
+    border-radius: var(--radius);
+    z-index: 10;
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+  }
+</style>

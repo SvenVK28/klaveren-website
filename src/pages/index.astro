@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WorkCard from '../components/WorkCard.astro';
+import WorkGrid from '../components/WorkGrid.astro';
+import { getHome, getWork } from '../lib/content';
+import { url } from '../lib/url';
+
+const home = await getHome();
+const work = await getWork();
+
+// Up to two featured pieces get a large card; the rest of the recent work follows.
+const featured = work.filter((entry) => entry.data.featured).slice(0, 2);
+const recent = work.filter((entry) => !featured.includes(entry)).slice(0, 6);
+---
+
+<BaseLayout>
+  <section class="container hero">
+    <h1>{home.headline}</h1>
+    {home.intro && <p class="intro">{home.intro}</p>}
+    <p class="actions">
+      <a class="button button--primary" href={url('werk/')}>Bekijk mijn werk</a>
+      <a class="button" href={url('over/')}>Over mij</a>
+    </p>
+  </section>
+
+  {
+    featured.length > 0 && (
+      <section class="container featured" aria-labelledby="featured-title">
+        <h2 id="featured-title" class="eyebrow">
+          Uitgelicht
+        </h2>
+        <div class="featured-grid">
+          {featured.map((entry) => (
+            <WorkCard entry={entry} large eager />
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <section class="container recent" aria-labelledby="recent-title">
+    <div class="section-head">
+      <h2 id="recent-title" class="eyebrow">Recent werk</h2>
+      {work.length > featured.length + recent.length && <a href={url('werk/')}>Alle werk →</a>}
+    </div>
+    <WorkGrid entries={recent} eager={featured.length ? 0 : 3} />
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-block: var(--space-section) calc(var(--space-section) * 0.75);
+  }
+
+  .hero h1 {
+    font-size: var(--text-3xl);
+    font-weight: 500;
+    max-width: 18ch;
+    margin-bottom: 1.5rem;
+  }
+
+  .intro {
+    max-width: 38rem;
+    font-size: var(--text-lg);
+    color: var(--color-muted);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: 3rem 2rem;
+  }
+
+  .featured,
+  .recent {
+    padding-bottom: var(--space-section);
+  }
+
+  .section-head,
+  .featured h2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding-top: 1rem;
+    margin-bottom: 2rem;
+    border-top: 1px solid var(--color-text);
+  }
+
+  .section-head h2 {
+    margin: 0;
+  }
+
+  .section-head a {
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+</style>

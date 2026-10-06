@@ -1,0 +1,236 @@
+/*
+ * Temporary design. Every colour, font and size lives in the tokens below,
+ * so a redesign can mostly happen here.
+ */
+
+:root {
+  color-scheme: light dark;
+
+  /* Colours */
+  --color-bg: #faf9f6;
+  --color-surface: #ffffff;
+  --color-text: #1b1b19;
+  --color-muted: #63625c;
+  --color-border: #e4e1d9;
+  --color-accent: #b4232a;
+  --color-accent-text: #ffffff;
+  --color-placeholder: #ece9e1;
+
+  /* Typography */
+  --font-serif: var(--font-newsreader), Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.1875rem;
+  --text-xl: clamp(1.375rem, 1.2rem + 0.6vw, 1.625rem);
+  --text-2xl: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);
+  --text-3xl: clamp(2.25rem, 1.6rem + 2.8vw, 4rem);
+
+  /* Layout */
+  --width-page: 72rem;
+  --width-prose: 42rem;
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+  --radius: 0.375rem;
+  --space-section: clamp(3rem, 2rem + 4vw, 6rem);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #131312;
+    --color-surface: #1c1c1a;
+    --color-text: #ecebe6;
+    --color-muted: #a3a29b;
+    --color-border: #2f2e2b;
+    --color-accent: #f0646a;
+    --color-accent-text: #131312;
+    --color-placeholder: #262523;
+  }
+}
+
+/* ---------- Base ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+main {
+  flex: 1;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.5em;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0 0 1em;
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--color-accent);
+}
+
+img,
+iframe,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* ---------- Helpers ---------- */
+
+.container {
+  width: 100%;
+  max-width: calc(var(--width-page) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--space-section);
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.eyebrow .type {
+  color: var(--color-accent);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.7em 1.2em;
+  border-radius: 999px;
+  border: 1px solid var(--color-text);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  text-decoration: none;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.button:hover {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.button--primary {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-accent-text);
+}
+
+.button--primary:hover {
+  background: var(--color-text);
+  border-color: var(--color-text);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- Long-form text (article bodies, about page) ---------- */
+
+.prose {
+  max-width: var(--width-prose);
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  line-height: 1.7;
+}
+
+.prose h2 {
+  font-size: var(--text-xl);
+  margin-top: 2em;
+}
+
+.prose h3 {
+  font-size: var(--text-lg);
+  margin-top: 1.75em;
+}
+
+.prose img {
+  height: auto;
+  border-radius: var(--radius);
+  margin-block: 2rem;
+}
+
+.prose blockquote {
+  margin: 2rem 0;
+  padding-left: 1.25rem;
+  border-left: 3px solid var(--color-accent);
+  font-style: italic;
+  font-size: var(--text-xl);
+  line-height: 1.45;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.25em;
+}
+
+.prose li + li {
+  margin-top: 0.35em;
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  margin-block: 2.5rem;
+}
+
+.prose a {
+  color: var(--color-accent);
+}

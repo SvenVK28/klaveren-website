@@ -1,0 +1,6 @@
+# Keep LF everywhere (the CMS commits LF through the GitHub API).
+* text=auto eol=lf
+*.webp binary
+*.jpg binary
+*.png binary
+*.pdf binary

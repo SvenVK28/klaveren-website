@@ -1,0 +1,318 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+#
+# Sveltia CMS configuration: the admin panel at /admin/.
+# The fields here must stay in sync with the schemas in src/content.config.ts.
+# Validate after editing: npm run check:cms
+# Docs: https://sveltiacms.app/en/docs
+
+backend:
+  name: github
+  repo: Sven-vh/klaveren-website
+  branch: main
+  # Sign-in: for now with a personal access token only. To enable "Sign in with
+  # GitHub", deploy the OAuth worker (README > "Inloggen met GitHub"), uncomment
+  # base_url and remove auth_methods.
+  # base_url: https://sveltia-cms-auth.<your-subdomain>.workers.dev
+  auth_methods: [token]
+  commit_messages:
+    create: 'Nieuw: {{collection}} "{{slug}}"'
+    update: 'Bijgewerkt: {{collection}} "{{slug}}"'
+    delete: 'Verwijderd: {{collection}} "{{slug}}"'
+    uploadMedia: 'Upload "{{path}}"'
+    deleteMedia: 'Verwijderd "{{path}}"'
+
+app_title: Beheer portfolio
+site_url: https://sven-vh.github.io/klaveren-website/
+display_url: https://sven-vh.github.io/klaveren-website/
+logo:
+  src: /klaveren-website/favicon.svg
+
+# Downloads (pdf's, cv). Photos are stored next to the item they belong to; see below.
+media_folder: /public/files
+public_folder: /files
+
+media_libraries:
+  default:
+    config:
+      max_file_size: 20971520 # 20 MB
+      slugify_filename: true
+      # Photos straight from a phone or camera are resized and converted to WebP on upload.
+      transformations:
+        raster_image:
+          format: webp
+          quality: 85
+          width: 2400
+          height: 2400
+        heic:
+          format: webp
+          quality: 85
+          width: 2400
+          height: 2400
+
+slug:
+  encoding: ascii
+  clean_accents: true
+  maxlength: 80
+
+output:
+  omit_empty_optional_fields: true
+
+# The live site is the real preview; the generic preview pane only repeats the fields.
+editor:
+  preview: false
+
+collections:
+  - name: work
+    label: Werk
+    label_singular: productie
+    description: Artikelen, video's, audio en fotografie. Elk item krijgt een eigen pagina op de site.
+    icon: newspaper
+    folder: src/content/work
+    # One folder per item, with its photos stored next to it.
+    path: '{{slug}}/index'
+    media_folder: ''
+    public_folder: ''
+    slug:
+      template: '{{title}}'
+      editable: [create]
+      hint: Het webadres van dit stuk. Na het opslaan ligt het vast, zodat gedeelde links blijven werken.
+    thumbnail: cover
+    preview_path: 'werk/{{slug}}/'
+    sortable_fields:
+      fields: [date, title, type]
+      default:
+        field: date
+        direction: descending
+    view_filters:
+      filters:
+        - { name: artikel, label: Artikelen, field: type, pattern: artikel }
+        - { name: video, label: Video, field: type, pattern: video }
+        - { name: audio, label: Audio, field: type, pattern: audio }
+        - { name: fotografie, label: Fotografie, field: type, pattern: fotografie }
+        - { name: concepten, label: Concepten, field: draft, pattern: true }
+        - { name: uitgelicht, label: Uitgelicht, field: featured, pattern: true }
+    view_groups:
+      groups:
+        - { name: jaar, label: Jaar, field: date, pattern: '\d{4}' }
+        - { name: soort, label: Soort, field: type }
+    fields:
+      - name: title
+        label: Titel
+        widget: string
+        hint: De kop van je stuk.
+
+      - name: date
+        label: Datum
+        widget: datetime
+        type: date
+        default: '{{now}}'
+        hint: Datum van publicatie of oplevering. Bepaalt de volgorde op de site.
+
+      - name: type
+        label: Soort
+        widget: select
+        default: artikel
+        options:
+          - { label: Artikel, value: artikel }
+          - { label: Video, value: video }
+          - { label: Audio / podcast, value: audio }
+          - { label: Fotografie, value: fotografie }
+          - { label: Overig, value: overig }
+
+      - name: summary
+        label: Korte samenvatting
+        widget: text
+        maxlength: 300
+        hint: Eén of twee zinnen. Staat op de overzichtspagina en verschijnt als je de link deelt (WhatsApp, LinkedIn…).
+
+      - name: cover
+        label: Omslagfoto
+        widget: image
+        required: false
+        hint: Een liggende foto werkt het best. Heb je een YouTube-video maar geen foto? Dan wordt de thumbnail van de video gebruikt.
+
+      - name: cover_alt
+        label: Beschrijving van de omslagfoto
+        widget: string
+        required: false
+        hint: Wat is er op de foto te zien? Voor slechtzienden en zoekmachines.
+
+      - name: cover_credit
+        label: Fotocredit
+        widget: string
+        required: false
+        hint: Wie maakte de foto? Wordt getoond als "Foto:" gevolgd door de naam.
+
+      - name: media_url
+        label: Video- of audiolink
+        widget: string
+        type: url
+        required: false
+        hint: Link van YouTube, Vimeo, Spotify of SoundCloud. De speler verschijnt automatisch op de pagina. Upload video's zelf niet hier, maar op YouTube of Vimeo (eventueel als "niet vermeld").
+
+      - name: body
+        label: Tekst
+        widget: richtext
+        required: false
+        editor_components: [image]
+        hint: Het artikel zelf, of een toelichting bij je video, audio of foto's. Foto's kun je tussen de tekst zetten.
+
+      - name: gallery
+        label: Fotoserie
+        label_singular: foto
+        widget: list
+        required: false
+        collapsed: auto
+        summary: '{{fields.caption}}'
+        hint: Voor fotoreportages. Foto's verschijnen onder de tekst, elk met een eigen bijschrift.
+        fields:
+          - { name: image, label: Foto, widget: image }
+          - { name: caption, label: Bijschrift, widget: string, required: false }
+
+      - name: publication
+        label: Gepubliceerd bij
+        widget: string
+        required: false
+        hint: Medium of platform, bijvoorbeeld de schoolkrant of een lokale nieuwssite.
+
+      - name: external_url
+        label: Link naar de originele publicatie
+        widget: string
+        type: url
+        required: false
+        hint: Onder je stuk verschijnt dan een knop naar het origineel.
+
+      - name: context
+        label: Context of opdracht
+        widget: string
+        required: false
+        hint: Bijvoorbeeld "Schoolopdracht onderzoeksjournalistiek, jaar 1".
+
+      - name: credits
+        label: Gemaakt met
+        widget: string
+        required: false
+        hint: 'Medewerkers, bijvoorbeeld "Camera: naam, montage: naam".'
+
+      - name: attachments
+        label: Bijlagen
+        label_singular: bijlage
+        widget: list
+        required: false
+        collapsed: auto
+        summary: '{{fields.label}}'
+        hint: Bestanden om te downloaden, zoals de pdf van een gedrukt artikel.
+        fields:
+          - { name: file, label: Bestand, widget: file, media_folder: /public/files, public_folder: /files }
+          - name: label
+            label: Tekst op de knop
+            widget: string
+            required: false
+            hint: Bijvoorbeeld "Lees de krantenpagina (pdf)".
+
+      - name: tags
+        label: Onderwerpen
+        widget: list
+        required: false
+        hint: Trefwoorden, bijvoorbeeld "wonen" of "onderwijs".
+
+      - name: featured
+        label: Uitlichten op de homepage
+        widget: boolean
+        required: false
+        default: false
+        hint: Maximaal twee stukken worden groot bovenaan de homepage getoond (de nieuwste eerst).
+
+      - name: draft
+        label: Concept
+        widget: boolean
+        required: false
+        default: false
+        hint: Aan = opgeslagen, maar nog niet zichtbaar op de site.
+
+singletons:
+  - name: home
+    label: Homepage
+    icon: home
+    file: src/content/site/home.yaml
+    fields:
+      - name: headline
+        label: Kop
+        widget: string
+        hint: De grote zin bovenaan de homepage.
+      - name: intro
+        label: Introductie
+        widget: text
+        required: false
+        hint: Twee of drie zinnen onder de kop.
+
+  - name: about
+    label: Over mij
+    icon: person
+    file: src/content/site/about.md
+    media_folder: images
+    public_folder: images
+    fields:
+      - { name: title, label: Paginatitel, widget: string, default: Over mij }
+      - name: photo
+        label: Profielfoto
+        widget: image
+        required: false
+        hint: Staande foto (portret) werkt het best.
+      - { name: photo_alt, label: Beschrijving van de foto, widget: string, required: false }
+      - name: intro
+        label: Introductie
+        widget: text
+        required: false
+        hint: Twee of drie zinnen, in een grotere letter bovenaan de pagina.
+      - { name: body, label: Tekst, widget: richtext, required: false, editor_components: [image] }
+
+  - divider: true
+
+  - name: settings
+    label: Site-instellingen
+    icon: settings
+    file: src/content/site/settings.yaml
+    fields:
+      - name: name
+        label: Naam
+        widget: string
+        hint: Staat linksboven op elke pagina en in de titel van de site.
+      - name: tagline
+        label: Ondertitel
+        widget: string
+        required: false
+        hint: Bijvoorbeeld "Journalist in opleiding".
+      - name: description
+        label: Omschrijving voor zoekmachines
+        widget: text
+        required: false
+        maxlength: 200
+        hint: Eén zin over de site. Google toont dit onder de link.
+      - name: email
+        label: E-mailadres
+        widget: string
+        type: email
+        required: false
+        hint: Voor de "Mail mij"-knop. Let op, dit adres is openbaar.
+      - name: socials
+        label: Sociale media
+        label_singular: link
+        widget: list
+        required: false
+        summary: '{{fields.platform}}'
+        fields:
+          - name: platform
+            label: Platform
+            widget: select
+            dropdown_threshold: 0
+            options: [LinkedIn, Instagram, X, TikTok, YouTube, Bluesky, Threads, Facebook, Website]
+          - { name: url, label: Link, widget: string, type: url }
+      - name: cv
+        label: Cv (pdf)
+        widget: file
+        required: false
+        accept: application/pdf
+        media_folder: /public/files
+        public_folder: /files
+        hint: Verschijnt als downloadknop op de pagina "Over mij".
