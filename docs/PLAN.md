@@ -1,0 +1,86 @@
+# Portfolio website: plan
+
+A portfolio for a journalism student: articles, video, audio and photo work in one
+place. He can post something new every 2–3 weeks through an admin page, without
+touching code. Hosting should be free.
+
+## Decisions
+
+| Topic | Choice | Why |
+| --- | --- | --- |
+| Site generator | **Astro 7** (static output) | Built for content sites. Markdown content collections with schema validation, built-in image optimisation, zero JS by default. |
+| Admin / CMS | **Sveltia CMS** at `/admin` | Free, git-based (no database or server). Dutch UI, works on a phone (installable PWA), drag-and-drop uploads that convert photos to WebP. Successor to Decap/Netlify CMS. |
+| Hosting | **GitHub Pages**, deployed by GitHub Actions | Free, HTTPS, custom domain support. Each CMS save is a commit, and each commit rebuilds the site (live in about 1–2 min). |
+| Source code | **Private** repo on `Sven-vh` | Only the built site is public. Pages from a private repo needs **GitHub Pro** (free with the Student Developer Pack). |
+| Video / audio | Embed from YouTube / Vimeo / Spotify / SoundCloud | Git can't hold large media (100 MB/file, 1 GB/site). Embeds stream better and cost nothing. |
+| Styling | Plain CSS with design tokens (`src/styles/global.css`) | The design is a placeholder. Every colour, font and spacing value lives in one block so a redesign is cheap. |
+
+### Why it counts as "dynamic" without a server
+
+To the editor it behaves like a dynamic site: log in, write, press *Publiceren*,
+and it's live a minute later. Under the hood the CMS commits Markdown and photos to
+the repo, and Actions rebuilds the static site. A static site is faster, can't be
+hacked through a login form or plugins, and costs nothing to host.
+
+### Alternatives considered
+
+- **WordPress / Ghost**: truly dynamic, but needs paid hosting (about €5–10/month) and updates.
+- **Decap CMS**: same model as Sveltia, but older UI, slower, and needs an OAuth server too.
+- **TinaCMS / Keystatic**: nicer visual editing, but need Tina Cloud or a server runtime. GitHub Pages can't run one.
+- **Pages CMS** (app.pagescms.org): good UI, and editors can be invited by email without a GitHub
+  account. It's a hosted third party with access to the repo, and not an `/admin` on his own site.
+  It's a fallback if a GitHub account turns out to be a hurdle for him. It reads the same Markdown files.
+
+## Content model
+
+**Werk** (`src/content/work/<slug>/index.md`): one folder per production, with its photos next to it.
+
+| Field | Notes |
+| --- | --- |
+| `title`, `date`, `type` | type = `artikel` / `video` / `audio` / `fotografie` / `overig` |
+| `summary` | Shown on cards and as the meta description |
+| `cover`, `cover_alt`, `cover_credit` | Optimised by Astro (responsive WebP) |
+| `media_url` | YouTube/Vimeo/Spotify/SoundCloud link, turned into an embed automatically |
+| `publication`, `external_url` | "Gepubliceerd bij …" plus a link to the original |
+| `context` | E.g. "Schoolopdracht jaar 1, Onderzoeksjournalistiek" |
+| `credits` | Collaborators (camera, editing…) |
+| `tags`, `featured`, `draft` | Featured items go on the homepage. Drafts are never built. |
+| `gallery[]`, `attachments[]` | Photo series. PDFs (e.g. a printed article). |
+| body | Rich text with inline images |
+
+**Singletons** (`src/content/site/*.yaml`): `settings` (name, tagline, e-mail, socials, CV),
+`home` (intro text), `about` (photo + bio).
+
+## Pages
+
+`/` home · `/werk/` all work · `/werk/soort/<type>/` filtered · `/werk/<slug>/` detail ·
+`/over/` about + contact · `/rss.xml` · `/sitemap-index.xml` · `/admin/` CMS · 404.
+
+## Logging in to the CMS
+
+Every editor needs a (free) GitHub account with write access to the repo.
+
+1. **Now:** "Sign in with token". Nothing extra to host. The owner can use a fine-grained token
+   (Contents: read & write, this repo only). A collaborator needs a *classic* token with `repo`
+   scope, because GitHub doesn't allow fine-grained tokens for collaborators on another user's repo.
+2. **For the friend, recommended:** "Sign in with GitHub" (OAuth) through the free
+   [sveltia-cms-auth](https://github.com/sveltia/sveltia-cms-auth) Cloudflare Worker. This needs
+   a Cloudflare account and a GitHub OAuth app. See the README.
+
+## Costs
+
+| Item | Cost |
+| --- | --- |
+| GitHub Pages + Actions | €0 (Pro needed for a private repo; free for students) |
+| Sveltia CMS, Cloudflare Worker | €0 |
+| Custom domain, e.g. `.nl` (optional) | Often ~€1–5 the first year, then ~€10–15/year |
+
+## Roadmap
+
+1. ✅ Research and plan
+2. Astro skeleton, content model, temporary design
+3. Sveltia CMS at `/admin`
+4. Private repo, Actions deploy, Pages live at `https://sven-vh.github.io/klaveren-website/`
+5. End-to-end CMS test (create, publish, verify the live site), README and a Dutch guide for the editor
+6. **Later:** OAuth login, his real content, the real design (based on sites he likes),
+   custom domain (`public/CNAME`, `site` in the config, drop `base`), and possibly moving the repo to his account

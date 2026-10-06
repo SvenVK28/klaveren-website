@@ -1,0 +1,9 @@
+name: Voornaam van Klaveren
+tagline: Journalist in opleiding
+description: Portfolio met artikelen, video's, audio en fotografie.
+email: hallo@example.com
+socials:
+  - platform: LinkedIn
+    url: https://www.linkedin.com/
+  - platform: Instagram
+    url: https://www.instagram.com/

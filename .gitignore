@@ -1,0 +1,18 @@
+# build output
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# local caches / test output
+.cache/
+test-results/
+screenshots/
+
+# env / editor
+.env
+.env.*
+.DS_Store
+.vscode/*
+!.vscode/extensions.json

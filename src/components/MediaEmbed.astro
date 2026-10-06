@@ -1,0 +1,53 @@
+---
+import { parseEmbed } from '../lib/embed';
+
+interface Props {
+  link: string;
+  title: string;
+}
+
+const { link, title } = Astro.props;
+const embed = parseEmbed(link);
+---
+
+{
+  embed ? (
+    <div class:list={['embed', embed.provider]} style={embed.height ? `--embed-height: ${embed.height}px` : undefined}>
+      <iframe
+        src={embed.src}
+        title={title}
+        loading="lazy"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        allowfullscreen
+        referrerpolicy="strict-origin-when-cross-origin"
+      />
+    </div>
+  ) : (
+    <p>
+      <a class="button" href={link} target="_blank" rel="noopener">
+        Bekijk / beluister de productie ↗
+      </a>
+    </p>
+  )
+}
+
+<style>
+  .embed {
+    margin-block: 2rem;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--color-placeholder);
+  }
+
+  .embed iframe {
+    width: 100%;
+    height: var(--embed-height, auto);
+    aspect-ratio: 16 / 9;
+    border: 0;
+  }
+
+  .spotify iframe,
+  .soundcloud iframe {
+    aspect-ratio: auto;
+  }
+</style>
