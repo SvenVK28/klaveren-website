@@ -8,6 +8,7 @@ It's a static [Astro](https://astro.build) site with [Sveltia CMS](https://svelt
 - **Admin:** https://sven-vh.github.io/klaveren-website/admin/
 - **Plan and decisions:** [docs/PLAN.md](docs/PLAN.md)
 - **Guide for the editor (Dutch):** [docs/HANDLEIDING.md](docs/HANDLEIDING.md)
+- **Context, gotchas and status for Claude Code sessions:** [CLAUDE.md](CLAUDE.md)
 
 ## How it works
 
@@ -33,6 +34,8 @@ Chrome or Edge, choose **Werken met een lokale repository**, and pick this folde
 written straight to your working copy, and you commit them yourself.
 
 Drafts (`draft: true`) show up in `npm run dev` with a "Concept" label but are never built.
+
+Browser checks (screenshots, CMS smoke and end-to-end tests) live in `scripts/dev/`. See CLAUDE.md §6.
 
 ## Project layout
 

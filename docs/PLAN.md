@@ -78,9 +78,9 @@ Every editor needs a (free) GitHub account with write access to the repo.
 ## Roadmap
 
 1. ✅ Research and plan
-2. Astro skeleton, content model, temporary design
-3. Sveltia CMS at `/admin`
-4. Private repo, Actions deploy, Pages live at `https://sven-vh.github.io/klaveren-website/`
-5. End-to-end CMS test (create, publish, verify the live site), README and a Dutch guide for the editor
+2. ✅ Astro skeleton, content model, temporary design
+3. ✅ Sveltia CMS at `/admin`
+4. ✅ Private repo, Actions deploy, Pages live at `https://sven-vh.github.io/klaveren-website/`
+5. ✅ End-to-end CMS test (create, publish, verify the live site, delete), README and a Dutch guide for the editor
 6. **Later:** OAuth login, his real content, the real design (based on sites he likes),
    custom domain (`public/CNAME`, `site` in the config, drop `base`), and possibly moving the repo to his account
