@@ -1,5 +1,5 @@
 ---
-title: 'Voorbeeld: Waarom steeds meer studenten geen kamer vinden'
+title: 'Voorbeeld: Waarom steeds meer studenten geen kamer vinden (test)'
 date: 2026-09-22
 type: artikel
 summary: Dit is een voorbeeldartikel. Wachtlijsten van twee jaar, kamers van 700 euro en hospiteeravonden met zestig kandidaten. Hoe de kamernood eruitziet voor eerstejaars.
