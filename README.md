@@ -71,6 +71,13 @@ content. It can be deleted from the CMS.
      with *Contents: read and write* on this repo is enough.
    - **Better: "Sign in with GitHub"** (see below). No tokens to manage.
 
+## Admin privacy (requirement)
+
+Only the two editors may access the admin. Today, only GitHub collaborators can sign in and save,
+but the `/admin/` login screen itself is publicly reachable. The plan is Cloudflare Access (email
+code, free) in front of `/admin*` once the custom domain runs on Cloudflare DNS. Details and
+rules are in [CLAUDE.md §2a](CLAUDE.md).
+
 ## Inloggen met GitHub (OAuth, optional, free)
 
 GitHub's OAuth needs a small server to hold the client secret. Use the official
@@ -100,8 +107,13 @@ GitHub's OAuth needs a small server to hold the client secret. Use the official
 
 `Sven-vh` is a temporary home. To move:
 
-1. Check that the new account has **GitHub Pro**, which Pages from a private repo requires.
-   Students get it free with the [GitHub Student Developer Pack](https://education.github.com/pack).
+1. Decide whether the repo stays private:
+   - **Private:** the new account needs **GitHub Pro**, which Pages from a private repo requires.
+     Students get it free with the [GitHub Student Developer Pack](https://education.github.com/pack).
+   - **Public:** works on a free account, but drafts (`draft: true`) and unpublished uploads become
+     readable by anyone on GitHub.
+
+   Either way, the admin page must stay private (CLAUDE.md §2a).
 2. *Settings → General → Transfer ownership*.
 3. Replace the account name (`grep -rn "sven-vh" --exclude-dir=node_modules -i .`). Only two files
    matter for the site to work:

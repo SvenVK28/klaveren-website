@@ -11,7 +11,8 @@ touching code. Hosting should be free.
 | Site generator | **Astro 7** (static output) | Built for content sites. Markdown content collections with schema validation, built-in image optimisation, zero JS by default. |
 | Admin / CMS | **Sveltia CMS** at `/admin` | Free, git-based (no database or server). Dutch UI, works on a phone (installable PWA), drag-and-drop uploads that convert photos to WebP. Successor to Decap/Netlify CMS. |
 | Hosting | **GitHub Pages**, deployed by GitHub Actions | Free, HTTPS, custom domain support. Each CMS save is a commit, and each commit rebuilds the site (live in about 1–2 min). |
-| Source code | **Private** repo on `Sven-vh` | Only the built site is public. Pages from a private repo needs **GitHub Pro** (free with the Student Developer Pack). |
+| Source code | Repo on `Sven-vh` (currently **private**) | Public code is acceptable. In a public repo, though, drafts and unpublished uploads are readable by anyone. Pages from a private repo needs **GitHub Pro** (free with the Student Developer Pack); a public repo works on a free account. |
+| Admin privacy | **Must be private**: only the two editors | Today: only GitHub collaborators can sign in and save, but the login page itself is reachable. Planned: Cloudflare Access (email code) in front of `/admin`, once the custom domain is on Cloudflare DNS. |
 | Video / audio | Embed from YouTube / Vimeo / Spotify / SoundCloud | Git can't hold large media (100 MB/file, 1 GB/site). Embeds stream better and cost nothing. |
 | Styling | Plain CSS with design tokens (`src/styles/global.css`) | The design is a placeholder. Every colour, font and spacing value lives in one block so a redesign is cheap. |
 
@@ -71,8 +72,8 @@ Every editor needs a (free) GitHub account with write access to the repo.
 
 | Item | Cost |
 | --- | --- |
-| GitHub Pages + Actions | €0 (Pro needed for a private repo; free for students) |
-| Sveltia CMS, Cloudflare Worker | €0 |
+| GitHub Pages + Actions | €0 (a private repo needs Pro, which is free for students; a public repo works on a free account) |
+| Sveltia CMS, Cloudflare Worker, Cloudflare Access (≤ 50 users) | €0 |
 | Custom domain, e.g. `.nl` (optional) | Often ~€1–5 the first year, then ~€10–15/year |
 
 ## Roadmap
@@ -82,5 +83,6 @@ Every editor needs a (free) GitHub account with write access to the repo.
 3. ✅ Sveltia CMS at `/admin`
 4. ✅ Private repo, Actions deploy, Pages live at `https://sven-vh.github.io/klaveren-website/`
 5. ✅ End-to-end CMS test (create, publish, verify the live site, delete), README and a Dutch guide for the editor
-6. **Later:** OAuth login, his real content, the real design (based on sites he likes),
+6. **Required:** make the admin page unreachable for others (Cloudflare Access in front of `/admin`).
+7. **Later:** OAuth login, his real content, the real design (based on sites he likes),
    custom domain (`public/CNAME`, `site` in the config, drop `base`), and possibly moving the repo to his account

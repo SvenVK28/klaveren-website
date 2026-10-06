@@ -28,8 +28,13 @@ A **portfolio website for Sven van Klaveren**, a journalism student.
 ### The user's requirements
 - Dynamic: the friend can post any time, through an **admin page with a good UI**.
 - Host on **GitHub Pages** (free, reliable).
-- **Code private**, website public. Use the **`Sven-vh` account for now**. It's temporary and
-  will likely move to another account (README has the checklist).
+- **The admin page must be private: only the two Svens can get in.** This is a hard
+  requirement, and the user cares about it more than about the code (stated 2026-10-06). See §2a.
+- **Public code is fine** (the user changed this 2026-10-06; it was "code private" at first). The repo is
+  still private today. Making it public is allowed, but **drafts and unpublished uploads in the
+  repo would then be public too** (§2a). Raise that before making the repo public.
+- Use the **`Sven-vh` account for now**. It's temporary and will likely move to another account
+  (README has the checklist).
 - No content or design examples yet, so the **design is a temporary placeholder** that must be
   easy to change. Focus first on backend, hosting and the CMS. The friend was asked to collect
   links, photos and explanations of sites he likes in a Google Doc.
@@ -62,6 +67,38 @@ Not done yet / waiting on someone:
 - [ ] His real content, then delete the `voorbeeld-*` entries (he can do it in the CMS).
 - [ ] Maybe: custom domain (mijndomein.nl was mentioned), move the repo to another account.
 - [ ] Sveltia 0.230.0 is out (pinned 0.229.0). Update when convenient (README > Updating).
+- [ ] **Make the admin page itself unreachable for others** (§2a). This is a requirement, not optional.
+
+## 2a. Admin privacy: requirement, current state, plan
+
+**Requirement:** nobody except the user and the friend can access or use the admin.
+
+**Current state (honest):**
+- *Editing is locked:* signing in requires a GitHub account with **write access to the repo**.
+  Only collaborators can save anything. Others can't read the content through the CMS
+  either, because the repo is private.
+- *The page itself is reachable:* anyone who knows `/admin/` sees the Sveltia login screen, and
+  `/admin/config.yml` (field definitions and the repo name) is publicly downloadable. Search
+  engines are kept away (`noindex` and a `robots.txt` `Disallow`, which only takes effect at a
+  domain root, so only once the custom domain is live), and nothing on the site links to the admin.
+  That's obscurity, not access control.
+
+**Plan, recommended: Cloudflare Access in front of `/admin*`** (free, up to 50 users). Visitors must
+enter an allow-listed email and type in a one-time code mailed to them before the admin page even loads.
+It needs the custom domain with DNS on Cloudflare (proxied, SSL "Full"). The domain can stay
+registered at MijnDomein; only the nameservers change. It pairs well with the
+sveltia-cms-auth worker, which also runs on Cloudflare. Alternatives: host only the admin
+separately (e.g. Cloudflare Pages + Access) and remove `public/admin` from the public site; or a
+secret path, which is weak and not recommended on its own.
+
+**Rules until then and after:** never add a link to the admin on the public site, keep
+`noindex`, never enable Open Authoring, and keep sign-in restricted to collaborators. Every change
+to auth or hosting must be checked against this requirement.
+
+**If the repo becomes public:** pages from a public repo work on a free GitHub account, so Pro is no longer
+needed. But everything committed is world-readable, including entries with `draft: true` and media
+uploaded for unpublished pieces. That can matter for journalism (sources, embargoes, work in
+progress). Tell the friend that "Concept" doesn't mean private then, or keep the repo private (needs Pro).
 
 ---
 
@@ -82,6 +119,7 @@ editor ─► /admin (Sveltia CMS, runs in the browser) ─► GitHub API commit
 | **Plain CSS + tokens** in `src/styles/global.css` | The design is temporary, so all colours, fonts and sizes live in one place. | Tailwind (fine, but unnecessary for a throw-away design). |
 | **Lenient Zod schemas** | If the build fails, the friend's edit silently doesn't appear. GitHub emails the *actor* (the friend). So the CMS validates input, and the site schema tolerates `''`/`null` and missing optionals. | Strict schemas. |
 | **Token login first** | Zero extra infrastructure. GitHub has no PKCE for SPAs, so "Sign in with GitHub" needs an OAuth proxy (Cloudflare Worker). | Netlify OAuth (deprecated path). |
+| **Admin access = GitHub write access** (for now), Cloudflare Access planned | Only collaborators can save. Hiding the page itself needs a gate in front of it, because GitHub Pages has no access control on a personal account (private Pages need Enterprise Cloud). See §2a. | Password in JavaScript (fake security), secret URL only. |
 | **Stock photo libraries disabled** in the CMS | It's a journalism portfolio; everything should be his own work. | |
 | **CMS preview pane disabled** | The generic preview only repeated the fields. The live site is the real preview ("Bekijken op de live site" link via `preview_path`). | Custom preview templates (possible later). |
 
@@ -107,6 +145,8 @@ Content model: see `src/content.config.ts` (source of truth for the site) and
 - `trailingSlash: 'always'`, so links end in `/`.
 - Commits we make end with the `Co-Authored-By` line from the system reminder. Commit or push
   only when the user asks or it's part of the agreed task.
+- **Admin privacy is a hard requirement** (§2a): don't link to `/admin` from the site, don't weaken
+  sign-in, and check any change to auth or hosting against it.
 - Don't publish the friend's personal data beyond what he enters himself. The e-mail field hint
   warns that it's public.
 
