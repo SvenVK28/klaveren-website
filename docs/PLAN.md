@@ -71,7 +71,8 @@ The owner sent his brief (`docs/design/`). The plan for this round:
    tokens, Inter, layouts after the five mock-ups.
 2. All pages above, all text and photos editable in the CMS, services as an editable list.
 3. Contact form via Web3Forms; visibly "nog niet actief" until a key is set, never a fake success.
-4. Privacy: no cookies or analytics of our own; video players load only after a click;
+4. Privacy: no cookies of our own except Google Analytics after consent (cookie banner, added
+   2026-10-20); video players load only after a click;
    a draft privacy statement that names Web3Forms and GitHub Pages.
 5. Placeholders that can't be mistaken for real work: CC0 stock photos as atmosphere, a silhouette
    instead of a portrait, `Voorbeeld:` projects, a "Voorbeeldversie" banner + `noindex`.
