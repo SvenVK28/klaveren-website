@@ -57,6 +57,15 @@ const year = new Date().getFullYear();
     <ul class="legal">
       <li><a href={url('privacy/')}>Privacy</a></li>
       <li><a href={url('privacy/#cookies')}>Cookies</a></li>
+      {
+        settings.analytics_id && (
+          <li>
+            <button type="button" data-cookie-settings>
+              Cookie-instellingen
+            </button>
+          </li>
+        )
+      }
     </ul>
   </div>
 </footer>
@@ -115,10 +124,26 @@ const year = new Date().getFullYear();
   }
 
   .nav a,
-  .legal a {
+  .legal a,
+  .legal button {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
+  }
+
+  /* Opens the cookie banner again; looks like the links next to it. */
+  .legal button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-heading);
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .legal button:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
   }
 
   .socials {

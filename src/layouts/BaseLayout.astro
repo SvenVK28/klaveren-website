@@ -2,6 +2,7 @@
 import { Font } from 'astro:assets';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import CookieConsent from '../components/CookieConsent.astro';
 import { getSettings } from '../lib/content';
 import { url } from '../lib/url';
 import '../styles/global.css';
@@ -65,6 +66,7 @@ const noindex = Astro.props.noindex || settings.preview;
       <slot />
     </main>
     <Footer settings={settings} />
+    {settings.analytics_id && <CookieConsent measurementId={settings.analytics_id} />}
   </body>
 </html>
 
