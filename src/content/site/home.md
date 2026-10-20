@@ -1,7 +1,7 @@
 ---
-eyebrow: SCVK Media
-headline: Journalistiek, van verhaal tot video.
-intro: Ik schrijf artikelen, neem interviews af en maak en monteer video's. Bekijk mijn werk of neem contact op voor een freelanceopdracht.
+eyebrow: SCVK Media - Sven van Klaveren
+headline: Een verzameling van alles wat ik maak
+intro: Van interviews en artikelen tot video's en reportages. Op deze website vind je al het werk dat ik maak, de verhalen die ik uitzoek en de producties die ik zelf oplever.
 primary_button: Bekijk mijn werk
 secondary_button: Bespreek een opdracht
 hero_image: images/home-hero.webp
