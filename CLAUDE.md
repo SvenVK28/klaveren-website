@@ -37,7 +37,7 @@ A **portfolio website for Sven van Klaveren**, a journalism student.
   `Sven-vh` is a collaborator (write access), so `gh` as `Sven-vh` can still push and merge PRs.
   Only the owner can change repo settings (visibility, Pages, collaborators).
 - **The design brief arrived 2026-10-20** (Google Drive folder, now in `docs/design/`, read its
-  README). Brand **SCVK Media** (his initials), planned domain `scvkmedia.nl` (not bought yet),
+  README). Brand **SCVK Media** (his initials), domain `scvkmedia.nl` (bought 2026-10-20, MijnDomein),
   navy logo with a microphone in the K, white / near-black / marine navy, pages Home, Mijn werk,
   Over mij, Freelance, Contact. The brief's hard rules: **never invent** projects, clients,
   testimonials, prices, contact details, social URLs or KvK data; **he writes and approves the
@@ -47,7 +47,7 @@ A **portfolio website for Sven van Klaveren**, a journalism student.
 
 ## 2. Current status (last updated 2026-10-20)
 
-**Live:** https://svenvk28.github.io/klaveren-website/ · **Admin:** `/admin/` ·
+**Live:** https://scvkmedia.nl/ · **Admin:** `/admin/` ·
 **Repo:** `SvenVK28/klaveren-website` (public)
 
 **2026-10-20: SCVK Media redesign** after the owner's brief (PR "SCVK Media design"):
@@ -75,7 +75,8 @@ Done and verified earlier:
   entry through the admin themselves, and that deployed fine.
 Not done yet / waiting on someone:
 - [ ] The owner reviews the preview, writes his own copy, supplies real photos, portrait and projects.
-- [ ] Domain `scvkmedia.nl` + email (`info@scvkmedia.nl`?) → then a Web3Forms key, and
+- [ ] Domain `scvkmedia.nl` bought 2026-10-20 (DNS in README > Custom domain). Still: email
+      (`info@scvkmedia.nl`?) → then a Web3Forms key, and
       the email + LinkedIn/Instagram URLs in Site-instellingen.
 - [ ] Favicon is a crop of the logo's K + microphone (`scripts/brand/prepare-logo.mjs`): needs his OK.
 - [ ] At launch: `preview: false`, delete `voorbeeld-*`, review the privacy text (it's a draft).
@@ -161,8 +162,8 @@ are the keys of `CONTENT_ICONS` in `src/lib/icons.ts` (same list in config.yml).
   messages are Dutch (configured in `config.yml`).
 - **Keep `public/admin/config.yml` and `src/content.config.ts` in sync.** New CMS fields should be
   `required: false` unless every entry has them. Run `npm run check:cms` after editing the config.
-- **Internal links always go through `url()`** from `src/lib/url.ts`. The site lives under the base
-  path `/klaveren-website/`. Never hardcode `/werk/...`. `url()` passes external URLs through
+- **Internal links always go through `url()`** from `src/lib/url.ts`. The site lives at the domain root
+  today (`BASE = '/'`), but keep it base-path safe. Never hardcode `/werk/...`. `url()` passes external URLs through
   and prefixes `/files/...` CMS paths.
 - **Images:** the CMS writes **bare filenames** (`cover: photo.webp`, not `./photo.webp`). Astro 7's
   `image()` and Markdown accept this (verified). PDFs and the CV go to `public/files/` →

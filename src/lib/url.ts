@@ -1,5 +1,5 @@
 /**
- * Prefix a site-internal path with the base path (e.g. /klaveren-website/).
+ * Prefix a site-internal path with the base path (`/` on scvkmedia.nl).
  * External URLs and anchors are returned unchanged, so values coming from the
  * CMS (which may be full URLs or /files/... paths) can be passed in directly.
  */

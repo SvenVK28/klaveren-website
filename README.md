@@ -6,8 +6,8 @@ It's a static [Astro](https://astro.build) site with [Sveltia CMS](https://svelt
 `/admin/` for editing, published to GitHub Pages by GitHub Actions. The owner's design brief and
 mock-ups are in [docs/design/](docs/design/README.md).
 
-- **Site:** https://svenvk28.github.io/klaveren-website/
-- **Admin:** https://svenvk28.github.io/klaveren-website/admin/
+- **Site:** https://scvkmedia.nl/ (`www.` and `svenvk28.github.io/klaveren-website/` redirect here)
+- **Admin:** https://scvkmedia.nl/admin/
 - **Plan and decisions:** [docs/PLAN.md](docs/PLAN.md)
 - **Guide for the editor (Dutch):** [docs/HANDLEIDING.md](docs/HANDLEIDING.md)
 - **Contact form (Web3Forms):** [docs/CONTACT-FORM.md](docs/CONTACT-FORM.md)
@@ -26,13 +26,13 @@ the site, and it's live about 1–2 minutes later. There's no server or database
 
 ```sh
 npm install
-npm run dev        # http://localhost:4321/klaveren-website/
+npm run dev        # http://localhost:4321/
 npm run build      # production build into dist/
 npm run check      # TypeScript + Astro diagnostics
 npm run check:cms  # validate public/admin/config.yml against the Sveltia schema
 ```
 
-To use the CMS locally, open http://localhost:4321/klaveren-website/admin/index.html in
+To use the CMS locally, open http://localhost:4321/admin/index.html in
 Chrome or Edge, choose **Werken met een lokale repository**, and pick this folder. Edits are
 written straight to your working copy, and you commit them yourself.
 
@@ -101,23 +101,31 @@ GitHub's OAuth needs a small server to hold the client secret. Use the official
 1. Deploy the worker: use the *Deploy to Cloudflare* button in its README, or clone it and run
    `npx wrangler deploy`. Note the URL, e.g. `https://sveltia-cms-auth.<you>.workers.dev`.
 2. Create a GitHub OAuth app at https://github.com/settings/applications/new:
-   - Homepage URL: `https://svenvk28.github.io/klaveren-website/`
+   - Homepage URL: `https://scvkmedia.nl/`
    - Authorization callback URL: `https://sveltia-cms-auth.<you>.workers.dev/callback`
 3. In the worker's settings, add `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` (as a secret) and
-   `ALLOWED_DOMAINS=svenvk28.github.io`.
+   `ALLOWED_DOMAINS=scvkmedia.nl`.
 4. In `public/admin/config.yml`, set `backend.base_url` to the worker URL and remove
    `auth_methods: [token]`.
 
-## Custom domain (later)
+## Custom domain
 
-Planned: `scvkmedia.nl`.
+`scvkmedia.nl`, registered at MijnDomein (bought 2026-10-20). DNS at MijnDomein
+([GitHub's docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site)):
 
-1. Buy the domain, e.g. at mijndomein.nl, and point DNS at GitHub Pages:
-   [docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site).
-2. Create `public/CNAME` containing the domain.
-3. In `astro.config.mjs`, set `SITE = 'https://domein.nl'` and `BASE = '/'`.
-4. In `public/admin/config.yml`, update `site_url`, `display_url` and `logo.src`.
-5. Set the domain under *Settings → Pages → Custom domain* and enable *Enforce HTTPS*.
+| Type | Name | Content |
+|---|---|---|
+| A | `scvkmedia.nl` | `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` (four records) |
+| AAAA | `scvkmedia.nl` | `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153` (four records) |
+| CNAME | `www.scvkmedia.nl` | `svenvk28.github.io.` |
+
+No wildcard (`*.scvkmedia.nl`) records: GitHub warns they allow domain takeover. The SPF `TXT` and
+`_dmarc` records are for email; leave them alone.
+
+On GitHub (owner only): verify the domain under the account's *Settings → Pages*, set it under
+the repo's *Settings → Pages → Custom domain*, then tick *Enforce HTTPS* once the certificate is
+ready. No `CNAME` file: deploys from Actions ignore it. `SITE`/`BASE` in `astro.config.mjs` and
+the URLs in `public/admin/config.yml` point at the domain.
 
 ## Moving the repo to another account
 
@@ -142,7 +150,7 @@ it again:
    *Deploy site* workflow.
 5. Editors sign in again. With OAuth, update the OAuth app URLs and `ALLOWED_DOMAINS`.
 
-With a custom domain, the public URL stays the same through a move.
+With the custom domain, the public URL stays the same through a move (re-add the domain on the new repo).
 
 ## Updating Sveltia CMS
 
