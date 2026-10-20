@@ -20,13 +20,19 @@ Het formulier wordt verstuurd via **Web3Forms**, een dienst die je bericht als e
 
 Video's en audiofragmenten op deze site komen van diensten zoals YouTube, Vimeo, Spotify of SoundCloud. De speler wordt pas geladen als je zelf op afspelen klikt. Tot die tijd wordt er niets van die diensten geladen. Klik je wel op afspelen, dan gelden de privacyregels van die dienst. Voor YouTube gebruik ik de privacyvriendelijke variant (youtube-nocookie.com).
 
+## Statistieken
+
+Als je daar toestemming voor geeft, gebruik ik **Google Analytics** om te zien hoe deze website wordt gebruikt: hoeveel mensen hem bezoeken, welke pagina's ze bekijken en via welke website ze binnenkomen. Google Analytics plaatst daarvoor cookies en verwerkt gegevens over je bezoek, zoals je apparaat, je browser en ongeveer waar je bent (land of stad). Google slaat je IP-adres daarbij niet op. Google kan deze gegevens buiten de Europese Unie verwerken, onder andere in de Verenigde Staten, onder het EU-VS Data Privacy Framework. Ik gebruik de cijfers alleen om de website te verbeteren.
+
+Klik je op **Weigeren**, of klik je nergens op, dan wordt Google Analytics niet geladen. Je kunt je keuze altijd veranderen via **Cookie-instellingen** onderaan elke pagina.
+
 ## Hosting
 
 De website draait op GitHub Pages. Zoals bij elke website ontvangt de server technische gegevens, zoals je IP-adres, om de site te kunnen tonen en te beveiligen.
 
 ## Cookies
 
-Deze website plaatst zelf **geen cookies** en gebruikt geen analyse- of advertentiediensten. De lettertypen staan op deze website zelf, dus er wordt daarvoor niets bij andere partijen opgehaald.
+Deze website plaatst alleen cookies voor statistieken, en alleen als je daarvoor op **Accepteren** klikt (zie [Statistieken](#statistieken)). Het gaat om de cookies `_ga` en `_ga_…` van Google Analytics, die maximaal twee jaar bewaard blijven. Je keuze zelf wordt in je browser bewaard, zodat je de melding niet op elke pagina opnieuw ziet. De site gebruikt geen advertentiediensten, en de lettertypen staan op deze website zelf, dus daarvoor wordt niets bij andere partijen opgehaald.
 
 Alleen als je een video of audiofragment afspeelt, kan die dienst (bijvoorbeeld YouTube) cookies plaatsen. Dat gebeurt dus pas na jouw klik.
 
