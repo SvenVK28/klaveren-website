@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { getFreelance } from '../lib/content';
+import { url } from '../lib/url';
+
+const { data } = await getFreelance();
+---
+
+<BaseLayout title={data.eyebrow ?? 'Freelance'} description={data.description ?? data.intro}>
+  <PageHero eyebrow={data.eyebrow} title={data.title} intro={data.intro} image={data.hero_image} imageAlt={data.hero_image_alt}>
+    <p class="actions">
+      <a class="button button--primary" href={url('contact/')}>
+        Neem contact op
+        <Icon name="arrow" />
+      </a>
+    </p>
+  </PageHero>
+
+  {
+    data.services.length > 0 && (
+      <section class="container section" aria-labelledby="services-title">
+        <SectionHead id="services-title" eyebrow={data.services_eyebrow} title={data.services_title} />
+        <ul class="services">
+          {data.services.map((service, i) => (
+            <li>
+              <ServiceCard service={service} id={`dienst-${i + 1}`} />
+            </li>
+          ))}
+        </ul>
+        {data.price_note && <p class="price-note">{data.price_note}</p>}
+      </section>
+    )
+  }
+
+  {
+    data.agreements.length > 0 && (
+      <section class="section section--surface" aria-labelledby="agreements-title">
+        <div class="container agreements">
+          <h2 id="agreements-title">{data.agreements_title ?? 'Vooraf maken we afspraken over'}</h2>
+          <ul>
+            {data.agreements.map((item) => (
+              <li>
+                <Icon name="check" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <CtaBand
+    title={data.cta.title ?? 'Liever iets anders bespreken?'}
+    text={data.cta.text}
+    button={data.cta.button ?? 'Neem contact op'}
+    href={url('contact/')}
+    image={data.cta.image}
+  />
+</BaseLayout>
+
+<style>
+  .services {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .price-note {
+    margin: var(--space-8) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  .agreements {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+    gap: var(--space-6) var(--space-16);
+  }
+
+  .agreements h2 {
+    font-size: var(--text-section);
+  }
+
+  .agreements ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4) var(--space-8);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .agreements li {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+  }
+
+  .agreements :global(.icon) {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin-top: 3px;
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 62rem) {
+    .services {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .agreements {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .services,
+    .agreements ul {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

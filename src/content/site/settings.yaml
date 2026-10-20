@@ -1,9 +1,10 @@
-name: Sven van Klaveren
-tagline: Journalist in opleiding
-description: Portfolio met artikelen, video's, audio en fotografie.
-email: hallo@example.com
-socials:
-  - platform: LinkedIn
-    url: https://www.linkedin.com/
-  - platform: Instagram
-    url: https://www.instagram.com/
+name: SCVK Media
+owner: Sven van Klaveren
+description: Portfolio van Sven van Klaveren, journalist in opleiding. Artikelen, interviews en video's, en ruimte voor freelanceopdrachten.
+socials: []
+preview: true
+project_cta:
+  eyebrow: Vragen of een freelanceopdracht?
+  title: Een idee of opdracht?
+  text: Neem contact op om de mogelijkheden te bespreken.
+  button: Neem contact op

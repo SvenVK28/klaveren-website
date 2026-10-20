@@ -1,13 +1,16 @@
-# Klaveren website
+# SCVK Media website (klaveren-website)
 
-Portfolio site for a journalism student: articles, video, audio and photo work.
+Portfolio and freelance site of **SCVK Media**, the journalism brand of Sven van Klaveren:
+articles, interviews and video work, freelance services and a contact form.
 It's a static [Astro](https://astro.build) site with [Sveltia CMS](https://sveltiacms.app) at
-`/admin/` for editing, published to GitHub Pages by GitHub Actions.
+`/admin/` for editing, published to GitHub Pages by GitHub Actions. The owner's design brief and
+mock-ups are in [docs/design/](docs/design/README.md).
 
 - **Site:** https://sven-vh.github.io/klaveren-website/
 - **Admin:** https://sven-vh.github.io/klaveren-website/admin/
 - **Plan and decisions:** [docs/PLAN.md](docs/PLAN.md)
 - **Guide for the editor (Dutch):** [docs/HANDLEIDING.md](docs/HANDLEIDING.md)
+- **Contact form (Web3Forms):** [docs/CONTACT-FORM.md](docs/CONTACT-FORM.md)
 - **Context, gotchas and status for Claude Code sessions:** [CLAUDE.md](CLAUDE.md)
 
 ## How it works
@@ -41,13 +44,16 @@ Browser checks (screenshots, CMS smoke and end-to-end tests) live in `scripts/de
 
 | Path | What |
 | --- | --- |
-| `src/content/work/<slug>/index.md` | One production per folder. Its photos sit next to it. |
-| `src/content/site/` | Singletons: `settings.yaml`, `home.yaml`, `about.md` (+ `images/`) |
+| `src/content/work/<slug>/index.md` | One project per folder. Its photos sit next to it. |
+| `src/content/site/` | One file per page (`home.md`, `portfolio.md`, `about.md`, `freelance.md`, `contact.md`, `privacy.md`; frontmatter = the page's fields) + `settings.yaml`. Page photos in `images/`. |
+| `src/assets/brand/` | Logo (made from `docs/design/logo/` by `scripts/brand/prepare-logo.mjs`) |
 | `src/content.config.ts` | Content schemas (Zod) |
 | `public/admin/config.yml` | CMS fields. **Keep in sync with `content.config.ts`.** |
 | `public/files/` | Downloads uploaded through the CMS (PDFs, CV) |
-| `src/styles/global.css` | Design tokens (colours, fonts, spacing) and base styles |
-| `src/lib/embed.ts` | Turns YouTube/Vimeo/Spotify/SoundCloud links into players |
+| `src/styles/global.css` | Design tokens (colours, fonts, spacing, from the brief) and base styles |
+| `src/lib/embed.ts` | Turns YouTube/Vimeo/Spotify/SoundCloud links into click-to-play players |
+| `src/lib/work-types.ts`, `src/lib/icons.ts` | Categories and the icons the editor can pick (must match `config.yml`) |
+| `src/components/ContactForm.astro` | The contact form (Web3Forms) |
 | `.github/workflows/deploy.yml` | Build and deploy to Pages |
 
 **Adding a field:** add it to `public/admin/config.yml` (`required: false` unless every entry
@@ -56,7 +62,11 @@ failing build means the editor's changes silently don't appear. GitHub emails th
 triggered the run (the editor, for CMS saves) when it fails.
 
 **Example content:** everything starting with `voorbeeld-` in `src/content/work/` is placeholder
-content. It can be deleted from the CMS.
+content, as are the stock photos (CC0, see `docs/design/photo-credits.json`) and the portrait
+silhouette. `preview: true` in `settings.yaml` adds a "Voorbeeldversie" banner and `noindex`.
+
+**Logo:** never redraw it. If the owner sends a new file, put it in `docs/design/logo/` and run
+`node scripts/brand/prepare-logo.mjs` (transparent logo, favicon, share image).
 
 ## Giving the editor access
 
@@ -95,6 +105,8 @@ GitHub's OAuth needs a small server to hold the client secret. Use the official
    `auth_methods: [token]`.
 
 ## Custom domain (later)
+
+Planned: `scvkmedia.nl`.
 
 1. Buy the domain, e.g. at mijndomein.nl, and point DNS at GitHub Pages:
    [docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site).

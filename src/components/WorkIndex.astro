@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TypeFilter from './TypeFilter.astro';
+import WorkGrid from './WorkGrid.astro';
+import CtaBand from './CtaBand.astro';
+import { getPortfolio, getSettings, getWork } from '../lib/content';
+import { url } from '../lib/url';
+import { WORK_TYPES, WORK_TYPE_KEYS, type WorkType } from '../lib/work-types';
+
+interface Props {
+  /** Selected category, or all work. */
+  type?: WorkType;
+}
+
+// "Mijn werk" with and without a category filter. Each filter is its own page
+// (/mijn-werk/soort/<categorie>/), so filtering works without JavaScript and
+// filtered views can be shared as links.
+const { type } = Astro.props;
+const page = await getPortfolio();
+const settings = await getSettings();
+const work = await getWork();
+const available = WORK_TYPE_KEYS.filter((key) => work.some((entry) => entry.data.type === key));
+const entries = type ? work.filter((entry) => entry.data.type === type) : work;
+const title = type ? `${WORK_TYPES[type].plural} | ${page.title}` : page.title;
+---
+
+<BaseLayout title={title} description={page.description ?? page.intro}>
+  <header class="head">
+    <div class="container">
+      {page.eyebrow && <p class="eyebrow">{page.eyebrow}</p>}
+      <h1>{page.title}</h1>
+      {page.intro && <p class="intro">{page.intro}</p>}
+    </div>
+  </header>
+
+  <div class="container section">
+    <TypeFilter available={available} current={type} />
+    <WorkGrid entries={entries} eager={3} level={2} />
+  </div>
+
+  <CtaBand
+    eyebrow={settings.project_cta.eyebrow}
+    title={settings.project_cta.title ?? 'Een idee of opdracht?'}
+    text={settings.project_cta.text}
+    button={settings.project_cta.button ?? 'Neem contact op'}
+    href={url('contact/')}
+  />
+</BaseLayout>
+
+<style>
+  .head {
+    padding-block: var(--space-16) 0;
+  }
+
+  h1 {
+    font-size: var(--text-page);
+    margin-bottom: var(--space-4);
+  }
+
+  .intro {
+    max-width: 40rem;
+    color: var(--color-muted);
+    font-size: var(--text-md);
+    margin: 0;
+  }
+
+  .section {
+    padding-top: var(--space-8);
+  }
+</style>

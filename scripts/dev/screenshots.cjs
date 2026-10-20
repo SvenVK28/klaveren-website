@@ -1,4 +1,4 @@
-// Full-page screenshots of the site (desktop, phone, dark mode) into screenshots/.
+// Full-page screenshots of the site (desktop, tablet, phones) into screenshots/.
 // Also reports horizontal overflow and console/network errors.
 //
 //   npm run build && npx astro preview        (in another terminal)
@@ -9,19 +9,23 @@ const { chromium } = require('playwright');
 const fs = require('fs');
 
 const base = process.argv[2] || 'http://localhost:4321/klaveren-website/';
-const paths = (process.argv[3] || ',werk/,over/').split(',');
-const variants = [
-  { name: 'desktop', viewport: { width: 1440, height: 900 }, colorScheme: 'light' },
-  { name: 'mobile', viewport: { width: 390, height: 844 }, colorScheme: 'light' },
-  { name: 'dark', viewport: { width: 1440, height: 900 }, colorScheme: 'dark' },
+const paths = (process.argv[3] || ',mijn-werk/,over-mij/,freelance/,contact/,privacy/').split(',');
+// Widths from the design brief's acceptance tests (spec §15). VARIANTS=desktop,mobile picks a subset.
+const allVariants = [
+  { name: 'desktop', viewport: { width: 1440, height: 900 } },
+  { name: 'tablet', viewport: { width: 768, height: 1024 } },
+  { name: 'mobile', viewport: { width: 390, height: 844 } },
+  { name: 'small', viewport: { width: 320, height: 640 } },
 ];
+const wanted = process.env.VARIANTS?.split(',');
+const variants = wanted ? allVariants.filter((v) => wanted.includes(v.name)) : allVariants;
 
 (async () => {
   fs.mkdirSync('screenshots', { recursive: true });
   const browser = await chromium.launch();
   const problems = [];
   for (const variant of variants) {
-    const ctx = await browser.newContext({ viewport: variant.viewport, colorScheme: variant.colorScheme });
+    const ctx = await browser.newContext({ viewport: variant.viewport, reducedMotion: 'no-preference' });
     const page = await ctx.newPage();
     page.on('console', (m) => m.type() === 'error' && problems.push(`${variant.name}: ${m.text()}`));
     // YouTube's player fires tracking requests that fail in headless mode; ignore those.

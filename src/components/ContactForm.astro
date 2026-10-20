@@ -1,0 +1,417 @@
+---
+import Icon from './Icon.astro';
+import { url } from '../lib/url';
+
+interface Props {
+  /** Web3Forms access key from the CMS settings. Without it the form is shown as not active yet. */
+  formKey?: string;
+  email?: string;
+  /** Options for "Type opdracht", usually the service titles. */
+  topics: string[];
+  successMessage: string;
+  siteName: string;
+}
+
+const { formKey, email, topics, successMessage, siteName } = Astro.props;
+const active = Boolean(formKey);
+const thanksUrl = new URL(url('contact/bedankt/'), Astro.site).href;
+
+// Messages go through Web3Forms (web3forms.com): it e-mails each submission to
+// the address the access key belongs to. The key is meant to be public (it only
+// says where to deliver), so it can live in the page. See docs/CONTACT-FORM.md.
+---
+
+<form
+  class="form"
+  action="https://api.web3forms.com/submit"
+  method="POST"
+  novalidate
+  data-contact-form
+  data-email={email}
+  aria-describedby={active ? undefined : 'form-inactive'}
+>
+  {
+    !active && (
+      <div class="notice" id="form-inactive" role="note">
+        <Icon name="alert" />
+        <p>
+          <strong>Het contactformulier is nog niet actief.</strong>
+          {email ? (
+            <>
+              {' '}Stuur je bericht voorlopig naar <a href={`mailto:${email}`}>{email}</a>.
+            </>
+          ) : (
+            ' Neem voorlopig contact op via de gegevens op deze pagina.'
+          )}
+        </p>
+      </div>
+    )
+  }
+
+  <fieldset disabled={!active}>
+    <legend class="visually-hidden">Je bericht</legend>
+    <input type="hidden" name="access_key" value={formKey ?? ''} />
+    <input type="hidden" name="from_name" value={`Website ${siteName}`} />
+    <input type="hidden" name="subject" value={`Nieuw bericht via de website van ${siteName}`} />
+    <input type="hidden" name="redirect" value={thanksUrl} />
+    {/* Spam trap: people never see or fill this; bots do. */}
+    <input type="checkbox" name="botcheck" class="trap" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+    <div class="field">
+      <label for="cf-name">Naam <span class="req" aria-hidden="true">*</span><span class="visually-hidden">(verplicht)</span></label>
+      <input id="cf-name" name="name" type="text" autocomplete="name" required maxlength="120" placeholder="Je naam" aria-describedby="cf-name-error" />
+      <p class="error" id="cf-name-error" hidden></p>
+    </div>
+
+    <div class="field">
+      <label for="cf-email">E-mailadres <span class="req" aria-hidden="true">*</span><span class="visually-hidden">(verplicht)</span></label>
+      <input id="cf-email" name="email" type="email" autocomplete="email" required maxlength="200" placeholder="je@email.nl" aria-describedby="cf-email-error" />
+      <p class="error" id="cf-email-error" hidden></p>
+    </div>
+
+    <div class="field">
+      <label for="cf-topic">Onderwerp</label>
+      <input id="cf-topic" name="Onderwerp" type="text" maxlength="150" placeholder="Waar gaat je bericht over?" />
+    </div>
+
+    {
+      topics.length > 0 && (
+        <div class="field">
+          <label for="cf-type">Type opdracht</label>
+          <div class="select">
+            <select id="cf-type" name="Type opdracht">
+              <option value="">Kies een optie (niet verplicht)</option>
+              {topics.map((topic) => (
+                <option value={topic}>{topic}</option>
+              ))}
+              <option value="Iets anders">Iets anders</option>
+            </select>
+          </div>
+        </div>
+      )
+    }
+
+    <div class="field">
+      <label for="cf-message">Bericht <span class="req" aria-hidden="true">*</span><span class="visually-hidden">(verplicht)</span></label>
+      <textarea id="cf-message" name="message" rows="6" required maxlength="5000" placeholder="Typ je bericht hier…" aria-describedby="cf-message-error"></textarea>
+      <p class="error" id="cf-message-error" hidden></p>
+    </div>
+
+    <p class="hint">
+      Velden met een <span aria-hidden="true">*</span> zijn verplicht. Je gegevens worden alleen gebruikt om je bericht te beantwoorden
+      (<a href={url('privacy/')}>privacyverklaring</a>).
+    </p>
+
+    <button class="button button--primary submit" type="submit">
+      <span class="label">Verstuur bericht</span>
+      <Icon name="arrow" />
+    </button>
+  </fieldset>
+
+  <div class="status" role="status" aria-live="polite" tabindex="-1"></div>
+</form>
+
+<template id="cf-success">
+  <div class="result result--success">
+    <Icon name="check" />
+    <div>
+      <p class="result-title">Bericht verstuurd</p>
+      <p>{successMessage}</p>
+    </div>
+  </div>
+</template>
+
+<template id="cf-failure">
+  <div class="result result--error">
+    <Icon name="alert" />
+    <div>
+      <p class="result-title">Het versturen is niet gelukt</p>
+      <p>
+        <span data-detail></span>
+        {
+          email ? (
+            <>
+              Probeer het later opnieuw of mail direct naar <a href={`mailto:${email}`}>{email}</a>.
+            </>
+          ) : (
+            'Probeer het later opnieuw.'
+          )
+        }
+      </p>
+    </div>
+  </div>
+</template>
+
+<script>
+  const MESSAGES: Record<string, string> = {
+    name: 'Vul je naam in.',
+    email: 'Vul een geldig e-mailadres in, bijvoorbeeld naam@voorbeeld.nl.',
+    message: 'Schrijf een bericht.',
+  };
+
+  for (const form of document.querySelectorAll<HTMLFormElement>('[data-contact-form]')) {
+    const fieldset = form.querySelector('fieldset')!;
+    const status = form.querySelector<HTMLElement>('.status')!;
+    const submit = form.querySelector<HTMLButtonElement>('.submit')!;
+    const label = submit.querySelector('.label')!;
+    const fields = [...form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input[required], textarea[required]')];
+
+    // Coming from a service on the Freelance page: pre-select it.
+    const wanted = new URLSearchParams(location.search).get('opdracht');
+    const select = form.querySelector<HTMLSelectElement>('select');
+    if (wanted && select) {
+      const option = [...select.options].find((o) => o.value.toLowerCase() === wanted.toLowerCase());
+      if (option) select.value = option.value;
+    }
+
+    const check = (field: HTMLInputElement | HTMLTextAreaElement) => {
+      const error = form.querySelector<HTMLElement>(`#${field.id}-error`);
+      const value = field.value.trim();
+      const valid = value !== '' && field.checkValidity();
+      field.toggleAttribute('aria-invalid', !valid);
+      if (error) {
+        error.textContent = valid ? '' : MESSAGES[field.name] ?? 'Dit veld is verplicht.';
+        error.hidden = valid;
+      }
+      return valid;
+    };
+
+    for (const field of fields) {
+      field.addEventListener('blur', () => field.value && check(field));
+      field.addEventListener('input', () => field.hasAttribute('aria-invalid') && check(field));
+    }
+
+    const show = (templateId: string, detail?: string) => {
+      const template = document.getElementById(templateId) as HTMLTemplateElement;
+      const node = template.content.cloneNode(true) as DocumentFragment;
+      const slot = node.querySelector('[data-detail]');
+      if (slot) slot.textContent = detail ? `${detail} ` : '';
+      status.replaceChildren(node);
+      status.focus();
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (fieldset.disabled) return;
+      const invalid = fields.filter((field) => !check(field));
+      if (invalid.length) {
+        invalid[0].focus();
+        return;
+      }
+
+      const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
+      delete data.redirect;
+      // The reply-to of the e-mail is the visitor's address, so "reply" just works.
+      data.subject = data.Onderwerp ? `${data.subject}: ${data.Onderwerp}` : data.subject;
+
+      submit.disabled = true;
+      label.textContent = 'Versturen…';
+      status.replaceChildren();
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const result = await response.json().catch(() => ({}));
+        if (response.ok && result.success === true) {
+          form.reset();
+          fieldset.hidden = true;
+          show('cf-success');
+        } else {
+          // Web3Forms' own message is English and technical: log it, show the Dutch text.
+          console.warn('Contactformulier:', response.status, result.message);
+          show('cf-failure');
+        }
+      } catch {
+        show('cf-failure', 'Er is geen verbinding.');
+      } finally {
+        submit.disabled = false;
+        label.textContent = 'Verstuur bericht';
+      }
+    });
+  }
+</script>
+
+<style>
+  .form {
+    max-width: 36rem;
+  }
+
+  fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    min-width: 0;
+  }
+
+  fieldset[disabled] {
+    opacity: 0.6;
+  }
+
+  .field {
+    margin-bottom: var(--space-6);
+  }
+
+  label {
+    display: block;
+    margin-bottom: var(--space-2);
+    color: var(--color-heading);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .req {
+    color: var(--color-primary);
+  }
+
+  input,
+  textarea,
+  select {
+    width: 100%;
+    min-height: 48px;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-small);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font: inherit;
+    font-size: var(--text-base);
+    transition:
+      border-color 0.15s,
+      background 0.15s;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 9rem;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #7d868e;
+  }
+
+  input:hover,
+  textarea:hover,
+  select:hover {
+    border-color: #c3cbd1;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background: var(--color-background);
+    box-shadow: 0 0 0 3px rgb(18 51 74 / 0.15);
+  }
+
+  [aria-invalid] {
+    border-color: #b42318;
+  }
+
+  .select {
+    position: relative;
+  }
+
+  select {
+    appearance: none;
+    padding-right: var(--space-12);
+  }
+
+  .select::after {
+    content: '';
+    position: absolute;
+    right: var(--space-4);
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-right: 1.5px solid var(--color-heading);
+    border-bottom: 1.5px solid var(--color-heading);
+    transform: translateY(-70%) rotate(45deg);
+    pointer-events: none;
+  }
+
+  .error {
+    margin: var(--space-2) 0 0;
+    color: #b42318;
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+
+  .hint {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  .trap {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  .submit {
+    min-height: 48px;
+    padding-inline: var(--space-6);
+  }
+
+  .notice,
+  .result {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+    margin-bottom: var(--space-6);
+    padding: var(--space-4);
+    border-radius: var(--radius-small);
+    border-left: 3px solid var(--color-accent);
+    background: #edf5f6;
+  }
+
+  .notice p,
+  .result p {
+    margin: 0;
+  }
+
+  .notice :global(.icon),
+  .result :global(.icon) {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    margin-top: 1px;
+    color: var(--color-accent);
+  }
+
+  .status:focus {
+    outline: none;
+  }
+
+  .status :global(.result) {
+    margin-top: var(--space-6);
+  }
+
+  .status :global(.result--success) {
+    border-left-color: #1f7a4d;
+    background: #ecf6f0;
+  }
+
+  .status :global(.result--success .icon) {
+    color: #1f7a4d;
+  }
+
+  .status :global(.result--error) {
+    border-left-color: #b42318;
+    background: #fdf0ef;
+  }
+
+  .status :global(.result--error .icon) {
+    color: #b42318;
+  }
+
+  .status :global(.result-title) {
+    font-weight: 700;
+    color: var(--color-heading);
+  }
+</style>

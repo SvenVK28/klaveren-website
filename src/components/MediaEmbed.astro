@@ -1,53 +1,175 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Icon from './Icon.astro';
 import { parseEmbed } from '../lib/embed';
 
 interface Props {
   link: string;
   title: string;
+  /** Still shown before the player loads. Falls back to the video's own thumbnail. */
+  poster?: ImageMetadata;
 }
 
-const { link, title } = Astro.props;
+const { link, title, poster } = Astro.props;
 const embed = parseEmbed(link);
+const PROVIDERS = { youtube: 'YouTube', vimeo: 'Vimeo', spotify: 'Spotify', soundcloud: 'SoundCloud' } as const;
+const provider = embed ? PROVIDERS[embed.provider] : undefined;
+const isAudio = embed?.provider === 'spotify' || embed?.provider === 'soundcloud';
+
+// The player only loads after a click ("click to play"). Until then nothing is
+// requested from YouTube & co, so no third-party cookies without consent, and
+// the page stays fast. Without JavaScript the link opens the original video.
 ---
 
 {
   embed ? (
-    <div class:list={['embed', embed.provider]} style={embed.height ? `--embed-height: ${embed.height}px` : undefined}>
-      <iframe
-        src={embed.src}
-        title={title}
-        loading="lazy"
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        allowfullscreen
-        referrerpolicy="strict-origin-when-cross-origin"
-      />
+    <div class:list={['embed', embed.provider, { audio: isAudio }]} style={embed.height ? `--embed-height: ${embed.height}px` : undefined}>
+      <a
+        class="facade"
+        href={link}
+        target="_blank"
+        rel="noopener"
+        data-src={embed.src}
+        data-title={title}
+        data-autoplay={isAudio ? undefined : 'true'}
+      >
+        {!isAudio &&
+          (poster ? (
+            <Image src={poster} alt="" width={1280} height={720} fit="cover" sizes="(min-width: 50rem) 46rem, 100vw" />
+          ) : embed.thumbnail ? (
+            <img
+              src={embed.thumbnail}
+              alt=""
+              width="1280"
+              height="720"
+              loading="lazy"
+              onerror={embed.thumbnailFallback ? `this.onerror=null;this.src='${embed.thumbnailFallback}'` : undefined}
+            />
+          ) : null)}
+        <span class="play">
+          <span class="play-icon">
+            <Icon name="play" />
+          </span>
+          <span class="play-text">
+            <strong>{isAudio ? 'Luisteren' : 'Video afspelen'}</strong>
+            <span>Laadt de speler van {provider}</span>
+          </span>
+        </span>
+      </a>
     </div>
   ) : (
     <p>
-      <a class="button" href={link} target="_blank" rel="noopener">
-        Bekijk / beluister de productie ↗
+      <a class="button button--primary" href={link} target="_blank" rel="noopener">
+        Bekijk de productie
+        <Icon name="external" />
       </a>
     </p>
   )
 }
 
+<script>
+  document.querySelectorAll<HTMLAnchorElement>('.embed .facade').forEach((facade) => {
+    facade.addEventListener('click', (event) => {
+      event.preventDefault();
+      const src = new URL(facade.dataset.src!);
+      if (facade.dataset.autoplay) src.searchParams.set('autoplay', '1');
+      const iframe = document.createElement('iframe');
+      iframe.src = src.href;
+      iframe.title = facade.dataset.title ?? '';
+      iframe.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      facade.replaceWith(iframe);
+      iframe.focus();
+    });
+  });
+</script>
+
 <style>
   .embed {
-    margin-block: 2rem;
-    border-radius: var(--radius);
+    position: relative;
+    margin-block: 0 var(--space-8);
+    border-radius: var(--radius-small);
     overflow: hidden;
-    background: var(--color-placeholder);
+    background: var(--color-primary);
+    aspect-ratio: 16 / 9;
   }
 
-  .embed iframe {
+  .embed.audio {
+    aspect-ratio: auto;
+    height: var(--embed-height, 152px);
+  }
+
+  .embed :global(iframe) {
     width: 100%;
-    height: var(--embed-height, auto);
-    aspect-ratio: 16 / 9;
+    height: 100%;
     border: 0;
   }
 
-  .spotify iframe,
-  .soundcloud iframe {
-    aspect-ratio: auto;
+  .facade {
+    position: absolute;
+    inset: 0;
+    display: block;
+    color: var(--color-on-primary);
+    text-decoration: none;
+  }
+
+  .facade :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.88;
+    transition: opacity 0.2s;
+  }
+
+  .facade:hover :global(img) {
+    opacity: 1;
+  }
+
+  .play {
+    position: absolute;
+    left: var(--space-6);
+    bottom: var(--space-6);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-4) var(--space-2) var(--space-2);
+    border-radius: var(--radius-medium);
+    background: rgb(12 39 57 / 0.88);
+  }
+
+  .audio .play {
+    inset: 0;
+    border-radius: 0;
+    padding: var(--space-6);
+    background: none;
+  }
+
+  .play-icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--color-background);
+    color: var(--color-primary);
+  }
+
+  .play-icon :global(.icon) {
+    width: 22px;
+    height: 22px;
+    transform: translateX(2px);
+  }
+
+  .play-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+  }
+
+  .play-text span {
+    font-size: var(--text-xs);
+    opacity: 0.8;
   }
 </style>
