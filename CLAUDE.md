@@ -31,10 +31,11 @@ A **portfolio website for Sven van Klaveren**, a journalism student.
 - **The admin page must be private: only the two Svens can get in.** This is a hard
   requirement, and the user cares about it more than about the code (stated 2026-10-06). See §2a.
 - **Public code is fine** (the user changed this 2026-10-06; it was "code private" at first). The repo is
-  still private today. Making it public is allowed, but **drafts and unpublished uploads in the
-  repo would then be public too** (§2a). Raise that before making the repo public.
-- Use the **`Sven-vh` account for now**. It's temporary and will likely move to another account
-  (README has the checklist).
+  **public** since 2026-10-20 (the user OK'd it), so **drafts and unpublished uploads in the
+  repo are public too** (§2a).
+- The repo is owned by the friend's account **`SvenVK28`** (moved from `Sven-vh` on 2026-10-20).
+  `Sven-vh` is a collaborator (write access), so `gh` as `Sven-vh` can still push and merge PRs.
+  Only the owner can change repo settings (visibility, Pages, collaborators).
 - **The design brief arrived 2026-10-20** (Google Drive folder, now in `docs/design/`, read its
   README). Brand **SCVK Media** (his initials), planned domain `scvkmedia.nl` (not bought yet),
   navy logo with a microphone in the K, white / near-black / marine navy, pages Home, Mijn werk,
@@ -46,8 +47,8 @@ A **portfolio website for Sven van Klaveren**, a journalism student.
 
 ## 2. Current status (last updated 2026-10-20)
 
-**Live:** https://sven-vh.github.io/klaveren-website/ · **Admin:** `/admin/` ·
-**Repo:** `Sven-vh/klaveren-website` (PRIVATE)
+**Live:** https://svenvk28.github.io/klaveren-website/ · **Admin:** `/admin/` ·
+**Repo:** `SvenVK28/klaveren-website` (public)
 
 **2026-10-20: SCVK Media redesign** after the owner's brief (PR "SCVK Media design"):
 - Pages: `/` (hero, uitgelicht werk, over-mij teaser, 4 services, CTA), `/mijn-werk/` +
@@ -65,7 +66,9 @@ A **portfolio website for Sven van Klaveren**, a journalism student.
 
 Done and verified earlier:
 - Sveltia CMS at `/admin/`, Dutch UI, config validated against the official schema.
-- GitHub Actions deploy to Pages. Pages from a private repo **works**, so the account has Pro.
+- GitHub Actions deploy to Pages. The repo is public, so this works on the owner's free account.
+- Repo moved to `SvenVK28` (public) on 2026-10-20; Pages serves at the new address, the old
+  `sven-vh.github.io` one is a 404 (GitHub doesn't redirect Pages).
 - **End-to-end on the live site**: sign in with token → create entry with a 3000×2000 JPEG →
   commit (`Nieuw: productie "…"`, photo stored as a 2400px WebP next to `index.md`) → build →
   page live → delete through the CMS (entry and its media removed). The user also edited an
@@ -76,12 +79,11 @@ Not done yet / waiting on someone:
       the email + LinkedIn/Instagram URLs in Site-instellingen.
 - [ ] Favicon is a crop of the logo's K + microphone (`scripts/brand/prepare-logo.mjs`): needs his OK.
 - [ ] At launch: `preview: false`, delete `voorbeeld-*`, review the privacy text (it's a draft).
-- [ ] The friend creates a GitHub account → add him as a collaborator → he makes a **classic**
-      token (see gotchas) → walk him through `docs/HANDLEIDING.md`.
+- [ ] The friend (owner `SvenVK28`) makes a token and signs in at `/admin/` → walk him through
+      `docs/HANDLEIDING.md`.
 - [ ] Optional: "Inloggen met GitHub" via the sveltia-cms-auth Cloudflare Worker. Needs the
       user's Cloudflare account and a GitHub OAuth app (README has the steps). Until then
       `auth_methods: [token]` hides the GitHub button, which would otherwise fail.
-- [ ] Maybe: move the repo to another account.
 - [ ] Sveltia 0.248.x is out (pinned 0.229.0). Update when convenient (README > Updating).
 - [ ] **Make the admin page itself unreachable for others** (§2a). This is a requirement, not optional.
 
@@ -91,8 +93,8 @@ Not done yet / waiting on someone:
 
 **Current state (honest):**
 - *Editing is locked:* signing in requires a GitHub account with **write access to the repo**.
-  Only collaborators can save anything. Others can't read the content through the CMS
-  either, because the repo is private.
+  Only collaborators can save anything. The repo is public, so anyone can read the content
+  (drafts and unpublished uploads included) on GitHub, but not change it.
 - *The page itself is reachable:* anyone who knows `/admin/` sees the Sveltia login screen, and
   `/admin/config.yml` (field definitions and the repo name) is publicly downloadable. Search
   engines are kept away (`noindex` and a `robots.txt` `Disallow`, which only takes effect at a
@@ -199,8 +201,8 @@ are the keys of `CONTENT_ICONS` in `src/lib/icons.ts` (same list in config.yml).
 **Sveltia CMS (pinned 0.229.0 in `public/admin/index.html` and `scripts/check-cms-config.mjs`):**
 - No PKCE for GitHub yet, so OAuth needs `base_url` pointing at an auth worker.
 - **Fine-grained PATs don't work for collaborators on a repo owned by another personal
-  account.** The friend needs a **classic** token with `repo` scope. The owner can use
-  fine-grained (Contents: read & write).
+  account.** Since the move that's the user (`Sven-vh`): he needs a **classic** token with `repo`
+  scope. The owner (`SvenVK28`, the friend) can use either kind.
 - `slug_length` is deprecated; use the global `slug.maxlength`.
 - The slug is editable only at creation (`editable: [create]`), so shared links never break.
 - Admin entry URLs look like `#/collections/work/entries/<slug>/index`.
