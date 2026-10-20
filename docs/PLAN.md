@@ -106,7 +106,7 @@ Every editor needs a (free) GitHub account with write access to the repo.
 1. ✅ Research and plan
 2. ✅ Astro skeleton, content model, temporary design
 3. ✅ Sveltia CMS at `/admin`
-4. ✅ Private repo, Actions deploy, Pages live at `https://svenvk28.github.io/klaveren-website/`
+4. ✅ Repo (private on `Sven-vh` at first, public on `SvenVK28` since 2026-10-20), Actions deploy, Pages live at `https://svenvk28.github.io/klaveren-website/`
 5. ✅ End-to-end CMS test (create, publish, verify the live site, delete), README and a Dutch guide for the editor
 6. **Required:** make the admin page unreachable for others (Cloudflare Access in front of `/admin`).
 7. ✅ SCVK Media design after his brief (2026-10-20)
