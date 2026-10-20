@@ -7,7 +7,7 @@
 
 backend:
   name: github
-  repo: Sven-vh/klaveren-website
+  repo: SvenVK28/klaveren-website
   branch: main
   # Sign-in: for now with a personal access token only. To enable "Sign in with
   # GitHub", deploy the OAuth worker (README > "Inloggen met GitHub"), uncomment
@@ -22,8 +22,8 @@ backend:
     deleteMedia: 'Verwijderd "{{path}}"'
 
 app_title: Beheer SCVK Media
-site_url: https://sven-vh.github.io/klaveren-website/
-display_url: https://sven-vh.github.io/klaveren-website/
+site_url: https://svenvk28.github.io/klaveren-website/
+display_url: https://svenvk28.github.io/klaveren-website/
 logo:
   src: /klaveren-website/favicon.png
 
