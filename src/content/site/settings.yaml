@@ -1,9 +1,8 @@
 name: SCVK Media
 owner: Sven van Klaveren
 description: Portfolio van Sven van Klaveren, journalist in opleiding. Artikelen, interviews en video's, en ruimte voor freelanceopdrachten.
-socials: []
 form_key: 99c0af93-bfc1-4a9a-9ff4-c098237dd90d
-preview: true
+preview: false
 project_cta:
   eyebrow: Vragen of een freelanceopdracht?
   title: Een idee of opdracht?
