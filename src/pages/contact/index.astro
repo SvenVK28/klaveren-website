@@ -1,0 +1,212 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Icon from '../../components/Icon.astro';
+import { getContact, getFreelance, getSettings } from '../../lib/content';
+import { socialIcon } from '../../lib/icons';
+import { url } from '../../lib/url';
+
+const { data } = await getContact();
+const settings = await getSettings();
+const { data: freelance } = await getFreelance();
+const topics = freelance.services.map((service) => service.title);
+---
+
+<BaseLayout title="Contact" description={data.description ?? data.intro}>
+  <PageHero eyebrow={data.eyebrow} title={data.title} intro={data.intro} image={data.hero_image} imageAlt={data.hero_image_alt} />
+
+  <div class="container section layout">
+    <section id="formulier" aria-labelledby="form-title">
+      {data.form_eyebrow && <p class="eyebrow">{data.form_eyebrow}</p>}
+      <h2 id="form-title">{data.form_title}</h2>
+      <ContactForm formKey={settings.form_key} email={settings.email} topics={topics} successMessage={data.success_message} siteName={settings.name} />
+    </section>
+
+    <aside class="aside" aria-labelledby="direct-title">
+      {data.direct_eyebrow && <p class="eyebrow">{data.direct_eyebrow}</p>}
+      <h2 id="direct-title">{data.direct_title}</h2>
+
+      <div class="block">
+        {
+          settings.email ? (
+            <p class="row">
+              <Icon name="mail" />
+              <span>
+                <span class="row-label">E-mailadres</span>
+                <a href={`mailto:${settings.email}`}>{settings.email}</a>
+              </span>
+            </p>
+          ) : (
+            <p class="row">
+              <Icon name="mail" />
+              <span>
+                <span class="row-label">E-mailadres</span>
+                <span class="muted">Volgt binnenkort.</span>
+              </span>
+            </p>
+          )
+        }
+      </div>
+
+      {
+        settings.socials.length > 0 && (
+          <div class="block">
+            {data.socials_title && <p class="block-title">{data.socials_title}</p>}
+            {data.socials_text && <p class="muted">{data.socials_text}</p>}
+            <ul class="socials">
+              {settings.socials.map((social) => (
+                <li>
+                  <a href={social.url} rel="me noopener" target="_blank">
+                    <Icon name={socialIcon(social.platform)} />
+                    {social.platform}
+                    <Icon name="arrow" class="arrow" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+
+      <div class="block">
+        <p class="row">
+          <Icon name="shield" />
+          <span>
+            <span class="row-label">Privacy</span>
+            <span class="muted">
+              {data.privacy_text ?? 'Je gegevens gebruik ik alleen om je bericht te beantwoorden.'}{' '}
+              <a href={url('privacy/')}>Lees de privacyverklaring</a>.
+            </span>
+          </span>
+        </p>
+      </div>
+    </aside>
+  </div>
+
+  {
+    data.cta.title && (
+      <CtaBand
+        title={data.cta.title}
+        text={data.cta.text}
+        button={data.cta.button ?? 'Bekijk mijn werk'}
+        href={url('mijn-werk/')}
+        image={data.cta.image}
+      />
+    )
+  }
+</BaseLayout>
+
+<style>
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-12) clamp(var(--space-8), 6vw, var(--space-20));
+  }
+
+  h2 {
+    font-size: var(--text-section);
+    margin-bottom: var(--space-8);
+  }
+
+  .aside {
+    padding-left: clamp(var(--space-8), 4vw, var(--space-12));
+    border-left: 1px solid var(--color-border);
+  }
+
+  .block {
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .block:first-of-type {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .block p {
+    margin: 0;
+  }
+
+  .row {
+    display: flex;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+
+  .row > :global(.icon) {
+    flex: none;
+    width: 28px;
+    height: 28px;
+    color: var(--color-primary);
+  }
+
+  .row > span {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .row-label,
+  .block-title {
+    color: var(--color-heading);
+    font-weight: 600;
+  }
+
+  .row a {
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  .block-title + .muted {
+    margin-top: var(--space-1);
+  }
+
+  .socials {
+    display: grid;
+    gap: var(--space-1);
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .socials a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-4);
+    min-height: 44px;
+    color: var(--color-heading);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    text-decoration: none;
+  }
+
+  .socials a:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+
+  .socials :global(.icon) {
+    width: 28px;
+    height: 28px;
+    color: var(--color-primary);
+  }
+
+  .socials :global(.arrow) {
+    width: 16px;
+    height: 16px;
+  }
+
+  @media (max-width: 56rem) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+
+    .aside {
+      padding: var(--space-8) 0 0;
+      border-left: 0;
+      border-top: 1px solid var(--color-border);
+    }
+  }
+</style>

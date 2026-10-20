@@ -1,0 +1,43 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPrivacy } from '../lib/content';
+import { formatDate } from '../lib/format';
+
+const privacy = await getPrivacy();
+const { data } = privacy;
+const { Content } = await render(privacy);
+---
+
+<BaseLayout title={data.title} description={data.intro}>
+  <div class="container section">
+    <header class="head">
+      <h1>{data.title}</h1>
+      {data.updated && <p class="muted">Laatst bijgewerkt op {formatDate(data.updated)}</p>}
+      {data.intro && <p class="intro">{data.intro}</p>}
+    </header>
+    <div class="prose">
+      <Content />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .head {
+    max-width: var(--reading-width);
+    margin-bottom: var(--space-8);
+  }
+
+  h1 {
+    font-size: var(--text-page);
+  }
+
+  .intro {
+    font-size: var(--text-lg);
+  }
+
+  /* Headings get ids from the Markdown, so /privacy/#cookies works. */
+  .prose :global(h2) {
+    scroll-margin-top: var(--space-6);
+  }
+</style>

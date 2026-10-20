@@ -3,7 +3,7 @@ import { url } from '../lib/url';
 import { WORK_TYPES, type WorkType } from '../lib/work-types';
 
 interface Props {
-  /** Types that have at least one entry; others are hidden. */
+  /** Categories that have at least one entry; others are hidden. */
   available: WorkType[];
   current?: WorkType;
 }
@@ -13,44 +13,60 @@ const { available, current } = Astro.props;
 
 {
   available.length > 1 && (
-    <nav class="filter" aria-label="Filter op soort">
-      <a href={url('werk/')} aria-current={!current ? 'page' : undefined}>
-        Alles
-      </a>
-      {available.map((type) => (
-        <a href={url(`werk/soort/${type}/`)} aria-current={type === current ? 'page' : undefined}>
-          {WORK_TYPES[type].plural}
-        </a>
-      ))}
+    <nav class="filter" aria-label="Filter op categorie">
+      <ul>
+        <li>
+          <a href={url('mijn-werk/')} aria-current={!current ? 'page' : undefined}>
+            Alles
+          </a>
+        </li>
+        {available.map((type) => (
+          <li>
+            <a href={url(`mijn-werk/soort/${type}/`)} aria-current={type === current ? 'page' : undefined}>
+              {WORK_TYPES[type].plural}
+            </a>
+          </li>
+        ))}
+      </ul>
     </nav>
   )
 }
 
 <style>
   .filter {
+    margin-bottom: var(--space-12);
+  }
+
+  ul {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 3rem;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
   a {
-    padding: 0.4em 1em;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 var(--space-4);
     border: 1px solid var(--color-border);
-    border-radius: 999px;
+    border-radius: var(--radius-small);
+    color: var(--color-heading);
     font-size: var(--text-sm);
     font-weight: 600;
     text-decoration: none;
   }
 
   a:hover {
-    border-color: var(--color-text);
-    color: inherit;
+    border-color: var(--color-primary);
+    color: var(--color-primary);
   }
 
   a[aria-current='page'] {
-    background: var(--color-text);
-    border-color: var(--color-text);
-    color: var(--color-bg);
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-on-primary);
   }
 </style>

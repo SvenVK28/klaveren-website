@@ -8,7 +8,7 @@ export async function GET(context: APIContext) {
   const work = await getWork();
   return rss({
     title: settings.name,
-    description: settings.description ?? settings.tagline ?? '',
+    description: settings.description ?? '',
     site: context.site!,
     trailingSlash: true,
     items: work.map((entry) => ({
@@ -16,7 +16,7 @@ export async function GET(context: APIContext) {
       description: entry.data.summary,
       pubDate: entry.data.date,
       link: workUrl(entry),
-      categories: [WORK_TYPES[entry.data.type].label, ...entry.data.tags],
+      categories: [WORK_TYPES[entry.data.type].label],
     })),
     customData: '<language>nl-nl</language>',
   });

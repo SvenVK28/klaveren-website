@@ -1,0 +1,142 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  intro?: string;
+  image?: ImageMetadata;
+  /** Leave empty for atmosphere photos; describe the photo when it shows something meaningful. */
+  imageAlt?: string;
+  /** The homepage hero: taller, with a bigger headline. */
+  large?: boolean;
+}
+
+const { eyebrow, title, intro, image, imageAlt, large = false } = Astro.props;
+---
+
+<section class:list={['hero', { 'hero--image': image, 'hero--large': large }]}>
+  {
+    image && (
+      <div class="media">
+        <Image
+          src={image}
+          alt={imageAlt ?? ''}
+          layout="full-width"
+          widths={[640, 960, 1280, 1600, 2000]}
+          sizes="(min-width: 48rem) 62vw, 100vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+    )
+  }
+  <div class="container inner">
+    <div class="text">
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h1>{title.split('\n').map((line, i) => (i > 0 ? [<br />, line] : line))}</h1>
+      {intro && <p class="intro">{intro}</p>}
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-background);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 340px;
+    padding-block: var(--space-16);
+  }
+
+  .hero--large .inner {
+    min-height: 420px;
+  }
+
+  .text {
+    max-width: 34rem;
+  }
+
+  h1 {
+    font-size: var(--text-page);
+    margin-bottom: var(--space-4);
+  }
+
+  .hero--large h1 {
+    font-size: var(--text-hero);
+    line-height: 1.04;
+  }
+
+  .intro {
+    color: var(--color-text);
+    font-size: var(--text-md);
+    max-width: 30rem;
+  }
+
+  .text :global(.actions) {
+    margin-top: var(--space-8);
+  }
+
+  .media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: var(--color-placeholder);
+  }
+
+  .media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 70% 40%;
+  }
+
+  /* Wider screens: the photo fills the right side and fades into the page. */
+  @media (min-width: 48rem) {
+    .hero--image .media {
+      position: absolute;
+      inset: 0 0 0 auto;
+      width: 62%;
+      aspect-ratio: auto;
+    }
+
+    .hero--image .media::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        var(--color-background) 0%,
+        rgb(255 255 255 / 0.82) 18%,
+        rgb(255 255 255 / 0.25) 42%,
+        rgb(255 255 255 / 0) 60%
+      );
+    }
+
+    .hero--image .text {
+      max-width: min(34rem, 46%);
+    }
+  }
+
+  /* Phones: text first, then the photo full width. */
+  @media (max-width: 47.99rem) {
+    .hero--image {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
+    .inner,
+    .hero--large .inner {
+      min-height: 0;
+      padding-block: var(--space-12) var(--space-8);
+    }
+  }
+</style>

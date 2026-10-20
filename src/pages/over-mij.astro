@@ -1,0 +1,294 @@
+---
+import { render } from 'astro:content';
+import { Image, getImage } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { getAbout } from '../lib/content';
+import { url } from '../lib/url';
+
+const about = await getAbout();
+const { data } = about;
+const { Content } = await render(about);
+const hasBody = Boolean(about.body?.trim());
+const shareImage = data.photo ? (await getImage({ src: data.photo, width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src : undefined;
+const [lead, ...tiles] = data.work_items;
+---
+
+<BaseLayout title={data.eyebrow ?? 'Over mij'} description={data.description ?? data.intro} image={shareImage}>
+  <PageHero eyebrow={data.eyebrow} title={data.title} intro={data.intro} image={data.photo} imageAlt={data.photo_alt}>
+    {
+      data.cv && (
+        <p class="actions">
+          <a class="button" href={url(data.cv)} target="_blank" rel="noopener">
+            Download mijn cv
+            <Icon name="download" />
+          </a>
+        </p>
+      )
+    }
+  </PageHero>
+
+  {
+    data.highlights.length > 0 && (
+      <section class="section section--surface highlights-band" aria-label="In het kort">
+        <ul class="container highlights">
+          {data.highlights.map((item) => (
+            <li>
+              {item.icon && <Icon name={item.icon} />}
+              <h2>{item.title}</h2>
+              {item.text && <p>{item.text}</p>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    hasBody && (
+      <section class="container section">
+        <div class="prose">
+          <Content />
+        </div>
+      </section>
+    )
+  }
+
+  {
+    (data.work_title || data.work_items.length > 0) && (
+      <section class="container section work" aria-labelledby="work-title">
+        <div class="work-text">
+          {data.work_eyebrow && <p class="eyebrow">{data.work_eyebrow}</p>}
+          {data.work_title && <h2 id="work-title">{data.work_title}</h2>}
+          {data.work_text && <p class="muted">{data.work_text}</p>}
+          <a class="text-link" href={url('mijn-werk/')}>
+            Bekijk mijn werk
+            <Icon name="arrow" />
+          </a>
+        </div>
+        {lead && (
+          <ul class:list={['tiles', { 'tiles--single': tiles.length === 0 }]}>
+            {[lead, ...tiles.slice(0, 2)].map((item, i) => (
+              <li class:list={{ lead: i === 0 }}>
+                {item.image && (
+                  <div class="tile-media">
+                    <Image
+                      src={item.image}
+                      alt={item.image_alt ?? ''}
+                      width={i === 0 ? 640 : 560}
+                      height={i === 0 ? 620 : 320}
+                      fit="cover"
+                      sizes="(min-width: 62rem) 22rem, (min-width: 36rem) 45vw, 100vw"
+                    />
+                  </div>
+                )}
+                <h3>{item.title}</h3>
+                {item.text && <p class="muted">{item.text}</p>}
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+    )
+  }
+
+  {
+    (data.next_title || data.next_text) && (
+      <section class="section section--surface" aria-labelledby="next-title">
+        <div class:list={['container', 'next', { 'next--image': data.next_image }]}>
+          <div>
+            {data.next_eyebrow && <p class="eyebrow">{data.next_eyebrow}</p>}
+            {data.next_title && <h2 id="next-title">{data.next_title}</h2>}
+            {data.next_text && <p class="muted">{data.next_text}</p>}
+          </div>
+          {data.next_image && (
+            <div class="next-media">
+              <Image src={data.next_image} alt={data.next_image_alt ?? ''} width={900} height={420} fit="cover" sizes="(min-width: 48rem) 40vw, 100vw" />
+            </div>
+          )}
+        </div>
+      </section>
+    )
+  }
+
+  <CtaBand
+    title={data.cta.title ?? 'Laten we in contact komen'}
+    text={data.cta.text}
+    button={data.cta.button ?? 'Neem contact op'}
+    href={url('contact/')}
+    image={data.cta.image}
+  />
+</BaseLayout>
+
+<style>
+  .highlights-band {
+    padding-block: var(--space-12);
+  }
+
+  .highlights {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-block: 0;
+    list-style: none;
+  }
+
+  .highlights li {
+    padding: var(--space-2) var(--space-8);
+    border-left: 1px solid var(--color-border);
+  }
+
+  .highlights li:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .highlights :global(.icon) {
+    width: 34px;
+    height: 34px;
+    margin-bottom: var(--space-4);
+    color: var(--color-primary);
+    stroke-width: 1.4;
+  }
+
+  .highlights h2 {
+    font-size: var(--text-md);
+    margin-bottom: var(--space-3);
+  }
+
+  .highlights p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.9375rem;
+  }
+
+  .work {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-8) var(--space-16);
+    align-items: start;
+  }
+
+  .work-text h2,
+  .next h2 {
+    font-size: var(--text-section);
+  }
+
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tiles .lead {
+    grid-row: span 2;
+  }
+
+  .tiles--single {
+    grid-template-columns: 1fr;
+  }
+
+  .tile-media {
+    overflow: hidden;
+    border-radius: var(--radius-small);
+    background: var(--color-placeholder);
+    aspect-ratio: 16 / 9;
+    margin-bottom: var(--space-3);
+  }
+
+  .lead .tile-media {
+    aspect-ratio: 1 / 1;
+  }
+
+  .tile-media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tiles h3 {
+    font-size: var(--text-md);
+    margin-bottom: var(--space-1);
+  }
+
+  .tiles p {
+    font-size: 0.9375rem;
+    margin: 0;
+  }
+
+  .next {
+    display: grid;
+    gap: var(--space-8) var(--space-16);
+    align-items: center;
+  }
+
+  .next > div:first-child {
+    max-width: 34rem;
+  }
+
+  .next--image {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  }
+
+  .next-media {
+    aspect-ratio: 21 / 10;
+    overflow: hidden;
+    border-radius: var(--radius-small);
+    background: var(--color-placeholder);
+  }
+
+  .next-media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 62rem) {
+    .highlights {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-8) 0;
+    }
+
+    .highlights li:nth-child(odd) {
+      padding-left: 0;
+      border-left: 0;
+    }
+
+    .work {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 47.99rem) {
+    .next--image {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .highlights {
+      grid-template-columns: 1fr;
+    }
+
+    .highlights li {
+      padding: 0;
+      border-left: 0;
+    }
+
+    .tiles {
+      grid-template-columns: 1fr;
+    }
+
+    .tiles .lead {
+      grid-row: auto;
+    }
+
+    .lead .tile-media {
+      aspect-ratio: 16 / 9;
+    }
+  }
+</style>
