@@ -1,5 +1,6 @@
-// Contact form check in a real browser. The built site has no Web3Forms key yet,
-// so the test enables the form in the page, then fakes Web3Forms' reply:
+// Contact form check in a real browser. It checks the build's state (with a
+// Web3Forms key the form is enabled; without one it shows the "nog niet actief"
+// notice), swaps in a dummy key so nothing is delivered, then fakes Web3Forms' reply:
 //   1. empty submit      → inline errors, no request
 //   2. valid + success   → "Bericht verstuurd", form hidden, request body checked
 //   3. valid + failure   → error message, form stays
@@ -48,9 +49,12 @@ const fail = (msg) => {
   }
 
   await page.goto(`${contactUrl}?opdracht=Interviews%20afnemen`, { waitUntil: 'networkidle' });
+  const hasKey = Boolean(await page.locator('input[name=access_key]').inputValue());
   const inactive = await page.locator('#form-inactive').isVisible();
-  console.log('inactive notice shown without key:', inactive);
-  if (!inactive) fail('expected the "nog niet actief" notice on a build without key');
+  const disabled = await page.locator('[data-contact-form] fieldset').isDisabled();
+  console.log(`build has a key: ${hasKey}, notice shown: ${inactive}, fieldset disabled: ${disabled}`);
+  if (hasKey && (inactive || disabled)) fail('form has a key but is shown as not active');
+  if (!hasKey && !(inactive && disabled)) fail('expected the "nog niet actief" notice on a build without key');
   const preselected = await page.locator('#cf-type').inputValue();
   console.log('pre-selected type:', preselected);
   if (preselected !== 'Interviews afnemen') fail('?opdracht= did not pre-select the service');
