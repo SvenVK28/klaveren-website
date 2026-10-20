@@ -8,7 +8,7 @@ import sitemap from '@astrojs/sitemap';
 //   2. set BASE to '/'
 //   3. put the domain in public/CNAME
 //   4. update site_url, display_url and logo.src in public/admin/config.yml
-const SITE = 'https://sven-vh.github.io';
+const SITE = 'https://svenvk28.github.io';
 const BASE = '/klaveren-website';
 
 export default defineConfig({

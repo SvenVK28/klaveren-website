@@ -15,7 +15,7 @@ const fs = require('fs');
 const path = require('path');
 
 const mode = process.argv[2];
-const adminUrl = process.argv[3] || 'https://sven-vh.github.io/klaveren-website/admin/';
+const adminUrl = process.argv[3] || 'https://svenvk28.github.io/klaveren-website/admin/';
 const token = process.env.CMS_TOKEN;
 const TITLE = 'E2E test: verwijder mij';
 if (!['create', 'delete'].includes(mode) || !token) {

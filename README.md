@@ -6,8 +6,8 @@ It's a static [Astro](https://astro.build) site with [Sveltia CMS](https://svelt
 `/admin/` for editing, published to GitHub Pages by GitHub Actions. The owner's design brief and
 mock-ups are in [docs/design/](docs/design/README.md).
 
-- **Site:** https://sven-vh.github.io/klaveren-website/
-- **Admin:** https://sven-vh.github.io/klaveren-website/admin/
+- **Site:** https://svenvk28.github.io/klaveren-website/
+- **Admin:** https://svenvk28.github.io/klaveren-website/admin/
 - **Plan and decisions:** [docs/PLAN.md](docs/PLAN.md)
 - **Guide for the editor (Dutch):** [docs/HANDLEIDING.md](docs/HANDLEIDING.md)
 - **Contact form (Web3Forms):** [docs/CONTACT-FORM.md](docs/CONTACT-FORM.md)
@@ -68,18 +68,22 @@ silhouette. `preview: true` in `settings.yaml` adds a "Voorbeeldversie" banner a
 **Logo:** never redraw it. If the owner sends a new file, put it in `docs/design/logo/` and run
 `node scripts/brand/prepare-logo.mjs` (transparent logo, favicon, share image).
 
-## Giving the editor access
+## Access
 
-1. He creates a free GitHub account.
-2. Add him as a collaborator: *Settings → Collaborators → Add people*, or
-   `gh api -X PUT repos/Sven-vh/klaveren-website/collaborators/<username> -f permission=push`.
-3. He signs in at `/admin/`:
-   - **Today: access token.** GitHub doesn't allow *fine-grained* tokens for collaborators on
-     another user's repo, so he needs a **classic** token with the `repo` scope:
-     https://github.com/settings/tokens/new?scopes=repo&description=Portfolio%20CMS.
-     The steps are in the [handleiding](docs/HANDLEIDING.md). For yourself, a fine-grained token
-     with *Contents: read and write* on this repo is enough.
-   - **Better: "Sign in with GitHub"** (see below). No tokens to manage.
+- **Owner:** `SvenVK28` (the friend). Only he can change repo settings: visibility, Pages,
+  collaborators.
+- **Collaborator:** `Sven-vh`, with write access (push, merge PRs, save in the CMS).
+- Another editor is added by the owner: *Settings → Collaborators → Add people*, or
+  `gh api -X PUT repos/SvenVK28/klaveren-website/collaborators/<username> -f permission=push`
+  while logged in as `SvenVK28`.
+
+Signing in at `/admin/`:
+
+- **Today: access token.** GitHub doesn't allow *fine-grained* tokens for collaborators on
+  another user's repo, so a collaborator (`Sven-vh`) needs a **classic** token with the `repo`
+  scope: https://github.com/settings/tokens/new?scopes=repo&description=Portfolio%20CMS.
+  The owner can use either kind; his steps are in the [handleiding](docs/HANDLEIDING.md).
+- **Better: "Sign in with GitHub"** (see below). No tokens to manage.
 
 ## Admin privacy (requirement)
 
@@ -97,10 +101,10 @@ GitHub's OAuth needs a small server to hold the client secret. Use the official
 1. Deploy the worker: use the *Deploy to Cloudflare* button in its README, or clone it and run
    `npx wrangler deploy`. Note the URL, e.g. `https://sveltia-cms-auth.<you>.workers.dev`.
 2. Create a GitHub OAuth app at https://github.com/settings/applications/new:
-   - Homepage URL: `https://sven-vh.github.io/klaveren-website/`
+   - Homepage URL: `https://svenvk28.github.io/klaveren-website/`
    - Authorization callback URL: `https://sveltia-cms-auth.<you>.workers.dev/callback`
 3. In the worker's settings, add `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` (as a secret) and
-   `ALLOWED_DOMAINS=sven-vh.github.io`.
+   `ALLOWED_DOMAINS=svenvk28.github.io`.
 4. In `public/admin/config.yml`, set `backend.base_url` to the worker URL and remove
    `auth_methods: [token]`.
 
@@ -117,7 +121,8 @@ Planned: `scvkmedia.nl`.
 
 ## Moving the repo to another account
 
-`Sven-vh` is a temporary home. To move:
+The repo moved from `Sven-vh` to `SvenVK28` on 2026-10-20 (made public, then transferred). The old `sven-vh.github.io` address doesn't redirect. To move
+it again:
 
 1. Decide whether the repo stays private:
    - **Private:** the new account needs **GitHub Pro**, which Pages from a private repo requires.
@@ -127,7 +132,7 @@ Planned: `scvkmedia.nl`.
 
    Either way, the admin page must stay private (CLAUDE.md §2a).
 2. *Settings → General → Transfer ownership*.
-3. Replace the account name (`grep -rn "sven-vh" --exclude-dir=node_modules -i .`). Only two files
+3. Replace the account name (`grep -rn "svenvk28" --exclude-dir=node_modules -i .`). Only two files
    matter for the site to work:
    - `astro.config.mjs`: `SITE` (and `BASE` if the repo is renamed)
    - `public/admin/config.yml`: `backend.repo`, `site_url`, `display_url`, `logo.src`
