@@ -1,15 +1,17 @@
 ---
-title: 'Voorbeeld: Waarom steeds meer studenten geen kamer vinden'
-date: 2026-09-22
+title: 'Voorbeeld: Waarom steeds meer sthugyu'
 type: artikel
 summary: Voorbeeld van een artikel. Wachtlijsten van twee jaar, kamers van 700 euro en hospiteeravonden met zestig kandidaten. Hoe de kamernood eruitziet voor eerstejaars.
 cover: cover.webp
 cover_alt: Opengevouwen krant in een streep zonlicht
 cover_credit: Tijdelijke foto (CC0)
 role: Onderzoek en tekst
+date: 2026-09-22
+show_date: true
 project_type: studieopdracht
 context: Opdracht onderzoeksjournalistiek, jaar 1
 featured: true
+draft: false
 ---
 
 *Dit is voorbeeldinhoud, zodat je kunt zien hoe een artikel eruitziet. Verwijder dit project in het beheerpaneel zodra je eigen werk erop staat.*
