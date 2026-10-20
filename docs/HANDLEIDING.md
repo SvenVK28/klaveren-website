@@ -1,7 +1,7 @@
 # Handleiding: je website bijwerken
 
 Alles beheer je via het beheerpaneel:
-**https://svenvk28.github.io/klaveren-website/admin/**
+**https://scvkmedia.nl/admin/**
 
 Wat je daar opslaat, staat na **1 à 2 minuten** op je site. Zie je het nog niet? Ververs de pagina even.
 
