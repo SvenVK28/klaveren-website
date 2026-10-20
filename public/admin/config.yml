@@ -541,6 +541,12 @@ singletons:
         widget: string
         required: false
         hint: De "Access Key" van web3forms.com. Daar vul je het e-mailadres in waar berichten naartoe moeten; je krijgt de sleutel per mail. Leeg = het formulier staat als "nog niet actief" op de site.
+      - name: analytics_id
+        label: Google Analytics-ID
+        widget: string
+        required: false
+        pattern: ['^G-[A-Z0-9]+$', 'Een ID van Google Analytics begint met G-, bijvoorbeeld G-AB12CD34EF.']
+        hint: De "metings-ID" uit Google Analytics (begint met G-). Bezoekers krijgen dan een cookiemelding, en Google Analytics laadt pas als ze op Accepteren klikken. Leeg = geen statistieken en geen cookiemelding.
       - name: preview
         label: Voorbeeldversie
         widget: boolean

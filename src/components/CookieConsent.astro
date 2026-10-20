@@ -1,0 +1,148 @@
+---
+import { url } from '../lib/url';
+
+interface Props {
+  /** Google Analytics measurement ID (G-…) from the CMS settings. */
+  measurementId: string;
+}
+
+const { measurementId } = Astro.props;
+
+// Google Analytics only with consent: nothing is requested from Google until the
+// visitor clicks "Accepteren". The choice is kept in localStorage, and the footer's
+// "Cookie-instellingen" button opens this banner again. Both buttons look the same
+// on purpose: refusing must be as easy as accepting (Autoriteit Persoonsgegevens).
+---
+
+<section class="consent" aria-label="Cookies" data-cookie-consent data-measurement-id={measurementId} hidden>
+  <p>
+    <strong>Cookies voor statistieken?</strong> Met Google Analytics zie ik hoe deze website wordt bezocht.
+    Google plaatst daarvoor cookies, maar alleen als je op Accepteren klikt.{' '}
+    <a href={url('privacy/#statistieken')}>Lees meer</a>
+  </p>
+  <div class="actions">
+    <button type="button" class="button button--primary" data-consent="denied">Weigeren</button>
+    <button type="button" class="button button--primary" data-consent="granted">Accepteren</button>
+  </div>
+</section>
+
+<script>
+  type Choice = 'granted' | 'denied';
+  const KEY = 'cookie-consent';
+
+  const banner = document.querySelector<HTMLElement>('[data-cookie-consent]');
+  if (banner) {
+    const id = banner.dataset.measurementId ?? '';
+
+    const stored = (): Choice | null => {
+      try {
+        const value = localStorage.getItem(KEY);
+        return value === 'granted' || value === 'denied' ? value : null;
+      } catch {
+        return null; // Storage blocked: ask again on the next page.
+      }
+    };
+
+    // Google's own snippet, run only after consent.
+    const loadAnalytics = () => {
+      if (document.querySelector('script[data-gtag]')) return;
+      const w = window as unknown as { dataLayer: unknown[]; gtag: (...args: unknown[]) => void };
+      w.dataLayer = w.dataLayer || [];
+      w.gtag = function () {
+        // gtag needs the arguments object itself, not an array.
+        w.dataLayer.push(arguments);
+      };
+      w.gtag('js', new Date());
+      w.gtag('config', id);
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`;
+      script.dataset.gtag = '';
+      document.head.append(script);
+    };
+
+    // Google Analytics sets _ga and _ga_<id> on the site's domain or its parent.
+    const removeAnalyticsCookies = () => {
+      const host = location.hostname;
+      const domains = ['', host, `.${host}`, `.${host.split('.').slice(-2).join('.')}`];
+      for (const cookie of document.cookie.split(';')) {
+        const name = cookie.split('=')[0].trim();
+        if (!name.startsWith('_ga')) continue;
+        for (const domain of domains) {
+          document.cookie = `${name}=; Max-Age=0; path=/${domain ? `; domain=${domain}` : ''}`;
+        }
+      }
+    };
+
+    const choose = (choice: Choice) => {
+      const wasLoaded = Boolean(document.querySelector('script[data-gtag]'));
+      try {
+        localStorage.setItem(KEY, choice);
+      } catch {
+        // Not remembered, but this page still follows the choice.
+      }
+      banner.hidden = true;
+      if (choice === 'granted') {
+        loadAnalytics();
+      } else if (wasLoaded) {
+        // Consent withdrawn: delete Google's cookies and reload without its script.
+        removeAnalyticsCookies();
+        location.reload();
+      }
+    };
+
+    banner.addEventListener('click', (event) => {
+      const button = (event.target as Element).closest<HTMLButtonElement>('[data-consent]');
+      if (button) choose(button.dataset.consent as Choice);
+    });
+
+    for (const button of document.querySelectorAll('[data-cookie-settings]')) {
+      button.addEventListener('click', () => {
+        banner.hidden = false;
+        banner.querySelector('button')?.focus();
+      });
+    }
+
+    const choice = stored();
+    if (choice === 'granted') loadAnalytics();
+    else if (!choice) banner.hidden = false;
+  }
+</script>
+
+<style>
+  .consent {
+    position: fixed;
+    inset: auto var(--space-4) var(--space-4);
+    z-index: 40;
+    max-width: 34rem;
+    margin-inline: auto;
+    padding: var(--space-6);
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-medium);
+    box-shadow: 0 8px 32px rgb(16 24 32 / 0.16);
+    font-size: var(--text-sm);
+  }
+
+  .consent[hidden] {
+    display: none;
+  }
+
+  p {
+    margin: 0 0 var(--space-4);
+  }
+
+  strong {
+    color: var(--color-heading);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .actions .button {
+    flex: 1 1 8rem;
+  }
+</style>

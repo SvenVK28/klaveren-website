@@ -82,6 +82,7 @@ const settings = defineCollection({
       }),
     ),
     form_key: optionalText,
+    analytics_id: optionalText,
     preview: z.boolean().default(false),
     project_cta: z.preprocess(
       (value) => empty(value) ?? {},
