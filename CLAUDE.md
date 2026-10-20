@@ -73,6 +73,8 @@ Done and verified earlier:
   commit (`Nieuw: productie "…"`, photo stored as a 2400px WebP next to `index.md`) → build →
   page live → delete through the CMS (entry and its media removed). The user also edited an
   entry through the admin themselves, and that deployed fine.
+- Contact form active since 2026-10-20: Web3Forms access key in `settings.yaml` (`form_key`,
+  Site-instellingen in the CMS). Submissions go to the address the key was made for.
 Not done yet / waiting on someone:
 - [ ] The owner reviews the preview, writes his own copy, supplies real photos, portrait and projects.
 - [ ] Domain `scvkmedia.nl` + email (`info@scvkmedia.nl`?) → then a Web3Forms key, and
