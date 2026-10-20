@@ -8,7 +8,7 @@
 const { chromium } = require('playwright');
 const fs = require('fs');
 
-const adminUrl = process.argv[2] || 'http://localhost:4321/klaveren-website/admin/';
+const adminUrl = process.argv[2] || 'http://localhost:4321/admin/';
 const yaml = fs
   .readFileSync('public/admin/config.yml', 'utf8')
   .replace(/backend:\n  name: github/, 'backend:\n  name: test-repo');

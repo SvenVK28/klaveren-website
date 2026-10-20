@@ -22,10 +22,10 @@ backend:
     deleteMedia: 'Verwijderd "{{path}}"'
 
 app_title: Beheer SCVK Media
-site_url: https://svenvk28.github.io/klaveren-website/
-display_url: https://svenvk28.github.io/klaveren-website/
+site_url: https://scvkmedia.nl/
+display_url: https://scvkmedia.nl/
 logo:
-  src: /klaveren-website/favicon.png
+  src: /favicon.png
 
 # Downloads (pdf's, cv). Photos are stored next to the item they belong to; see below.
 media_folder: /public/files
