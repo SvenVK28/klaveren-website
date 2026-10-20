@@ -9,14 +9,15 @@ Wat je daar opslaat, staat na **1 à 2 minuten** op je site. Zie je het nog niet
 
 ## 1. Eenmalig: toegang regelen
 
-1. Maak een gratis account aan op [github.com](https://github.com/signup) en stuur je gebruikersnaam door.
-2. Je krijgt een uitnodiging per mail ("invited you to collaborate"). Klik op **Accept invitation**.
-3. Maak een *toegangstoken*. Dat is een soort wachtwoord speciaal voor het beheerpaneel:
+De website staat op jouw eigen GitHub-account (**SvenVK28**), dus je hebt al toegang.
+
+1. Log in op [github.com](https://github.com/login) met je account **SvenVK28**.
+2. Maak een *toegangstoken*. Dat is een soort wachtwoord speciaal voor het beheerpaneel:
    - Ga naar [deze link](https://github.com/settings/tokens/new?scopes=repo&description=SCVK%20Media%20CMS).
      Het vinkje **repo** staat dan al aan.
    - Kies bij *Expiration* voor **No expiration** (of een jaar, dan doe je dit volgend jaar opnieuw).
    - Klik onderaan op **Generate token** en kopieer de code die begint met `ghp_`.
-4. Open het beheerpaneel, kies **Inloggen met een toegangstoken** en plak de code.
+3. Open het beheerpaneel, kies **Inloggen met een toegangstoken** en plak de code.
 
 Je blijft daarna ingelogd op dat apparaat. Bewaar de code niet ergens openbaar: met de code kan
 iemand je site aanpassen.

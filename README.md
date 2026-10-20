@@ -68,18 +68,22 @@ silhouette. `preview: true` in `settings.yaml` adds a "Voorbeeldversie" banner a
 **Logo:** never redraw it. If the owner sends a new file, put it in `docs/design/logo/` and run
 `node scripts/brand/prepare-logo.mjs` (transparent logo, favicon, share image).
 
-## Giving the editor access
+## Access
 
-1. He creates a free GitHub account.
-2. Add him as a collaborator: *Settings → Collaborators → Add people*, or
-   `gh api -X PUT repos/SvenVK28/klaveren-website/collaborators/<username> -f permission=push`.
-3. He signs in at `/admin/`:
-   - **Today: access token.** GitHub doesn't allow *fine-grained* tokens for collaborators on
-     another user's repo, so he needs a **classic** token with the `repo` scope:
-     https://github.com/settings/tokens/new?scopes=repo&description=Portfolio%20CMS.
-     The steps are in the [handleiding](docs/HANDLEIDING.md). For yourself, a fine-grained token
-     with *Contents: read and write* on this repo is enough.
-   - **Better: "Sign in with GitHub"** (see below). No tokens to manage.
+- **Owner:** `SvenVK28` (the friend). Only he can change repo settings: visibility, Pages,
+  collaborators.
+- **Collaborator:** `Sven-vh`, with write access (push, merge PRs, save in the CMS).
+- Another editor is added by the owner: *Settings → Collaborators → Add people*, or
+  `gh api -X PUT repos/SvenVK28/klaveren-website/collaborators/<username> -f permission=push`
+  while logged in as `SvenVK28`.
+
+Signing in at `/admin/`:
+
+- **Today: access token.** GitHub doesn't allow *fine-grained* tokens for collaborators on
+  another user's repo, so a collaborator (`Sven-vh`) needs a **classic** token with the `repo`
+  scope: https://github.com/settings/tokens/new?scopes=repo&description=Portfolio%20CMS.
+  The owner can use either kind; his steps are in the [handleiding](docs/HANDLEIDING.md).
+- **Better: "Sign in with GitHub"** (see below). No tokens to manage.
 
 ## Admin privacy (requirement)
 
@@ -117,7 +121,8 @@ Planned: `scvkmedia.nl`.
 
 ## Moving the repo to another account
 
-The repo moved from `Sven-vh` to `SvenVK28` on 2026-10-20 (made public, then transferred). To move it again:
+The repo moved from `Sven-vh` to `SvenVK28` on 2026-10-20 (made public, then transferred). The old `sven-vh.github.io` address doesn't redirect. To move
+it again:
 
 1. Decide whether the repo stays private:
    - **Private:** the new account needs **GitHub Pro**, which Pages from a private repo requires.
@@ -127,7 +132,7 @@ The repo moved from `Sven-vh` to `SvenVK28` on 2026-10-20 (made public, then tra
 
    Either way, the admin page must stay private (CLAUDE.md §2a).
 2. *Settings → General → Transfer ownership*.
-3. Replace the account name (`grep -rn "sven-vh" --exclude-dir=node_modules -i .`). Only two files
+3. Replace the account name (`grep -rn "svenvk28" --exclude-dir=node_modules -i .`). Only two files
    matter for the site to work:
    - `astro.config.mjs`: `SITE` (and `BASE` if the repo is renamed)
    - `public/admin/config.yml`: `backend.repo`, `site_url`, `display_url`, `logo.src`
