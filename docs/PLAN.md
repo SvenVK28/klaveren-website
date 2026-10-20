@@ -34,28 +34,52 @@ hacked through a login form or plugins, and costs nothing to host.
 
 ## Content model
 
-**Werk** (`src/content/work/<slug>/index.md`): one folder per production, with its photos next to it.
+**Mijn werk** (`src/content/work/<slug>/index.md`): one folder per project, with its photos next to it.
+Fields follow the brief (`docs/design/04-Portfolio-Content.md`).
 
 | Field | Notes |
 | --- | --- |
-| `title`, `date`, `type` | type = `artikel` / `video` / `audio` / `fotografie` / `overig` |
+| `title`, `type` | type = `artikel` / `interview` / `nieuwsvideo` / `videoreportage` / `videomontage` / `overig` |
 | `summary` | Shown on cards and as the meta description |
-| `cover`, `cover_alt`, `cover_credit` | Optimised by Astro (responsive WebP) |
-| `media_url` | YouTube/Vimeo/Spotify/SoundCloud link, turned into an embed automatically |
-| `publication`, `external_url` | "Gepubliceerd bij …" plus a link to the original |
-| `context` | E.g. "Schoolopdracht jaar 1, Onderzoeksjournalistiek" |
-| `credits` | Collaborators (camera, editing…) |
-| `tags`, `featured`, `draft` | Featured items go on the homepage. Drafts are never built. |
-| `gallery[]`, `attachments[]` | Photo series. PDFs (e.g. a printed article). |
+| `cover`, `cover_alt`, `cover_credit` | Required in the CMS (every item has at least one photo); optimised by Astro |
+| `role` | "Mijn rol": what he did himself |
+| `date`, `show_date` | Date orders the list (newest first); `show_date: false` hides it when it isn't known |
+| `project_type` | Optional: studieopdracht / eigen project / opdracht voor een klant |
+| `media_url` | YouTube/Vimeo/Spotify/SoundCloud link → click-to-play player |
+| `publication`, `external_url` | "Gepubliceerd bij …" plus a link to the original (only if true) |
+| `context`, `credits` | Assignment context; collaborators |
+| `featured`, `draft` | Featured items come first on the homepage. Drafts are never built. |
+| `gallery[]`, `attachments[]` | Extra photos with captions. PDFs. |
 | body | Rich text with inline images |
 
-**Singletons** (`src/content/site/*.yaml`): `settings` (name, tagline, e-mail, socials, CV),
-`home` (intro text), `about` (photo + bio).
+**Pages** (`src/content/site/<page>.md`, frontmatter only): `home`, `portfolio`, `about`,
+`freelance` (with the `services` list), `contact`, `privacy` (+ body). **Settings**
+(`settings.yaml`): site name, owner, description, e-mail, socials, Web3Forms key, preview switch,
+the CTA under projects.
 
 ## Pages
 
-`/` home · `/werk/` all work · `/werk/soort/<type>/` filtered · `/werk/<slug>/` detail ·
-`/over/` about + contact · `/rss.xml` · `/sitemap-index.xml` · `/admin/` CMS · 404.
+`/` home · `/mijn-werk/` all work · `/mijn-werk/soort/<categorie>/` filtered ·
+`/mijn-werk/<slug>/` project · `/over-mij/` · `/freelance/` · `/contact/` (+ `/contact/bedankt/`) ·
+`/privacy/` · `/rss.xml` · `/sitemap-index.xml` · `/admin/` CMS · 404. Old `/werk/` and `/over/` redirect.
+
+## SCVK Media redesign (2026-10-20)
+
+The owner sent his brief (`docs/design/`). The plan for this round:
+
+1. Rebrand: his navy logo (his own doc calls it the standard), the brief's colour/type/spacing
+   tokens, Inter, layouts after the five mock-ups.
+2. All pages above, all text and photos editable in the CMS, services as an editable list.
+3. Contact form via Web3Forms; visibly "nog niet actief" until a key is set, never a fake success.
+4. Privacy: no cookies or analytics of our own; video players load only after a click;
+   a draft privacy statement that names Web3Forms and GitHub Pages.
+5. Placeholders that can't be mistaken for real work: CC0 stock photos as atmosphere, a silhouette
+   instead of a portrait, `Voorbeeld:` projects, a "Voorbeeldversie" banner + `noindex`.
+6. Draft copy from the brief's own suggestions (not the AI mock-up text); he rewrites it.
+
+Still needed from the owner: his own copy, photos, portrait and projects (with rights), the
+domain, an e-mail address (→ Web3Forms key), LinkedIn and Instagram URLs, OK on the favicon,
+and which services he really wants to offer.
 
 ## Logging in to the CMS
 
@@ -74,6 +98,7 @@ Every editor needs a (free) GitHub account with write access to the repo.
 | --- | --- |
 | GitHub Pages + Actions | €0 (a private repo needs Pro, which is free for students; a public repo works on a free account) |
 | Sveltia CMS, Cloudflare Worker, Cloudflare Access (≤ 50 users) | €0 |
+| Contact form (Web3Forms, up to 250 messages/month) | €0 |
 | Custom domain, e.g. `.nl` (optional) | Often ~€1–5 the first year, then ~€10–15/year |
 
 ## Roadmap
@@ -84,5 +109,7 @@ Every editor needs a (free) GitHub account with write access to the repo.
 4. ✅ Private repo, Actions deploy, Pages live at `https://sven-vh.github.io/klaveren-website/`
 5. ✅ End-to-end CMS test (create, publish, verify the live site, delete), README and a Dutch guide for the editor
 6. **Required:** make the admin page unreachable for others (Cloudflare Access in front of `/admin`).
-7. **Later:** OAuth login, his real content, the real design (based on sites he likes),
-   custom domain (`public/CNAME`, `site` in the config, drop `base`), and possibly moving the repo to his account
+7. ✅ SCVK Media design after his brief (2026-10-20)
+8. **Next:** his real content and copy, domain `scvkmedia.nl` (`public/CNAME`, `site` in the config,
+   drop `base`), e-mail + contact form key, launch checklist (`docs/design/07-…`).
+9. **Later:** OAuth login, and possibly moving the repo to his account

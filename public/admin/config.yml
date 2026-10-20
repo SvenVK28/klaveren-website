@@ -21,11 +21,11 @@ backend:
     uploadMedia: 'Upload "{{path}}"'
     deleteMedia: 'Verwijderd "{{path}}"'
 
-app_title: Beheer portfolio
+app_title: Beheer SCVK Media
 site_url: https://sven-vh.github.io/klaveren-website/
 display_url: https://sven-vh.github.io/klaveren-website/
 logo:
-  src: /klaveren-website/favicon.svg
+  src: /klaveren-website/favicon.png
 
 # Downloads (pdf's, cv). Photos are stored next to the item they belong to; see below.
 media_folder: /public/files
@@ -65,76 +65,70 @@ editor:
 
 collections:
   - name: work
-    label: Werk
-    label_singular: productie
-    description: Artikelen, video's, audio en fotografie. Elk item krijgt een eigen pagina op de site.
+    label: Mijn werk
+    label_singular: project
+    description: Artikelen, interviews en video's. Elk project krijgt een eigen pagina. Op de site staat het nieuwste project bovenaan (op datum).
     icon: newspaper
     folder: src/content/work
     # One folder per item, with its photos stored next to it.
     path: '{{slug}}/index'
     media_folder: ''
     public_folder: ''
-    slug:
-      template: '{{title}}'
-      editable: [create]
-      hint: Het webadres van dit stuk. Na het opslaan ligt het vast, zodat gedeelde links blijven werken.
-    thumbnail: cover
-    preview_path: 'werk/{{slug}}/'
+    # No `reorder`: Sveltia gives new entries the highest order (bottom of the list), so the
+    # editor's newest work would land last. The site orders by date instead.
     sortable_fields:
       fields: [date, title, type]
       default:
         field: date
         direction: descending
+    slug:
+      template: '{{title}}'
+      editable: [create]
+      hint: Het webadres van dit project. Na het opslaan ligt het vast, zodat gedeelde links blijven werken.
+    thumbnail: cover
+    preview_path: 'mijn-werk/{{slug}}/'
     view_filters:
       filters:
         - { name: artikel, label: Artikelen, field: type, pattern: artikel }
-        - { name: video, label: Video, field: type, pattern: video }
-        - { name: audio, label: Audio, field: type, pattern: audio }
-        - { name: fotografie, label: Fotografie, field: type, pattern: fotografie }
-        - { name: concepten, label: Concepten, field: draft, pattern: true }
+        - { name: interview, label: Interviews, field: type, pattern: interview }
+        - { name: nieuwsvideo, label: Nieuwsvideo's, field: type, pattern: nieuwsvideo }
+        - { name: videoreportage, label: Videoreportages, field: type, pattern: videoreportage }
+        - { name: videomontage, label: Videomontages, field: type, pattern: videomontage }
+        - { name: overig, label: Overig, field: type, pattern: overig }
         - { name: uitgelicht, label: Uitgelicht, field: featured, pattern: true }
-    view_groups:
-      groups:
-        - { name: jaar, label: Jaar, field: date, pattern: '\d{4}' }
-        - { name: soort, label: Soort, field: type }
+        - { name: concepten, label: Concepten, field: draft, pattern: true }
     fields:
       - name: title
         label: Titel
         widget: string
-        hint: De kop van je stuk.
-
-      - name: date
-        label: Datum
-        widget: datetime
-        type: date
-        default: '{{now}}'
-        hint: Datum van publicatie of oplevering. Bepaalt de volgorde op de site.
+        hint: De kop van je project.
 
       - name: type
-        label: Soort
+        label: Categorie
         widget: select
         default: artikel
         options:
           - { label: Artikel, value: artikel }
-          - { label: Video, value: video }
-          - { label: Audio / podcast, value: audio }
-          - { label: Fotografie, value: fotografie }
+          - { label: Interview, value: interview }
+          - { label: Nieuwsvideo, value: nieuwsvideo }
+          - { label: Videoreportage, value: videoreportage }
+          - { label: Videomontage, value: videomontage }
           - { label: Overig, value: overig }
+        hint: Hiermee kunnen bezoekers op "Mijn werk" filteren.
 
       - name: summary
-        label: Korte samenvatting
+        label: Korte omschrijving
         widget: text
         maxlength: 300
-        hint: Eén of twee zinnen. Staat op de overzichtspagina en verschijnt als je de link deelt (WhatsApp, LinkedIn…).
+        hint: Eén of twee zinnen. Staat op de kaartjes en verschijnt als je de link deelt (WhatsApp, LinkedIn…).
 
       - name: cover
-        label: Omslagfoto
+        label: Foto
         widget: image
-        required: false
-        hint: Een liggende foto werkt het best. Heb je een YouTube-video maar geen foto? Dan wordt de thumbnail van de video gebruikt.
+        hint: Elk project heeft minstens één foto. Een liggende foto werkt het best. Bij een video is dit ook het beeld vóór het afspelen.
 
       - name: cover_alt
-        label: Beschrijving van de omslagfoto
+        label: Beschrijving van de foto
         widget: string
         required: false
         hint: Wat is er op de foto te zien? Voor slechtzienden en zoekmachines.
@@ -145,28 +139,58 @@ collections:
         required: false
         hint: Wie maakte de foto? Wordt getoond als "Foto:" gevolgd door de naam.
 
+      - name: role
+        label: Mijn rol
+        widget: string
+        required: false
+        hint: Wat deed jij? Bijvoorbeeld "Interviewer en schrijver" of "Camera en montage".
+
+      - name: date
+        label: Datum
+        widget: datetime
+        type: date
+        default: '{{now}}'
+        hint: Datum van publicatie of oplevering. Bepaalt de volgorde op de site (nieuwste eerst).
+
+      - name: show_date
+        label: Datum tonen
+        widget: boolean
+        required: false
+        default: true
+        hint: Uit = de datum staat niet op de site, bijvoorbeeld als je die niet precies weet.
+
+      - name: project_type
+        label: Soort project
+        widget: select
+        required: false
+        options:
+          - { label: Studieopdracht, value: studieopdracht }
+          - { label: Eigen project, value: eigen-project }
+          - { label: Opdracht voor een klant, value: opdracht }
+        hint: Niet verplicht. Handig om te laten zien of iets een schoolopdracht, eigen werk of betaalde opdracht was.
+
       - name: media_url
         label: Video- of audiolink
         widget: string
         type: url
         required: false
-        hint: Link van YouTube, Vimeo, Spotify of SoundCloud. De speler verschijnt automatisch op de pagina. Upload video's zelf niet hier, maar op YouTube of Vimeo (eventueel als "niet vermeld").
+        hint: Link van YouTube, Vimeo, Spotify of SoundCloud. De speler verschijnt dan bovenaan de pagina. Upload video's niet hier, maar op YouTube of Vimeo (eventueel als "niet vermeld").
 
       - name: body
         label: Tekst
         widget: richtext
         required: false
         editor_components: [image]
-        hint: Het artikel zelf, of een toelichting bij je video, audio of foto's. Foto's kun je tussen de tekst zetten.
+        hint: Het artikel zelf, of een toelichting bij je video. Foto's kun je tussen de tekst zetten.
 
       - name: gallery
-        label: Fotoserie
+        label: Extra foto's
         label_singular: foto
         widget: list
         required: false
         collapsed: auto
         summary: '{{fields.caption}}'
-        hint: Voor fotoreportages. Foto's verschijnen onder de tekst, elk met een eigen bijschrift.
+        hint: Voor een fotoserie. De foto's verschijnen onder de tekst, elk met een eigen bijschrift.
         fields:
           - { name: image, label: Foto, widget: image }
           - { name: caption, label: Bijschrift, widget: string, required: false }
@@ -175,20 +199,20 @@ collections:
         label: Gepubliceerd bij
         widget: string
         required: false
-        hint: Medium of platform, bijvoorbeeld de schoolkrant of een lokale nieuwssite.
+        hint: Alleen invullen als het echt ergens gepubliceerd is, bijvoorbeeld de naam van een krant of site.
 
       - name: external_url
         label: Link naar de originele publicatie
         widget: string
         type: url
         required: false
-        hint: Onder je stuk verschijnt dan een knop naar het origineel.
+        hint: Onder je project verschijnt dan een knop naar het origineel.
 
       - name: context
         label: Context of opdracht
         widget: string
         required: false
-        hint: Bijvoorbeeld "Schoolopdracht onderzoeksjournalistiek, jaar 1".
+        hint: Bijvoorbeeld "Opdracht voor het vak videojournalistiek, jaar 1".
 
       - name: credits
         label: Gemaakt met
@@ -212,18 +236,12 @@ collections:
             required: false
             hint: Bijvoorbeeld "Lees de krantenpagina (pdf)".
 
-      - name: tags
-        label: Onderwerpen
-        widget: list
-        required: false
-        hint: Trefwoorden, bijvoorbeeld "wonen" of "onderwijs".
-
       - name: featured
         label: Uitlichten op de homepage
         widget: boolean
         required: false
         default: false
-        hint: Maximaal twee stukken worden groot bovenaan de homepage getoond (de nieuwste eerst).
+        hint: Aan = staat altijd bij "Uitgelicht werk" op de homepage. De overige plekken vult de site met je nieuwste werk.
 
       - name: draft
         label: Concept
@@ -236,17 +254,73 @@ singletons:
   - name: home
     label: Homepage
     icon: home
-    file: src/content/site/home.yaml
+    file: src/content/site/home.md
+    media_folder: images
+    public_folder: images
     fields:
+      - { name: eyebrow, label: Klein kopje boven de titel, widget: string, required: false }
       - name: headline
-        label: Kop
+        label: Grote titel
         widget: string
-        hint: De grote zin bovenaan de homepage.
+        hint: De zin waarmee je site opent. Kort en duidelijk.
       - name: intro
         label: Introductie
         widget: text
         required: false
-        hint: Twee of drie zinnen onder de kop.
+        hint: Twee zinnen onder de titel. Wat doe je, en wat kan een bezoeker hier?
+      - { name: primary_button, label: Tekst op de knop naar Mijn werk, widget: string, default: Bekijk mijn werk }
+      - { name: secondary_button, label: Tekst op de knop naar Freelance, widget: string, default: Bespreek een opdracht }
+      - name: hero_image
+        label: Grote foto
+        widget: image
+        required: false
+        hint: Staat rechts naast de titel. Het liefst een echte foto van jou aan het werk of een still uit je eigen video.
+      - { name: hero_image_alt, label: Beschrijving van de grote foto, widget: string, required: false, hint: 'Laat leeg als de foto alleen sfeer is.' }
+      - { name: work_eyebrow, label: 'Werk: klein kopje', widget: string, required: false }
+      - { name: work_title, label: 'Werk: titel', widget: string, default: Een greep uit mijn werk }
+      - name: work_count
+        label: 'Werk: aantal projecten'
+        widget: number
+        value_type: int
+        min: 3
+        max: 12
+        step: 3
+        default: 6
+        hint: Hoeveel projecten de homepage toont (3, 6, 9 of 12). Uitgelichte projecten komen eerst.
+      - { name: about_eyebrow, label: 'Over mij: klein kopje', widget: string, required: false }
+      - { name: about_title, label: 'Over mij: titel', widget: string, required: false }
+      - { name: about_text, label: 'Over mij: tekst', widget: text, required: false, hint: Een korte introductie. Het hele verhaal staat op de pagina Over mij. }
+      - { name: about_photo, label: 'Over mij: foto', widget: image, required: false }
+      - { name: about_photo_alt, label: 'Over mij: beschrijving van de foto', widget: string, required: false }
+      - { name: services_eyebrow, label: 'Diensten: klein kopje', widget: string, required: false }
+      - name: services_title
+        label: 'Diensten: titel'
+        widget: string
+        default: Wat ik voor je kan doen
+        hint: De homepage toont de eerste vier diensten van de pagina Freelance.
+      - &cta
+        name: cta
+        label: Blauwe balk onderaan
+        widget: object
+        required: false
+        collapsed: true
+        summary: '{{fields.title}}'
+        fields:
+          - { name: title, label: Titel, widget: string, required: false }
+          - { name: text, label: Tekst, widget: string, required: false }
+          - { name: button, label: Tekst op de knop, widget: string, required: false, default: Neem contact op }
+          - { name: image, label: Foto op de achtergrond, widget: image, required: false, hint: Niet verplicht. Wordt donkerblauw gekleurd zodat de tekst leesbaar blijft. }
+      - { name: description, label: Omschrijving voor zoekmachines, widget: text, required: false, maxlength: 200, hint: Niet verplicht. Anders wordt de omschrijving uit de site-instellingen gebruikt. }
+
+  - name: portfolio
+    label: Pagina Mijn werk
+    icon: grid_view
+    file: src/content/site/portfolio.md
+    fields:
+      - { name: eyebrow, label: Klein kopje boven de titel, widget: string, required: false }
+      - { name: title, label: Titel, widget: string, default: Mijn werk }
+      - { name: intro, label: Introductie, widget: text, required: false }
+      - { name: description, label: Omschrijving voor zoekmachines, widget: text, required: false, maxlength: 200 }
 
   - name: about
     label: Over mij
@@ -255,19 +329,173 @@ singletons:
     media_folder: images
     public_folder: images
     fields:
-      - { name: title, label: Paginatitel, widget: string, default: Over mij }
-      - name: photo
-        label: Profielfoto
-        widget: image
-        required: false
-        hint: Staande foto (portret) werkt het best.
-      - { name: photo_alt, label: Beschrijving van de foto, widget: string, required: false }
+      - { name: eyebrow, label: Klein kopje boven de titel, widget: string, required: false, default: Over mij }
+      - { name: title, label: Titel, widget: string, default: Over mij, hint: Bijvoorbeeld je naam. }
       - name: intro
         label: Introductie
         widget: text
         required: false
-        hint: Twee of drie zinnen, in een grotere letter bovenaan de pagina.
-      - { name: body, label: Tekst, widget: richtext, required: false, editor_components: [image] }
+        hint: Drie of vier zinnen over wie je bent. Kort houden; meer kan in de blokken hieronder.
+      - name: photo
+        label: Portretfoto
+        widget: image
+        required: false
+        hint: Staat rechts naast de introductie. Kies een liggende foto, of een foto waar links genoeg ruimte is.
+      - { name: photo_alt, label: Beschrijving van de foto, widget: string, required: false }
+      - name: highlights
+        label: Blokken onder de introductie
+        label_singular: blok
+        widget: list
+        required: false
+        collapsed: auto
+        summary: '{{fields.title}}'
+        hint: Bijvoorbeeld Opleiding, Ervaring, Interesses en Vaardigheden. Vier blokken staan het mooist.
+        fields:
+          - { name: title, label: Titel, widget: string }
+          - { name: text, label: Tekst, widget: text, required: false }
+          - &icon
+            name: icon
+            label: Icoon
+            widget: select
+            required: false
+            options:
+              - { label: Document (artikel), value: document }
+              - { label: Microfoon (interview), value: microphone }
+              - { label: Afspeelknop (video), value: play }
+              - { label: Montage (tijdlijn), value: timeline }
+              - { label: Geluidsgolf (voice-over), value: waveform }
+              - { label: Videocamera, value: videocamera }
+              - { label: Fotocamera, value: camera }
+              - { label: Pen, value: pen }
+              - { label: Krant, value: newspaper }
+              - { label: Afstudeerhoed (opleiding), value: graduation }
+              - { label: Koffer (ervaring), value: briefcase }
+              - { label: Kompas (interesses), value: compass }
+      - { name: body, label: Extra tekst, widget: richtext, required: false, editor_components: [image], hint: 'Niet verplicht. Verschijnt onder de blokken, voor een langer verhaal.' }
+      - { name: work_eyebrow, label: "Wat ik heb gedaan: klein kopje", widget: string, required: false }
+      - { name: work_title, label: "Wat ik heb gedaan: titel", widget: string, required: false }
+      - { name: work_text, label: "Wat ik heb gedaan: tekst", widget: text, required: false }
+      - name: work_items
+        label: "Wat ik heb gedaan: tegels"
+        label_singular: tegel
+        widget: list
+        required: false
+        collapsed: auto
+        summary: '{{fields.title}}'
+        hint: Drie tegels met een foto. De eerste wordt groot getoond.
+        fields:
+          - { name: title, label: Titel, widget: string }
+          - { name: text, label: Tekst, widget: string, required: false }
+          - { name: image, label: Foto, widget: image, required: false }
+          - { name: image_alt, label: Beschrijving van de foto, widget: string, required: false }
+      - { name: next_eyebrow, label: "Waar ik naartoe wil: klein kopje", widget: string, required: false }
+      - { name: next_title, label: "Waar ik naartoe wil: titel", widget: string, required: false }
+      - { name: next_text, label: "Waar ik naartoe wil: tekst", widget: text, required: false }
+      - { name: next_image, label: "Waar ik naartoe wil: foto", widget: image, required: false }
+      - { name: next_image_alt, label: "Waar ik naartoe wil: beschrijving van de foto", widget: string, required: false }
+      - name: cv
+        label: Cv (pdf)
+        widget: file
+        required: false
+        accept: application/pdf
+        media_folder: /public/files
+        public_folder: /files
+        hint: Niet verplicht. Verschijnt als downloadknop bovenaan de pagina.
+      - *cta
+      - { name: description, label: Omschrijving voor zoekmachines, widget: text, required: false, maxlength: 200 }
+
+  - name: freelance
+    label: Freelance
+    icon: work
+    file: src/content/site/freelance.md
+    media_folder: images
+    public_folder: images
+    fields:
+      - { name: eyebrow, label: Klein kopje boven de titel, widget: string, required: false, default: Freelance }
+      - { name: title, label: Titel, widget: string }
+      - { name: intro, label: Introductie, widget: text, required: false }
+      - { name: hero_image, label: Grote foto, widget: image, required: false }
+      - { name: hero_image_alt, label: Beschrijving van de grote foto, widget: string, required: false }
+      - { name: services_eyebrow, label: 'Diensten: klein kopje', widget: string, required: false }
+      - { name: services_title, label: 'Diensten: titel', widget: string, default: Wat ik voor je kan doen }
+      - name: services
+        label: Diensten
+        label_singular: dienst
+        widget: list
+        required: false
+        collapsed: auto
+        summary: '{{fields.title}}'
+        hint: Sleep om de volgorde te veranderen. De eerste vier staan ook op de homepage. Bied alleen aan wat je echt kunt en wilt doen.
+        fields:
+          - { name: title, label: Naam van de dienst, widget: string }
+          - { name: summary, label: Korte omschrijving (homepage), widget: string, required: false, hint: Eén korte zin. }
+          - { name: description, label: Uitleg (pagina Freelance), widget: text, required: false, hint: Wat houdt het in en wat spreken we vooraf af? Twee of drie zinnen. }
+          - { name: image, label: Foto, widget: image, required: false }
+          - { name: image_alt, label: Beschrijving van de foto, widget: string, required: false }
+          - *icon
+          - { name: price, label: Prijs, widget: string, default: Prijs in overleg, hint: 'Bijvoorbeeld "Prijs in overleg".' }
+      - { name: price_note, label: Toelichting op de prijzen, widget: text, required: false }
+      - { name: agreements_title, label: 'Afspraken: titel', widget: string, required: false }
+      - name: agreements
+        label: 'Afspraken: punten'
+        label_singular: punt
+        widget: list
+        required: false
+        hint: Waar maak je vooraf afspraken over? Eén punt per regel.
+      - *cta
+      - { name: description, label: Omschrijving voor zoekmachines, widget: text, required: false, maxlength: 200 }
+
+  - name: contact
+    label: Contact
+    icon: mail
+    file: src/content/site/contact.md
+    media_folder: images
+    public_folder: images
+    fields:
+      - { name: eyebrow, label: Klein kopje boven de titel, widget: string, required: false, default: Contact }
+      - { name: title, label: Titel, widget: string }
+      - { name: intro, label: Introductie, widget: text, required: false }
+      - { name: hero_image, label: Grote foto, widget: image, required: false }
+      - { name: hero_image_alt, label: Beschrijving van de grote foto, widget: string, required: false }
+      - { name: form_eyebrow, label: 'Formulier: klein kopje', widget: string, required: false }
+      - { name: form_title, label: 'Formulier: titel', widget: string, default: Stuur een bericht }
+      - name: success_message
+        label: 'Formulier: bedankt-tekst'
+        widget: text
+        default: Bedankt voor je bericht! Ik reageer zo snel mogelijk.
+        hint: Verschijnt nadat een bericht echt is verstuurd. Beloof liever geen vaste reactietijd.
+      - { name: direct_eyebrow, label: 'Contactgegevens: klein kopje', widget: string, required: false }
+      - { name: direct_title, label: 'Contactgegevens: titel', widget: string, default: Direct contact }
+      - { name: socials_title, label: 'Sociale media: titel', widget: string, required: false, hint: Je links zelf vul je in bij Site-instellingen. }
+      - { name: socials_text, label: 'Sociale media: tekst', widget: string, required: false }
+      - { name: privacy_text, label: 'Privacy: korte tekst', widget: string, required: false }
+      - name: cta
+        label: Blauwe balk onderaan
+        widget: object
+        required: false
+        collapsed: true
+        summary: '{{fields.title}}'
+        hint: De knop gaat hier naar Mijn werk. Laat de titel leeg om de balk weg te laten.
+        fields:
+          - { name: title, label: Titel, widget: string, required: false }
+          - { name: text, label: Tekst, widget: string, required: false }
+          - { name: button, label: Tekst op de knop, widget: string, required: false, default: Bekijk mijn werk }
+          - { name: image, label: Foto op de achtergrond, widget: image, required: false }
+      - { name: description, label: Omschrijving voor zoekmachines, widget: text, required: false, maxlength: 200 }
+
+  - name: privacy
+    label: Privacyverklaring
+    icon: shield
+    file: src/content/site/privacy.md
+    fields:
+      - { name: title, label: Titel, widget: string, default: Privacyverklaring }
+      - { name: updated, label: Laatst bijgewerkt, widget: datetime, type: date, required: false }
+      - { name: intro, label: Introductie, widget: text, required: false }
+      - name: body
+        label: Tekst
+        widget: richtext
+        required: false
+        hint: Pas deze tekst aan als je iets toevoegt dat gegevens verzamelt (bijvoorbeeld statistieken of een nieuwsbrief). Het kopje "Cookies" is de link "Cookies" onderaan elke pagina.
 
   - divider: true
 
@@ -277,14 +505,11 @@ singletons:
     file: src/content/site/settings.yaml
     fields:
       - name: name
-        label: Naam
+        label: Naam van de site
         widget: string
-        hint: Staat linksboven op elke pagina en in de titel van de site.
-      - name: tagline
-        label: Ondertitel
-        widget: string
-        required: false
-        hint: Bijvoorbeeld "Journalist in opleiding".
+        default: SCVK Media
+        hint: Staat in de titel van elke pagina en onderaan de site.
+      - { name: owner, label: Jouw naam, widget: string, default: Sven van Klaveren }
       - name: description
         label: Omschrijving voor zoekmachines
         widget: text
@@ -296,25 +521,40 @@ singletons:
         widget: string
         type: email
         required: false
-        hint: Voor de "Mail mij"-knop. Let op, dit adres is openbaar.
+        hint: Staat op de contactpagina en onderaan de site. Let op, dit adres is openbaar.
       - name: socials
         label: Sociale media
         label_singular: link
         widget: list
         required: false
         summary: '{{fields.platform}}'
+        hint: Bijvoorbeeld je LinkedIn en het Instagram-account van SCVK Media. Gebruik de volledige link.
         fields:
           - name: platform
             label: Platform
             widget: select
             dropdown_threshold: 0
-            options: [LinkedIn, Instagram, X, TikTok, YouTube, Bluesky, Threads, Facebook, Website]
+            options: [LinkedIn, Instagram, YouTube, TikTok, Facebook, Website]
           - { name: url, label: Link, widget: string, type: url }
-      - name: cv
-        label: Cv (pdf)
-        widget: file
+      - name: form_key
+        label: Sleutel van het contactformulier
+        widget: string
         required: false
-        accept: application/pdf
-        media_folder: /public/files
-        public_folder: /files
-        hint: Verschijnt als downloadknop op de pagina "Over mij".
+        hint: De "Access Key" van web3forms.com. Daar vul je het e-mailadres in waar berichten naartoe moeten; je krijgt de sleutel per mail. Leeg = het formulier staat als "nog niet actief" op de site.
+      - name: preview
+        label: Voorbeeldversie
+        widget: boolean
+        required: false
+        default: false
+        hint: Aan = bovenaan elke pagina staat dat teksten en foto's tijdelijk zijn, en zoekmachines slaan de site over. Zet dit uit als de site af is.
+      - name: project_cta
+        label: Blauwe balk onder projecten
+        widget: object
+        required: false
+        collapsed: true
+        summary: '{{fields.title}}'
+        fields:
+          - { name: eyebrow, label: Klein kopje, widget: string, required: false }
+          - { name: title, label: Titel, widget: string, required: false }
+          - { name: text, label: Tekst, widget: string, required: false }
+          - { name: button, label: Tekst op de knop, widget: string, required: false, default: Neem contact op }

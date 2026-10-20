@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets';
+import logoNavy from '../assets/brand/logo-navy.png';
+import logoBlack from '../assets/brand/logo-black.png';
+
+interface Props {
+  /** Rendered height in px; the width follows the logo's proportions. */
+  height?: number;
+  variant?: 'navy' | 'black';
+  alt?: string;
+  eager?: boolean;
+}
+
+// The owner's own logo files (docs/design/logo/), only made transparent and
+// trimmed by scripts/brand/prepare-logo.mjs. Never stretched or recoloured.
+const { height = 44, variant = 'navy', alt = 'SCVK Media', eager = false } = Astro.props;
+const src = variant === 'black' ? logoBlack : logoNavy;
+const width = Math.round((src.width / src.height) * height);
+---
+
+<Image
+  class="logo"
+  src={src}
+  alt={alt}
+  width={width}
+  height={height}
+  widths={[width, width * 2, width * 3]}
+  sizes={`${width}px`}
+  loading={eager ? 'eager' : 'lazy'}
+  format="png"
+/>
