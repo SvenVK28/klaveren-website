@@ -8,7 +8,7 @@
 const { chromium } = require('playwright');
 const fs = require('fs');
 
-const base = process.argv[2] || 'http://localhost:4321/klaveren-website/';
+const base = process.argv[2] || 'http://localhost:4321/';
 const paths = (process.argv[3] || ',mijn-werk/,over-mij/,freelance/,contact/,privacy/').split(',');
 // Widths from the design brief's acceptance tests (spec §15). VARIANTS=desktop,mobile picks a subset.
 const allVariants = [

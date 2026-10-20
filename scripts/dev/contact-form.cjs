@@ -14,7 +14,7 @@ const fs = require('fs');
 
 const args = process.argv.slice(2);
 const real = args.includes('--real');
-const contactUrl = args.find((a) => !a.startsWith('--')) || 'http://localhost:4321/klaveren-website/contact/';
+const contactUrl = args.find((a) => !a.startsWith('--')) || 'http://localhost:4321/contact/';
 const API = 'https://api.web3forms.com/submit';
 
 const fail = (msg) => {

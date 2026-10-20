@@ -2,14 +2,14 @@
 import { defineConfig, fontProviders } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// Where the site lives. While it runs on GitHub Pages the site sits in a
-// sub-folder (/klaveren-website/). Once a custom domain (scvkmedia.nl) is connected:
-//   1. set SITE to 'https://scvkmedia.nl'
-//   2. set BASE to '/'
-//   3. put the domain in public/CNAME
-//   4. update site_url, display_url and logo.src in public/admin/config.yml
-const SITE = 'https://svenvk28.github.io';
-const BASE = '/klaveren-website';
+// Where the site lives: the custom domain, at the root. The domain itself is set
+// under Settings → Pages on GitHub (no CNAME file: Actions deploys ignore it). If
+// the site ever goes back to <user>.github.io/<repo>/, set BASE to '/<repo>' and
+// update site_url, display_url and logo.src in public/admin/config.yml.
+const SITE = 'https://scvkmedia.nl';
+const BASE = '/';
+// BASE without its trailing slash, for building paths.
+const ROOT = BASE.replace(/\/$/, '');
 
 export default defineConfig({
   site: SITE,
@@ -19,8 +19,8 @@ export default defineConfig({
   integrations: [sitemap({ filter: (page) => !page.includes('/contact/bedankt/') })],
   // Addresses of the first version of the site.
   redirects: {
-    '/werk/': `${BASE}/mijn-werk/`,
-    '/over/': `${BASE}/over-mij/`,
+    '/werk/': `${ROOT}/mijn-werk/`,
+    '/over/': `${ROOT}/over-mij/`,
   },
   image: {
     layout: 'constrained',
