@@ -1,0 +1,16 @@
+---
+import WorkIndex from '../../../components/WorkIndex.astro';
+import { getWork } from '../../../lib/content';
+import { WORK_TYPE_KEYS, type WorkType } from '../../../lib/work-types';
+
+export async function getStaticPaths() {
+  const work = await getWork();
+  return WORK_TYPE_KEYS.filter((type) => work.some((entry) => entry.data.type === type)).map((type) => ({
+    params: { type },
+  }));
+}
+
+const type = Astro.params.type as WorkType;
+---
+
+<WorkIndex type={type} />

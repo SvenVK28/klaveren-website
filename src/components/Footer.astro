@@ -1,5 +1,9 @@
 ---
 import type { InferEntrySchema } from 'astro:content';
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { NAV_LINKS } from '../lib/nav';
+import { socialIcon } from '../lib/icons';
 import { url } from '../lib/url';
 
 interface Props {
@@ -12,83 +16,172 @@ const year = new Date().getFullYear();
 
 <footer class="site-footer">
   <div class="container inner">
-    <div>
-      <p class="name">{settings.name}</p>
-      {settings.tagline && <p class="muted">{settings.tagline}</p>}
-    </div>
-    <ul class="links">
-      {
-        settings.email && (
-          <li>
-            <a href={`mailto:${settings.email}`}>{settings.email}</a>
-          </li>
-        )
-      }
-      {
-        settings.socials.map((social) => (
-          <li>
-            <a href={social.url} rel="me noopener" target="_blank">
-              {social.platform}
-            </a>
-          </li>
-        ))
-      }
-      <li>
-        <a href={url('rss.xml')}>RSS</a>
-      </li>
+    <a class="home" href={url()} aria-label={`${settings.name}, naar de homepage`}>
+      <Logo height={36} alt="" />
+    </a>
+
+    <nav class="nav" aria-label="Footer">
+      <ul>
+        {
+          NAV_LINKS.map((link) => (
+            <li>
+              <a href={url(link.href)}>{link.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    {
+      (settings.socials.length > 0 || settings.email) && (
+        <ul class="socials">
+          {settings.email && (
+            <li>
+              <a href={`mailto:${settings.email}`} aria-label={`E-mail: ${settings.email}`}>
+                <Icon name="mail" />
+              </a>
+            </li>
+          )}
+          {settings.socials.map((social) => (
+            <li>
+              <a href={social.url} rel="me noopener" target="_blank" aria-label={`${settings.name} op ${social.platform}`}>
+                <Icon name={socialIcon(social.platform)} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+
+    <p class="copyright">© {year} {settings.name}</p>
+    <ul class="legal">
+      <li><a href={url('privacy/')}>Privacy</a></li>
+      <li><a href={url('privacy/#cookies')}>Cookies</a></li>
     </ul>
-    <p class="muted copyright">© {year} {settings.name}</p>
   </div>
 </footer>
 
 <style>
   .site-footer {
-    margin-top: var(--space-section);
     border-top: 1px solid var(--color-border);
-    padding-block: 2.5rem;
+    padding-block: var(--space-12) var(--space-8);
     font-size: var(--text-sm);
   }
 
   .inner {
     display: grid;
-    gap: 1.5rem;
-    grid-template-columns: 1fr auto;
-    align-items: start;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-areas:
+      'logo nav socials'
+      'copy . legal';
+    align-items: center;
+    gap: var(--space-6) var(--space-8);
   }
 
-  .name {
-    font-family: var(--font-serif);
-    font-size: var(--text-lg);
-    font-weight: 600;
-    margin: 0;
+  .home {
+    grid-area: logo;
+    justify-self: start;
   }
 
-  .muted {
-    color: var(--color-muted);
-    margin: 0;
+  .home :global(.logo) {
+    height: 36px;
+    width: auto;
   }
 
-  .links {
+  ul {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 0.5rem 1.25rem;
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .copyright {
-    grid-column: 1 / -1;
+  .nav {
+    grid-area: nav;
   }
 
-  @media (max-width: 40rem) {
+  .nav ul {
+    gap: 0 var(--space-8);
+  }
+
+  a {
+    color: var(--color-heading);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+
+  .nav a,
+  .legal a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .socials {
+    grid-area: socials;
+    justify-self: end;
+    gap: var(--space-2);
+  }
+
+  .socials a {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    color: var(--color-primary);
+  }
+
+  .socials :global(.icon) {
+    width: 22px;
+    height: 22px;
+  }
+
+  .copyright {
+    grid-area: copy;
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+  }
+
+  .legal {
+    grid-area: legal;
+    justify-self: end;
+    gap: 0 var(--space-6);
+    font-size: var(--text-xs);
+  }
+
+  @media (max-width: 56rem) {
+    .inner {
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        'logo socials'
+        'nav nav'
+        'copy legal';
+    }
+  }
+
+  @media (max-width: 30rem) {
     .inner {
       grid-template-columns: 1fr;
+      grid-template-areas: 'logo' 'nav' 'socials' 'legal' 'copy';
+      gap: var(--space-4);
     }
 
-    .links {
-      justify-content: flex-start;
+    .socials,
+    .legal {
+      justify-self: start;
+    }
+
+    .socials {
+      margin-left: -10px;
+    }
+
+    .nav ul {
+      gap: 0 var(--space-6);
     }
   }
 </style>

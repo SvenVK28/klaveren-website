@@ -1,0 +1,107 @@
+---
+import { Image } from 'astro:assets';
+import type { InferEntrySchema } from 'astro:content';
+import Icon from './Icon.astro';
+import { url } from '../lib/url';
+
+type Service = InferEntrySchema<'freelance'>['services'][number];
+
+interface Props {
+  service: Service;
+  id: string;
+}
+
+const { service, id } = Astro.props;
+const contactUrl = `${url('contact/')}?opdracht=${encodeURIComponent(service.title)}#formulier`;
+---
+
+<article class="service" id={id} aria-labelledby={`${id}-title`}>
+  {
+    service.image ? (
+      <div class="media">
+        <Image src={service.image} alt={service.image_alt ?? ''} width={640} height={360} fit="cover" sizes="(min-width: 62rem) 22rem, (min-width: 36rem) 45vw, 100vw" />
+      </div>
+    ) : (
+      service.icon && (
+        <span class="icon-only">
+          <Icon name={service.icon} />
+        </span>
+      )
+    )
+  }
+  <div class="body">
+    <h3 id={`${id}-title`}>{service.title}</h3>
+    {(service.description ?? service.summary) && <p class="description">{service.description ?? service.summary}</p>}
+    <p class="price">{service.price}</p>
+    <a class="button" href={contactUrl}>
+      Neem contact op
+      <span class="visually-hidden">over {service.title.toLowerCase()}</span>
+      <Icon name="arrow" />
+    </a>
+  </div>
+</article>
+
+<style>
+  .service {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background: var(--color-background);
+    overflow: hidden;
+  }
+
+  .media {
+    aspect-ratio: 16 / 9;
+    background: var(--color-placeholder);
+  }
+
+  .media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .icon-only {
+    padding: var(--space-6) var(--space-6) 0;
+    color: var(--color-primary);
+  }
+
+  .icon-only :global(.icon) {
+    width: 32px;
+    height: 32px;
+    stroke-width: 1.4;
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: var(--space-6);
+  }
+
+  h3 {
+    font-size: var(--text-card);
+    margin-bottom: var(--space-2);
+  }
+
+  .description {
+    color: var(--color-muted);
+    font-size: 0.9375rem;
+    margin-bottom: var(--space-3);
+  }
+
+  .price {
+    margin-top: auto;
+    margin-bottom: var(--space-4);
+    padding-top: var(--space-3);
+    color: var(--color-heading);
+    font-weight: 700;
+    font-size: var(--text-sm);
+  }
+
+  .button {
+    align-self: flex-start;
+  }
+</style>

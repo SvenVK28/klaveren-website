@@ -1,30 +1,48 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import WorkGrid from '../components/WorkGrid.astro';
+import { getHomeWork } from '../lib/content';
 import { url } from '../lib/url';
+
+const recent = await getHomeWork(3);
 ---
 
-<BaseLayout title="Pagina niet gevonden">
+<BaseLayout title="Pagina niet gevonden" noindex>
   <div class="container section">
     <p class="eyebrow">404</p>
     <h1>Deze pagina bestaat niet (meer).</h1>
-    <p>Misschien is de link veranderd. Bekijk al het werk of ga terug naar de homepage.</p>
+    <p class="intro">Misschien is de link veranderd of verkeerd overgenomen. Hieronder vind je mijn nieuwste werk, of ga terug naar de homepage.</p>
     <p class="actions">
-      <a class="button button--primary" href={url('werk/')}>Alle werk</a>
-      <a class="button" href={url()}>Homepage</a>
+      <a class="button button--primary" href={url('mijn-werk/')}>Bekijk mijn werk</a>
+      <a class="button" href={url()}>Naar de homepage</a>
+      <a class="button" href={url('contact/')}>Contact</a>
     </p>
   </div>
+  {
+    recent.length > 0 && (
+      <section class="container recent" aria-label="Nieuwste werk">
+        <WorkGrid entries={recent} level={2} />
+      </section>
+    )
+  }
 </BaseLayout>
 
 <style>
   h1 {
-    font-size: var(--text-3xl);
+    font-size: var(--text-page);
     max-width: 20ch;
   }
 
+  .intro {
+    max-width: 38rem;
+    font-size: var(--text-md);
+  }
+
   .actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: 2rem;
+    margin-top: var(--space-8);
+  }
+
+  .recent {
+    padding-bottom: var(--space-section);
   }
 </style>

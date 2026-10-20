@@ -1,0 +1,159 @@
+{
+  "note": "Temporary placeholder photos (CC0 / Public Domain Mark), placed as WebP under src/content/. Source file names refer to D:/Claude/klaveren-design-docs/photos on the Windows Server. Replace with the owner's own photos before launch.",
+  "photos": [
+    {
+      "file": "hero-camera.jpg",
+      "title": "A professional video camera on a tripod is in focus on the right side, set up in an outdoor grassy area. In the blurred background, there are two people standing and a tall structure visible.",
+      "creator": "Ratul Hasan",
+      "source": "wordpress",
+      "license": "cc0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "landing_url": "https://wordpress.org/photos/photo/18262964be/",
+      "width": 3449,
+      "height": 3000
+    },
+    {
+      "file": "microphone.jpg",
+      "title": "Speaker microphone at a WordCamp tags: microphone, speaker, blur, bokeh, WordCamp",
+      "creator": "Nilo Velez",
+      "source": "wordpress",
+      "license": "cc0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "landing_url": "https://wordpress.org/photos/photo/775642d393/",
+      "width": 6000,
+      "height": 4000
+    },
+    {
+      "file": "notebook-pen.jpg",
+      "title": "writing text, random text, text, paper, notebook, pen.",
+      "creator": "David Chandra Purnama",
+      "source": "wordpress",
+      "license": "cc0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "landing_url": "https://wordpress.org/photos/photo/632620a981/",
+      "width": 4624,
+      "height": 2604
+    },
+    {
+      "file": "video-editing.jpg",
+      "title": "Project 365 #133: 130510 Cut To The Chase",
+      "creator": "comedy_nose",
+      "source": "flickr",
+      "license": "pdm",
+      "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "landing_url": "https://www.flickr.com/photos/23408922@N07/4605011740",
+      "width": 3888,
+      "height": 2592
+    },
+    {
+      "file": "studio-mic.jpg",
+      "title": "Silver and black studio microphone condenser",
+      "creator": "Jonathan Velasquez",
+      "source": "wikimedia",
+      "license": "cc0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/deed.en/",
+      "landing_url": "https://commons.wikimedia.org/w/index.php?curid=104636156",
+      "width": 4240,
+      "height": 2827
+    },
+    {
+      "file": "camera-tripod.jpg",
+      "title": "A professional camera setup on a tripod, facing towards the viewer. The camera screen is visible, showing a preview of what the camera is capturing. A black lens cap hangs from the tripod, and several cables are connected to the camera.",
+      "creator": "Nilo Velez",
+      "source": "wordpress",
+      "license": "cc0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "landing_url": "https://wordpress.org/photos/photo/514678666a/",
+      "width": 3936,
+      "height": 2624
+    },
+    {
+      "file": "audio-waveform.jpg",
+      "title": "Big audio mixer with multiple knobs and buttons.",
+      "creator": "Nilo Velez",
+      "source": "wordpress",
+      "license": "cc0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "landing_url": "https://wordpress.org/photos/photo/90165c53e4/",
+      "width": 4912,
+      "height": 3264
+    },
+    {
+      "file": "camera-dark.jpg",
+      "title": "A Sony camera with a large black lens is positioned on a wooden table, alongside a white keyboard and a white computer mouse. There is also a black lens cap resting on the table. The lighting is dim, with a warm glow highlighting the camera and keyboard.",
+      "creator": "Farhan Srambiyan",
+      "source": "wordpress",
+      "license": "cc0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "landing_url": "https://wordpress.org/photos/photo/26663fd983/",
+      "width": 5760,
+      "height": 3840
+    },
+    {
+      "file": "city-harbour.jpg",
+      "title": "A harbour with multiple fishing boats. The water is calm. There is a stone gangway in the foreground.",
+      "creator": "Nathan Wrigley",
+      "source": "wordpress",
+      "license": "cc0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "landing_url": "https://wordpress.org/photos/photo/8865e93323/",
+      "width": 6000,
+      "height": 4000
+    },
+    {
+      "file": "beach-pier.jpg",
+      "title": "A bright daytime shot of Malibu Pier stretching over calm blue ocean waters with a breaking wave in the foreground.",
+      "creator": "Sakin Shrestha",
+      "source": "wordpress",
+      "license": "cc0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "landing_url": "https://wordpress.org/photos/photo/2056a186e7/",
+      "width": 4032,
+      "height": 3024
+    },
+    {
+      "file": "football-stadium.jpg",
+      "title": "Football (soccer) stadium Stamford Bridge in the spring sunshine",
+      "creator": "Will Presley",
+      "source": "wordpress",
+      "license": "cc0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "landing_url": "https://wordpress.org/photos/photo/1662029cd7/",
+      "width": 4160,
+      "height": 3120
+    },
+    {
+      "file": "street-people.jpg",
+      "title": "A yellow tram numbered 10 is traveling on a city street with buildings in the background. A green bus is visible alongside the tram. A group of people are walking on the sidewalk.",
+      "creator": "Nilo Velez",
+      "source": "wordpress",
+      "license": "cc0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "landing_url": "https://wordpress.org/photos/photo/60067dd2e8/",
+      "width": 6000,
+      "height": 4000
+    },
+    {
+      "file": "newspaper.jpg",
+      "title": "Newspaper in the sun.",
+      "creator": "Femy Praseeth",
+      "source": "wordpress",
+      "license": "cc0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "landing_url": "https://wordpress.org/photos/photo/4496275377/",
+      "width": 5184,
+      "height": 3456
+    },
+    {
+      "file": "train-station.jpg",
+      "title": "A train station platform with people walking alongside a stationary passenger train. Several individuals carry bags and luggage. The platform has safety barriers and orange cones.",
+      "creator": "Nilo Velez",
+      "source": "wordpress",
+      "license": "cc0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "landing_url": "https://wordpress.org/photos/photo/205678ab0e/",
+      "width": 5853,
+      "height": 3902
+    }
+  ]
+}

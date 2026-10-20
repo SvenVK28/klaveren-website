@@ -35,38 +35,54 @@ A **portfolio website for Sven van Klaveren**, a journalism student.
   repo would then be public too** (§2a). Raise that before making the repo public.
 - Use the **`Sven-vh` account for now**. It's temporary and will likely move to another account
   (README has the checklist).
-- No content or design examples yet, so the **design is a temporary placeholder** that must be
-  easy to change. Focus first on backend, hosting and the CMS. The friend was asked to collect
-  links, photos and explanations of sites he likes in a Google Doc.
+- **The design brief arrived 2026-10-20** (Google Drive folder, now in `docs/design/`, read its
+  README). Brand **SCVK Media** (his initials), planned domain `scvkmedia.nl` (not bought yet),
+  navy logo with a microphone in the K, white / near-black / marine navy, pages Home, Mijn werk,
+  Over mij, Freelance, Contact. The brief's hard rules: **never invent** projects, clients,
+  testimonials, prices, contact details, social URLs or KvK data; **he writes and approves the
+  final copy himself** (current text is a draft); no contact form that pretends to work.
 
 ---
 
-## 2. Current status (last updated 2026-10-06)
+## 2. Current status (last updated 2026-10-20)
 
 **Live:** https://sven-vh.github.io/klaveren-website/ · **Admin:** `/admin/` ·
 **Repo:** `Sven-vh/klaveren-website` (PRIVATE)
 
-Done and verified:
-- Astro 7 site: home, `/werk/` with type filters, detail pages, `/over/`, 404, RSS, sitemap. Dark
-  mode, mobile layout, no horizontal overflow (screenshots checked).
+**2026-10-20: SCVK Media redesign** after the owner's brief (PR "SCVK Media design"):
+- Pages: `/` (hero, uitgelicht werk, over-mij teaser, 4 services, CTA), `/mijn-werk/` +
+  `/mijn-werk/soort/<categorie>/` filters + `/mijn-werk/<slug>/` (two columns: content + facts,
+  "Meer werk", share links), `/over-mij/`, `/freelance/`, `/contact/` (+ `/contact/bedankt/`),
+  `/privacy/` (#cookies), 404. `/werk/` and `/over/` redirect.
+- Every page's text and photos are CMS singletons (`src/content/site/*.md`); services are a
+  list on the Freelance singleton (first four also on home).
+- Contact form via Web3Forms, **inactive until a key is set** in Site-instellingen (`docs/CONTACT-FORM.md`).
+- `preview: true` in settings shows a "Voorbeeldversie" banner and sets `noindex` everywhere.
+  The owner switches it off at launch.
+- Placeholders: CC0 stock photos (credits in `docs/design/photo-credits.json`), a neutral
+  silhouette for his portrait, six `voorbeeld-*` projects. No email, no socials yet (empty on purpose).
+- Light theme only (the brand is white + navy; the old dark mode is gone).
+
+Done and verified earlier:
 - Sveltia CMS at `/admin/`, Dutch UI, config validated against the official schema.
 - GitHub Actions deploy to Pages. Pages from a private repo **works**, so the account has Pro.
 - **End-to-end on the live site**: sign in with token → create entry with a 3000×2000 JPEG →
   commit (`Nieuw: productie "…"`, photo stored as a 2400px WebP next to `index.md`) → build →
   page live → delete through the CMS (entry and its media removed). The user also edited an
   entry through the admin themselves, and that deployed fine.
-- Site name is **Sven van Klaveren**. Five `voorbeeld-*` example entries are placeholders.
-
 Not done yet / waiting on someone:
+- [ ] The owner reviews the preview, writes his own copy, supplies real photos, portrait and projects.
+- [ ] Domain `scvkmedia.nl` + email (`info@scvkmedia.nl`?) → then a Web3Forms key, and
+      the email + LinkedIn/Instagram URLs in Site-instellingen.
+- [ ] Favicon is a crop of the logo's K + microphone (`scripts/brand/prepare-logo.mjs`): needs his OK.
+- [ ] At launch: `preview: false`, delete `voorbeeld-*`, review the privacy text (it's a draft).
 - [ ] The friend creates a GitHub account → add him as a collaborator → he makes a **classic**
       token (see gotchas) → walk him through `docs/HANDLEIDING.md`.
 - [ ] Optional: "Inloggen met GitHub" via the sveltia-cms-auth Cloudflare Worker. Needs the
       user's Cloudflare account and a GitHub OAuth app (README has the steps). Until then
       `auth_methods: [token]` hides the GitHub button, which would otherwise fail.
-- [ ] Real design, once the friend shares examples.
-- [ ] His real content, then delete the `voorbeeld-*` entries (he can do it in the CMS).
-- [ ] Maybe: custom domain (mijndomein.nl was mentioned), move the repo to another account.
-- [ ] Sveltia 0.230.0 is out (pinned 0.229.0). Update when convenient (README > Updating).
+- [ ] Maybe: move the repo to another account.
+- [ ] Sveltia 0.248.x is out (pinned 0.229.0). Update when convenient (README > Updating).
 - [ ] **Make the admin page itself unreachable for others** (§2a). This is a requirement, not optional.
 
 ## 2a. Admin privacy: requirement, current state, plan
@@ -116,7 +132,12 @@ editor ─► /admin (Sveltia CMS, runs in the browser) ─► GitHub API commit
 | **Sveltia CMS** | Free, modern UI, **Dutch locale**, mobile and PWA, WebP conversion on upload, and the admin lives on *his own site* at `/admin`. Decap-compatible config. | Decap (older and slower, same OAuth need). TinaCMS/Keystatic (need Tina Cloud or a server runtime). **Pages CMS** (app.pagescms.org) is the fallback if a GitHub account is too much for the friend: it supports email invites and reads the same Markdown. |
 | **Entry folders** `src/content/work/<slug>/index.md` with photos next to them | Lets Astro's `image()` optimise every photo (responsive WebP). Deleting an entry in the CMS removes its media. Avoids base-path problems with `/public` image URLs. | Global `public/uploads`: no optimisation, and base-path issues. |
 | **Video/audio as embeds** (YouTube, Vimeo, Spotify, SoundCloud) | Git limits: 100 MB per file, about 1 GB per Pages site. Embeds stream better. | Uploading video into the repo. |
-| **Plain CSS + tokens** in `src/styles/global.css` | The design is temporary, so all colours, fonts and sizes live in one place. | Tailwind (fine, but unnecessary for a throw-away design). |
+| **Plain CSS + tokens** in `src/styles/global.css` | The tokens are the brief's (spec §4–6, §23), so the system stays consistent and tunable in one place. Inter is the only font (self-hosted via the Fonts API). | Tailwind (fine, but unnecessary). |
+| **Every page is a CMS singleton** (`src/content/site/<page>.md`, frontmatter only) | The brief requires that he can edit all copy, photos, services, contact details and socials himself. `.md` (not `.yaml`) so `image()` works for page photos. | Hard-coded copy. |
+| **Projects ordered by date**, newest first; `featured` puts a project first on the homepage | Sveltia's `reorder: true` gives a *new* entry the highest `order` (end of the list), so his newest work would end up last unless he drags it each time (checked in Sveltia's source, `draft/save/sort-order.js`, 2026-10-20). | Manual drag order. |
+| **Contact form via Web3Forms**, disabled until a key exists | Static hosting can't send mail. Free, no account, the key is public by design. Never shows success unless the API says `success: true`. Details: `docs/CONTACT-FORM.md`. | Formspree (50/month), own Cloudflare Worker (more accounts), Docker server (the public site must not depend on the home network). |
+| **Click-to-play video facade** (`MediaEmbed.astro`) | Nothing loads from YouTube & co until the visitor clicks, so the site sets no third-party cookies without consent (no cookie banner needed) and stays fast. | Plain lazy iframes. |
+| **Category filters as static pages** (`/mijn-werk/soort/<categorie>/`) | Work without JS, shareable links, only categories that have projects. | Client-side filtering. |
 | **Lenient Zod schemas** | If the build fails, the friend's edit silently doesn't appear. GitHub emails the *actor* (the friend). So the CMS validates input, and the site schema tolerates `''`/`null` and missing optionals. | Strict schemas. |
 | **Token login first** | Zero extra infrastructure. GitHub has no PKCE for SPAs, so "Sign in with GitHub" needs an OAuth proxy (Cloudflare Worker). | Netlify OAuth (deprecated path). |
 | **Admin access = GitHub write access** (for now), Cloudflare Access planned | Only collaborators can save. Hiding the page itself needs a gate in front of it, because GitHub Pages has no access control on a personal account (private Pages need Enterprise Cloud). See §2a. | Password in JavaScript (fake security), secret URL only. |
@@ -124,8 +145,10 @@ editor ─► /admin (Sveltia CMS, runs in the browser) ─► GitHub API commit
 | **CMS preview pane disabled** | The generic preview only repeated the fields. The live site is the real preview ("Bekijken op de live site" link via `preview_path`). | Custom preview templates (possible later). |
 
 Content model: see `src/content.config.ts` (source of truth for the site) and
-`public/admin/config.yml` (source of truth for the editor UI). Work types:
-`artikel | video | audio | fotografie | overig` (`src/lib/work-types.ts`).
+`public/admin/config.yml` (source of truth for the editor UI). Categories (`type`):
+`artikel | interview | nieuwsvideo | videoreportage | videomontage | overig`
+(`src/lib/work-types.ts`; old values video/audio/fotografie are mapped). Icons the editor can pick
+are the keys of `CONTENT_ICONS` in `src/lib/icons.ts` (same list in config.yml).
 
 ---
 
@@ -149,6 +172,12 @@ Content model: see `src/content.config.ts` (source of truth for the site) and
   sign-in, and check any change to auth or hosting against it.
 - Don't publish the friend's personal data beyond what he enters himself. The e-mail field hint
   warns that it's public.
+- **Never invent content** (brief §21, §26): no made-up projects presented as real, clients,
+  testimonials, prices, email addresses, social URLs or business numbers. Placeholders must be
+  obviously placeholders (`Voorbeeld:` titles, the silhouette portrait, the preview banner).
+  Optional fields that are empty must disappear cleanly.
+- **The logo is never redrawn or recoloured.** Regenerate assets from the supplied files with
+  `node scripts/brand/prepare-logo.mjs`.
 
 ---
 
@@ -181,6 +210,14 @@ Content model: see `src/content.config.ts` (source of truth for the site) and
   `branch`, `auth_methods` and `commit_messages` are unknown, which is expected.
 - Sveltia shows a GitHub-status banner ("GitHub heeft een kleine storing") during GitHub incidents.
   That's not our bug.
+- `reorder: true` exists (since before 0.229) but appends new entries at the end; see §3.
+- YAML flow mappings in `config.yml` (`{ name: x, hint: … }`) break on a comma inside the hint:
+  quote such hints, or `check:cms` reports a confusing "widget must be equal to constant" error.
+
+**Web3Forms:** server-side requests get `403` ("Use our API in client side"), and its Cloudflare
+also blocks the CORS preflight from headless Chrome's default user agent ("HeadlessChrome"):
+test with a normal Chrome user agent (`scripts/dev/contact-form.cjs` does). Reply shape:
+`{ success, message }`; a bogus key gives `400 "Invalid form_id/access_key format"`.
 
 **GitHub:**
 - Pages source = GitHub Actions (enabled via `gh api -X POST repos/…/pages -f build_type=workflow`).
@@ -216,7 +253,8 @@ Visual and CMS checks (start `npx astro preview` first; Playwright via NODE_PATH
 
 | Script | What it does |
 | --- | --- |
-| `scripts/dev/screenshots.cjs [base] [paths]` | Desktop, mobile and dark full-page screenshots → `screenshots/`. Flags overflow and errors. |
+| `scripts/dev/screenshots.cjs [base] [paths]` | Full-page screenshots at 1440/768/390/320 px → `screenshots/` (`VARIANTS=desktop,mobile` for a subset). Flags overflow and errors. |
+| `scripts/dev/contact-form.cjs [contactUrl]` | Contact form with a faked Web3Forms reply: validation, success and failure states. |
 | `scripts/dev/cms-smoke.cjs [adminUrl]` | Admin with the in-memory test backend: collection and new-entry screenshots, reports config warnings. |
 | `scripts/dev/cms-e2e.cjs create\|delete [adminUrl]` | **Real** CMS against GitHub (makes commits!). `CMS_TOKEN="$(gh auth token)"`. Run `create`, inspect the commit and live page, then `delete`. |
 
@@ -227,8 +265,9 @@ with the Read tool. Don't call design work done without looking.
 
 ## 7. Likely next tasks and how to approach them
 
-- **Real design:** start from the friend's examples. Most changes belong in the tokens in
-  `global.css`, plus the components in `src/components/`. Keep it fast, accessible and mobile-first.
+- **Design tweaks:** compare with `docs/design/mockups/` and the spec. Most changes belong in the
+  tokens in `global.css`, plus the components in `src/components/`. Keep it fast, accessible and mobile-first.
+- **Launch:** the checklist in `docs/design/07-Launch-and-Owner-Checklist.md`; custom domain steps in the README.
 - **New content type or field:** config.yml + content.config.ts + render it, then
   `check:cms`, build, and the smoke test.
 - **OAuth login:** README > "Inloggen met GitHub". The user has to do the Cloudflare and OAuth-app

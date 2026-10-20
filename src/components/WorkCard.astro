@@ -7,57 +7,63 @@ import { WORK_TYPES } from '../lib/work-types';
 
 interface Props {
   entry: Work;
-  /** Larger card with a bigger title, used for featured work. */
-  large?: boolean;
   /** Set on the first cards of a page so their images load right away. */
   eager?: boolean;
+  /** Heading level of the title, so the page outline stays logical. */
+  level?: 2 | 3;
 }
 
-const { entry, large = false, eager = false } = Astro.props;
+const { entry, eager = false, level = 3 } = Astro.props;
 const { data } = entry;
 const cover = coverOf(entry);
 // Not every YouTube video has the wide thumbnail; fall back to the standard one.
 const fallback = typeof cover === 'string' ? parseEmbed(data.media_url)?.thumbnailFallback : undefined;
-const typeLabel = WORK_TYPES[data.type].label;
-const sizes = large ? '(min-width: 72rem) 36rem, (min-width: 48rem) 50vw, 100vw' : '(min-width: 72rem) 24rem, (min-width: 40rem) 50vw, 100vw';
+const type = WORK_TYPES[data.type];
+const Heading = level === 2 ? 'h2' : 'h3';
 ---
 
-<article class:list={['card', { large }]}>
-  <a class="media" href={workUrl(entry)} tabindex="-1" aria-hidden="true">
+<article class="card">
+  <div class="media">
     {
       typeof cover === 'object' ? (
         <Image
           src={cover}
-          alt=""
-          width={large ? 1200 : 800}
-          height={large ? 800 : 533}
-          sizes={sizes}
+          alt={data.cover_alt ?? ''}
+          width={720}
+          height={480}
+          fit="cover"
+          sizes="(min-width: 75rem) 23rem, (min-width: 40rem) 45vw, 100vw"
           loading={eager ? 'eager' : 'lazy'}
         />
       ) : cover ? (
         <img
           src={cover}
-          alt=""
+          alt={data.cover_alt ?? ''}
+          width="720"
+          height="480"
           loading={eager ? 'eager' : 'lazy'}
           onerror={fallback ? `this.onerror=null;this.src='${fallback}'` : undefined}
         />
       ) : (
-        <span class="placeholder">{typeLabel}</span>
+        <span class="placeholder" aria-hidden="true" />
       )
     }
-    {(data.type === 'video' || data.type === 'audio') && data.media_url && <span class="play" aria-hidden="true" />}
-  </a>
+    <span class="badge">{type.label}</span>
+  </div>
   <div class="body">
-    <p class="eyebrow meta">
-      <span class="type">{typeLabel}</span>
-      <time datetime={data.date.toISOString()}>{formatDate(data.date)}</time>
-      {data.draft && <span class="draft">Concept</span>}
-    </p>
-    <h3 class="title">
+    <Heading class="title">
       <a href={workUrl(entry)}>{data.title}</a>
-    </h3>
+    </Heading>
     {data.summary && <p class="summary">{data.summary}</p>}
-    {data.publication && <p class="publication">{data.publication}</p>}
+    {
+      (data.show_date || data.publication || data.draft) && (
+        <p class="meta">
+          {data.draft && <span class="draft">Concept</span>}
+          {data.publication && <span>{data.publication}</span>}
+          {data.show_date && <time datetime={data.date.toISOString()}>{formatDate(data.date)}</time>}
+        </p>
+      )
+    }
   </div>
 </article>
 
@@ -66,16 +72,15 @@ const sizes = large ? '(min-width: 72rem) 36rem, (min-width: 48rem) 50vw, 100vw'
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-4);
+    height: 100%;
   }
 
   .media {
     position: relative;
-    display: block;
-    text-decoration: none;
     aspect-ratio: 3 / 2;
     overflow: hidden;
-    border-radius: var(--radius);
+    border-radius: var(--radius-small);
     background: var(--color-placeholder);
   }
 
@@ -92,63 +97,43 @@ const sizes = large ? '(min-width: 72rem) 36rem, (min-width: 48rem) 50vw, 100vw'
   }
 
   .placeholder {
-    display: grid;
-    place-items: center;
+    display: block;
     height: 100%;
-    font-family: var(--font-serif);
-    font-size: var(--text-xl);
-    font-style: italic;
-    color: var(--color-muted);
+    background:
+      linear-gradient(135deg, transparent 49.6%, var(--color-border) 49.6% 50.4%, transparent 50.4%),
+      var(--color-placeholder);
   }
 
-  .play {
+  .badge {
     position: absolute;
-    left: 1rem;
-    bottom: 1rem;
-    width: 2.75rem;
-    height: 2.75rem;
-    border-radius: 50%;
-    background: var(--color-accent);
-  }
-
-  .play::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    margin: auto;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0.5rem 0 0.5rem 0.8rem;
-    border-color: transparent transparent transparent var(--color-accent-text);
-    transform: translateX(0.1rem);
-  }
-
-  .meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.25rem 0.75rem;
-    margin: 0 0 0.4rem;
-  }
-
-  .draft {
-    color: var(--color-accent-text);
-    background: var(--color-accent);
-    padding: 0 0.4em;
-    border-radius: 0.2rem;
+    top: var(--space-3);
+    left: var(--space-3);
+    padding: 3px 8px;
+    border-radius: 3px;
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.5;
   }
 
   .title {
-    font-size: var(--text-xl);
-    margin: 0 0 0.4rem;
-  }
-
-  .large .title {
-    font-size: var(--text-2xl);
+    font-size: var(--text-card);
+    margin: 0 0 var(--space-2);
+    line-height: 1.3;
   }
 
   .title a {
+    color: var(--color-heading);
     text-decoration: none;
+  }
+
+  .card:hover .title a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
   }
 
   /* Make the whole card clickable through the title link. */
@@ -158,9 +143,21 @@ const sizes = large ? '(min-width: 72rem) 36rem, (min-width: 48rem) 50vw, 100vw'
     inset: 0;
   }
 
+  .title a:focus-visible {
+    outline: none;
+  }
+
+  .title a:focus-visible::after {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+    border-radius: var(--radius-small);
+  }
+
   .summary {
-    color: var(--color-muted);
     margin: 0;
+    color: var(--color-muted);
+    font-size: 0.9375rem;
+    line-height: 1.6;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     line-clamp: 3;
@@ -168,9 +165,25 @@ const sizes = large ? '(min-width: 72rem) 36rem, (min-width: 48rem) 50vw, 100vw'
     overflow: hidden;
   }
 
-  .publication {
-    margin: 0.5rem 0 0;
-    font-size: var(--text-sm);
-    font-weight: 600;
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-3);
+    margin: var(--space-3) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+  }
+
+  .meta span + time::before,
+  .meta span + span::before {
+    content: '·';
+    margin-right: var(--space-3);
+  }
+
+  .draft {
+    color: var(--color-accent);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
   }
 </style>

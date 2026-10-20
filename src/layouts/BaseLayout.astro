@@ -13,13 +13,16 @@ interface Props {
   /** Absolute or site-relative URL of the image shown when the page is shared. */
   image?: string;
   type?: 'website' | 'article';
+  noindex?: boolean;
 }
 
 const settings = await getSettings();
-const { title, description = settings.description ?? settings.tagline, image, type = 'website' } = Astro.props;
-const fullTitle = title ? `${title} | ${settings.name}` : `${settings.name}${settings.tagline ? ` | ${settings.tagline}` : ''}`;
+const { title, description = settings.description, image, type = 'website' } = Astro.props;
+const fullTitle = title ? `${title} | ${settings.name}` : `${settings.name} | Journalistiek, van verhaal tot video`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const imageUrl = image ? new URL(image, Astro.site).href : undefined;
+const imageUrl = new URL(image ?? url('og-default.png'), Astro.site).href;
+// While the site is a preview, search engines are asked to stay away.
+const noindex = Astro.props.noindex || settings.preview;
 ---
 
 <!doctype html>
@@ -29,8 +32,11 @@ const imageUrl = image ? new URL(image, Astro.site).href : undefined;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     {description && <meta name="description" content={description} />}
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
-    <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={url('favicon.png')} type="image/png" />
+    <link rel="apple-touch-icon" href={url('apple-touch-icon.png')} />
+    <meta name="theme-color" content="#ffffff" />
     <link rel="alternate" type="application/rss+xml" title={settings.name} href={url('rss.xml')} />
     <link rel="sitemap" href={url('sitemap-index.xml')} />
 
@@ -40,15 +46,21 @@ const imageUrl = image ? new URL(image, Astro.site).href : undefined;
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="nl_NL" />
     {description && <meta property="og:description" content={description} />}
-    {imageUrl && <meta property="og:image" content={imageUrl} />}
-    <meta name="twitter:card" content={imageUrl ? 'summary_large_image' : 'summary'} />
+    <meta property="og:image" content={imageUrl} />
+    <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
 
-    <Font cssVariable="--font-newsreader" preload />
-    <Font cssVariable="--font-inter" />
+    <Font cssVariable="--font-inter" preload />
   </head>
   <body>
     <a class="skip-link" href="#main">Naar de inhoud</a>
-    <Header name={settings.name} />
+    {
+      settings.preview && (
+        <p class="preview-banner">
+          <strong>Voorbeeldversie</strong> · Teksten en foto's zijn tijdelijk en worden nog vervangen.
+        </p>
+      )
+    }
+    <Header />
     <main id="main">
       <slot />
     </main>
@@ -59,16 +71,25 @@ const imageUrl = image ? new URL(image, Astro.site).href : undefined;
 <style>
   .skip-link {
     position: absolute;
-    left: 1rem;
-    top: -3rem;
-    padding: 0.5rem 1rem;
-    background: var(--color-text);
-    color: var(--color-bg);
-    border-radius: var(--radius);
-    z-index: 10;
+    left: var(--space-4);
+    top: -4rem;
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    border-radius: var(--radius-small);
+    z-index: 30;
   }
 
   .skip-link:focus {
-    top: 1rem;
+    top: var(--space-4);
+  }
+
+  .preview-banner {
+    margin: 0;
+    padding: var(--space-2) var(--gutter);
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    font-size: var(--text-xs);
+    text-align: center;
   }
 </style>

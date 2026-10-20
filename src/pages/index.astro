@@ -1,105 +1,189 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import WorkCard from '../components/WorkCard.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHead from '../components/SectionHead.astro';
 import WorkGrid from '../components/WorkGrid.astro';
-import { getHome, getWork } from '../lib/content';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { getFreelance, getHome, getHomeWork, getWork } from '../lib/content';
 import { url } from '../lib/url';
 
-const home = await getHome();
-const work = await getWork();
-
-// Up to two featured pieces get a large card; the rest of the recent work follows.
-const featured = work.filter((entry) => entry.data.featured).slice(0, 2);
-const recent = work.filter((entry) => !featured.includes(entry)).slice(0, 6);
+const { data: home } = await getHome();
+const { data: freelance } = await getFreelance();
+const work = await getHomeWork(home.work_count);
+const total = (await getWork()).length;
+const services = freelance.services.slice(0, 4);
 ---
 
 <BaseLayout>
-  <section class="container hero">
-    <h1>{home.headline}</h1>
-    {home.intro && <p class="intro">{home.intro}</p>}
+  <PageHero eyebrow={home.eyebrow} title={home.headline} intro={home.intro} image={home.hero_image} imageAlt={home.hero_image_alt} large>
     <p class="actions">
-      <a class="button button--primary" href={url('werk/')}>Bekijk mijn werk</a>
-      <a class="button" href={url('over/')}>Over mij</a>
+      <a class="button button--primary" href={url('mijn-werk/')}>{home.primary_button}</a>
+      <a class="button" href={url('freelance/')}>{home.secondary_button}</a>
     </p>
+  </PageHero>
+
+  <section class="container section" aria-labelledby="work-title">
+    <SectionHead
+      id="work-title"
+      eyebrow={home.work_eyebrow}
+      title={home.work_title}
+      link={total > work.length ? { href: url('mijn-werk/'), label: 'Bekijk al mijn werk' } : undefined}
+    />
+    <WorkGrid entries={work} />
   </section>
 
   {
-    featured.length > 0 && (
-      <section class="container featured" aria-labelledby="featured-title">
-        <h2 id="featured-title" class="eyebrow">
-          Uitgelicht
-        </h2>
-        <div class="featured-grid">
-          {featured.map((entry) => (
-            <WorkCard entry={entry} large eager />
-          ))}
+    (home.about_text || home.about_title) && (
+      <section class="section section--surface" aria-labelledby="about-title">
+        <div class:list={['container', 'about', { 'about--photo': home.about_photo }]}>
+          {home.about_photo && (
+            <div class="about-photo">
+              <Image src={home.about_photo} alt={home.about_photo_alt ?? ''} width={720} height={480} fit="cover" sizes="(min-width: 48rem) 36rem, 100vw" />
+            </div>
+          )}
+          <div class="about-text">
+            {home.about_eyebrow && <p class="eyebrow">{home.about_eyebrow}</p>}
+            {home.about_title && <h2 id="about-title">{home.about_title}</h2>}
+            {home.about_text && <p class="muted">{home.about_text}</p>}
+            <a class="text-link" href={url('over-mij/')}>
+              Meer over mij
+              <Icon name="arrow" />
+            </a>
+          </div>
         </div>
       </section>
     )
   }
 
-  <section class="container recent" aria-labelledby="recent-title">
-    <div class="section-head">
-      <h2 id="recent-title" class="eyebrow">Recent werk</h2>
-      {work.length > featured.length + recent.length && <a href={url('werk/')}>Alle werk →</a>}
-    </div>
-    <WorkGrid entries={recent} eager={featured.length ? 0 : 3} />
-  </section>
+  {
+    services.length > 0 && (
+      <section class="container section" aria-labelledby="services-title">
+        <SectionHead
+          id="services-title"
+          eyebrow={home.services_eyebrow}
+          title={home.services_title}
+          link={{ href: url('freelance/'), label: 'Bekijk alle diensten' }}
+        />
+        <ul class="services">
+          {services.map((service, i) => (
+            <li>
+              {service.icon && <Icon name={service.icon} class="service-icon" />}
+              <h3>
+                <a href={`${url('freelance/')}#dienst-${i + 1}`}>{service.title}</a>
+              </h3>
+              {service.summary && <p class="muted">{service.summary}</p>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <CtaBand
+    title={home.cta.title ?? 'Heb je een vraag of wil je een freelanceopdracht bespreken?'}
+    text={home.cta.text}
+    button={home.cta.button ?? 'Neem contact op'}
+    href={url('contact/')}
+    image={home.cta.image}
+  />
 </BaseLayout>
 
 <style>
-  .hero {
-    padding-block: var(--space-section) calc(var(--space-section) * 0.75);
-  }
-
-  .hero h1 {
-    font-size: var(--text-3xl);
-    font-weight: 500;
-    max-width: 18ch;
-    margin-bottom: 1.5rem;
-  }
-
-  .intro {
-    max-width: 38rem;
-    font-size: var(--text-lg);
-    color: var(--color-muted);
-  }
-
-  .actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: 2rem;
-  }
-
-  .featured-grid {
+  .about {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
-    gap: 3rem 2rem;
+    gap: var(--space-8) var(--space-16);
+    align-items: center;
   }
 
-  .featured,
-  .recent {
-    padding-bottom: var(--space-section);
+  .about--photo {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
   }
 
-  .section-head,
-  .featured h2 {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 1rem;
-    padding-top: 1rem;
-    margin-bottom: 2rem;
-    border-top: 1px solid var(--color-text);
+  .about-photo {
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border-radius: var(--radius-small);
+    background: var(--color-placeholder);
   }
 
-  .section-head h2 {
+  .about-photo :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .about-text {
+    max-width: 36rem;
+  }
+
+  .about-text h2 {
+    font-size: var(--text-section);
+  }
+
+  .services {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-8);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .services li {
+    position: relative;
+  }
+
+  .services :global(.service-icon) {
+    width: 32px;
+    height: 32px;
+    margin-bottom: var(--space-4);
+    color: var(--color-primary);
+    stroke-width: 1.4;
+  }
+
+  .services h3 {
+    font-size: var(--text-md);
+    margin-bottom: var(--space-2);
+  }
+
+  .services h3 a {
+    color: var(--color-heading);
+    text-decoration: none;
+  }
+
+  .services h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .services li:hover h3 a {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+
+  .services p {
+    font-size: 0.9375rem;
     margin: 0;
   }
 
-  .section-head a {
-    font-size: var(--text-sm);
-    font-weight: 600;
+  @media (max-width: 62rem) {
+    .services {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 47.99rem) {
+    .about--photo {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .services {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
