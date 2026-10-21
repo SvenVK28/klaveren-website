@@ -1,5 +1,5 @@
 ---
-title: 'Voorbeeld: Waarom steeds meer sthugyu'
+title: 'Van vier jaar in Singapore tot maffiapraktijken in Italië: de bijzondere route van SVV Scheveningen speler Julian Jansen (23)'
 type: artikel
 summary: Voorbeeld van een artikel. Wachtlijsten van twee jaar, kamers van 700 euro en hospiteeravonden met zestig kandidaten. Hoe de kamernood eruitziet voor eerstejaars.
 cover: cover.webp
