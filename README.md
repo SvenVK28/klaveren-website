@@ -52,7 +52,8 @@ Browser checks (screenshots, CMS smoke and end-to-end tests) live in `scripts/de
 | `public/files/` | Downloads uploaded through the CMS (PDFs, CV) |
 | `src/styles/global.css` | Design tokens (colours, fonts, spacing, from the brief) and base styles |
 | `src/lib/embed.ts` | Turns YouTube/Vimeo/Spotify/SoundCloud links into click-to-play players |
-| `src/lib/work-types.ts`, `src/lib/icons.ts` | Categories and the icons the editor can pick (must match `config.yml`) |
+| `src/content/categories/*.yml` | Portfolio categories, editable in the CMS ("Categorieën"); a project's `type` is the file name |
+| `src/lib/work-types.ts`, `src/lib/icons.ts` | Project kinds and the icons the editor can pick (must match `config.yml`) |
 | `src/components/ContactForm.astro` | The contact form (Web3Forms) |
 | `.github/workflows/deploy.yml` | Build and deploy to Pages |
 

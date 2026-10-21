@@ -144,6 +144,7 @@ editor ─► /admin (Sveltia CMS, runs in the browser) ─► GitHub API commit
 | **Click-to-play video facade** (`MediaEmbed.astro`) | Nothing loads from YouTube & co until the visitor clicks, so embeds set no third-party cookies without consent and the site stays fast. |
 | **Google Analytics only after consent** (`CookieConsent.astro`, ID `analytics_id` in Site-instellingen, added 2026-10-20) | GA sets cookies, which needs consent in NL. Nothing from Google loads until "Accepteren"; both buttons look the same (refusing as easy as accepting); the choice is in `localStorage` (`cookie-consent`); footer "Cookie-instellingen" reopens it; withdrawing deletes `_ga*` and reloads. Empty ID = no banner. Test: `scripts/dev/cookie-consent.cjs`. | GA always on (legal grey area without a fully privacy-friendly GA setup), Consent Mode cookieless pings (still sends data before consent). | Plain lazy iframes. |
 | **Category filters as static pages** (`/mijn-werk/soort/<categorie>/`) | Work without JS, shareable links, only categories that have projects. | Client-side filtering. |
+| **Categories as a folder collection** (one `.yml` per category, relation field on the project) | The editor adds categories himself (asked 2026-10-21). The slug is fixed at creation, so renaming a category keeps its projects and links; drag-and-drop order. | A list on one settings file (the editor would have to type a key by hand, and renaming would break projects); a hard-coded select. |
 | **Lenient Zod schemas** | If the build fails, the friend's edit silently doesn't appear. GitHub emails the *actor* (the friend). So the CMS validates input, and the site schema tolerates `''`/`null` and missing optionals. | Strict schemas. |
 | **Token login first** | Zero extra infrastructure. GitHub has no PKCE for SPAs, so "Sign in with GitHub" needs an OAuth proxy (Cloudflare Worker). | Netlify OAuth (deprecated path). |
 | **Admin access = GitHub write access** (for now), Cloudflare Access planned | Only collaborators can save. Hiding the page itself needs a gate in front of it, because GitHub Pages has no access control on a personal account (private Pages need Enterprise Cloud). See §2a. | Password in JavaScript (fake security), secret URL only. |
@@ -151,9 +152,16 @@ editor ─► /admin (Sveltia CMS, runs in the browser) ─► GitHub API commit
 | **CMS preview pane disabled** | The generic preview only repeated the fields. The live site is the real preview ("Bekijken op de live site" link via `preview_path`). | Custom preview templates (possible later). |
 
 Content model: see `src/content.config.ts` (source of truth for the site) and
-`public/admin/config.yml` (source of truth for the editor UI). Categories (`type`):
-`artikel | interview | nieuwsvideo | videoreportage | videomontage | overig`
-(`src/lib/work-types.ts`; old values video/audio/fotografie are mapped). Icons the editor can pick
+`public/admin/config.yml` (source of truth for the editor UI). **Categories are content** since
+2026-10-21: one file per category in `src/content/categories/<key>.yml` (`name`, `plural`,
+`order`), the CMS collection "Categorieën" (`reorder: true`, drag order = filter order, slug fixed
+at creation). A project's `type` is a relation field storing that key; `getCategories()` /
+`categoryOf()` in `src/lib/content.ts`. A deleted category never breaks the build (the key is
+turned into a name). Only categories with projects get a filter and a `/mijn-werk/soort/<key>/`
+page. The CMS project list groups by category (`view_groups`) instead of one filter per
+category. Started with artikel, interview, nieuwsvideo, videoreportage, videomontage, overig;
+the old legacy mapping (video/audio/fotografie) is gone so it can't hijack a new category with
+that name. Icons the editor can pick
 are the keys of `CONTENT_ICONS` in `src/lib/icons.ts` (same list in config.yml).
 
 ---

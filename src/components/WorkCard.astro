@@ -1,9 +1,8 @@
 ---
 import { Image } from 'astro:assets';
-import { coverOf, workUrl, type Work } from '../lib/content';
+import { categoryOf, coverOf, getCategories, workUrl, type Work } from '../lib/content';
 import { parseEmbed } from '../lib/embed';
 import { formatDate } from '../lib/format';
-import { WORK_TYPES } from '../lib/work-types';
 
 interface Props {
   entry: Work;
@@ -18,7 +17,7 @@ const { data } = entry;
 const cover = coverOf(entry);
 // Not every YouTube video has the wide thumbnail; fall back to the standard one.
 const fallback = typeof cover === 'string' ? parseEmbed(data.media_url)?.thumbnailFallback : undefined;
-const type = WORK_TYPES[data.type];
+const type = categoryOf(await getCategories(), data.type);
 const Heading = level === 2 ? 'h2' : 'h3';
 ---
 

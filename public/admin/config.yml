@@ -87,14 +87,11 @@ collections:
       hint: Het webadres van dit project. Na het opslaan ligt het vast, zodat gedeelde links blijven werken.
     thumbnail: cover
     preview_path: 'mijn-werk/{{slug}}/'
+    # Grouped by category value, so new categories show up without editing this file.
+    view_groups:
+      - { label: Categorie, field: type }
     view_filters:
       filters:
-        - { name: artikel, label: Artikelen, field: type, pattern: artikel }
-        - { name: interview, label: Interviews, field: type, pattern: interview }
-        - { name: nieuwsvideo, label: Nieuwsvideo's, field: type, pattern: nieuwsvideo }
-        - { name: videoreportage, label: Videoreportages, field: type, pattern: videoreportage }
-        - { name: videomontage, label: Videomontages, field: type, pattern: videomontage }
-        - { name: overig, label: Overig, field: type, pattern: overig }
         - { name: uitgelicht, label: Uitgelicht, field: featured, pattern: true }
         - { name: concepten, label: Concepten, field: draft, pattern: true }
     fields:
@@ -105,16 +102,14 @@ collections:
 
       - name: type
         label: Categorie
-        widget: select
+        # Stores the category's slug (its file name in src/content/categories).
+        widget: relation
+        collection: categories
+        value_field: '{{slug}}'
+        search_fields: [name]
+        display_fields: [name]
         default: artikel
-        options:
-          - { label: Artikel, value: artikel }
-          - { label: Interview, value: interview }
-          - { label: Nieuwsvideo, value: nieuwsvideo }
-          - { label: Videoreportage, value: videoreportage }
-          - { label: Videomontage, value: videomontage }
-          - { label: Overig, value: overig }
-        hint: Hiermee kunnen bezoekers op "Mijn werk" filteren.
+        hint: Hiermee kunnen bezoekers op "Mijn werk" filteren. Staat je categorie er niet tussen? Voeg hem toe bij "Categorieën" in het menu.
 
       - name: summary
         label: Korte omschrijving
@@ -249,6 +244,35 @@ collections:
         required: false
         default: false
         hint: Aan = opgeslagen, maar nog niet zichtbaar op de site.
+
+  # The categories a project can have (filters on "Mijn werk"). One file per category; the
+  # slug is the web address /mijn-werk/soort/<slug>/ and the value stored in each project's `type`.
+  - name: categories
+    label: Categorieën
+    label_singular: categorie
+    description: De categorieën voor je werk, zoals Artikelen of Interviews. Sleep ze in de volgorde waarin ze op "Mijn werk" moeten staan. Een categorie verschijnt op de site zodra er een project in staat.
+    icon: category
+    folder: src/content/categories
+    format: yaml
+    extension: yml
+    identifier_field: name
+    reorder: true
+    slug:
+      template: '{{name}}'
+      editable: [create]
+      hint: Het webadres van deze categorie. Na het opslaan ligt het vast, zodat gedeelde links en je projecten blijven werken.
+    preview_path: 'mijn-werk/soort/{{slug}}/'
+    fields:
+      - name: name
+        label: Naam
+        widget: string
+        hint: Hoe één project heet, bijvoorbeeld "Podcast". Staat op de kaartjes en bij elk project.
+
+      - name: plural
+        label: Naam in het meervoud
+        widget: string
+        required: false
+        hint: Voor de filterknop op "Mijn werk", bijvoorbeeld "Podcasts". Leeg = dezelfde naam als hierboven.
 
 singletons:
   - name: home

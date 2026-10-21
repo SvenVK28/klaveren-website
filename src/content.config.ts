@@ -2,7 +2,7 @@ import { defineCollection, type SchemaContext } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { ICON_KEYS } from './lib/icons';
-import { LEGACY_WORK_TYPES, PROJECT_TYPE_KEYS, WORK_TYPE_KEYS } from './lib/work-types';
+import { PROJECT_TYPE_KEYS } from './lib/work-types';
 
 // The CMS (public/admin/config.yml) writes these files, so the schemas below
 // must stay in sync with the fields defined there. Keep them lenient: a failed
@@ -36,10 +36,8 @@ const work = defineCollection({
       title: z.string(),
       date: z.coerce.date(),
       show_date: z.boolean().default(true),
-      type: z.preprocess(
-        (value) => (typeof value === 'string' ? (LEGACY_WORK_TYPES[value] ?? value) : value),
-        z.enum(WORK_TYPE_KEYS).catch('overig'),
-      ),
+      // The key of a category in src/content/categories/ (a CMS relation field).
+      type: z.preprocess(empty, z.string().default('overig')).catch('overig'),
       summary: optionalText,
       cover: z.preprocess(empty, image().optional()),
       cover_alt: optionalText,
@@ -66,6 +64,17 @@ const work = defineCollection({
       featured: z.boolean().default(false),
       draft: z.boolean().default(false),
     }),
+});
+
+const categories = defineCollection({
+  // One file per category: src/content/categories/<key>.yml. `order` is written by the CMS
+  // when the editor drags categories into place.
+  loader: glob({ pattern: '*.yml', base: './src/content/categories' }),
+  schema: z.object({
+    name: optionalText,
+    plural: optionalText,
+    order: z.preprocess(empty, z.coerce.number().default(999)).catch(999),
+  }),
 });
 
 const settings = defineCollection({
@@ -226,4 +235,4 @@ const privacy = defineCollection({
   }),
 });
 
-export const collections = { work, settings, home, about, freelance, contact, portfolio, privacy };
+export const collections = { work, categories, settings, home, about, freelance, contact, portfolio, privacy };
