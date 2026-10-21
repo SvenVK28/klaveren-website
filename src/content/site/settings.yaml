@@ -1,7 +1,10 @@
 name: SCVK Media
 owner: Sven van Klaveren
-description: Portfolio van Sven van Klaveren, journalist in opleiding. Artikelen, interviews en video's, en ruimte voor freelanceopdrachten.
+description: Portfolio van Sven van Klaveren, journalist in opleiding. Artikelen, interviews, videomontage, en ruimte voor freelanceopdrachten.
 email: scvkmedia@gmail.com
+socials:
+  - platform: LinkedIn
+    url: https://nl.linkedin.com/in/sven-van-klaveren-bb4725329?
 form_key: 99c0af93-bfc1-4a9a-9ff4-c098237dd90d
 analytics_id: G-W8DQCWBFDM
 preview: false
