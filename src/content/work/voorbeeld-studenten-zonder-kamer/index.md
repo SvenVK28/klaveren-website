@@ -5,12 +5,12 @@ summary: 'Van een Engelse kostschool tot een Italiaans voetbalavontuur met maffi
 cover: julian-jansen-foto-artikel.webp
 cover_alt: Voetbalspeler Julian Jansen die de bal kopt in een wedstrijd
 cover_credit: Julian Jansen
-role: Interview afgenomen met Julian en daar een artikel van geschreven
+role: Interview afgenomen en uitgewerkt tot een artikel.
 date: 2026-10-15
 show_date: true
 project_type: studieopdracht
-context: Voor deze opdracht moest ik individueel op zoek gaan naar nieuws dat een link had met de door onze klas uitgekozen wijk (Scheveningen), een relevante bron vinden waaruit ik nieuws kon halen en op basis daarvan een journalistiek nieuwsartikel schrijven.
-credits: Alleen
+context: Voor deze opdracht moest ik individueel nieuws verzamelen dat verband hield met onze gekozen wijk Scheveningen, een relevante bron interviewen en op basis daarvan een journalistiek nieuwsartikel schrijven.
+credits: Eigen productie
 featured: true
 draft: false
 ---
