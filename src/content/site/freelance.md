@@ -15,13 +15,13 @@ services:
   - title: Interviews afnemen
     summary: Van korte gesprekken tot verdiepende interviews van een half uur of langer.
     description: Ik bereid interviews voor en neem gesprekken af om informatie, ervaringen of standpunten helder in beeld te brengen. De insteek, duur en vorm stemmen we vooraf af.
-    image: images/64022.webp
+    image: images/whatsapp-image-2026-10-21-at-16-09-59.webp
     icon: microphone
     price: Prijs in overleg
   - title: Videoreportages maken
     summary: Van straatinterviews tot een korte, complete videoreportage.
     description: Ik denk mee over de opbouw van een korte videoreportage en breng beeld, interviews en voice-over samen tot een duidelijk verhaal.
-    image: images/63991.webp
+    image: images/63991-1.webp
     icon: videocamera
     price: Prijs in overleg
   - title: Video monteren in Adobe Premiere Pro
