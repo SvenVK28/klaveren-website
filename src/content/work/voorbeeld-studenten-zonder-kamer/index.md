@@ -33,4 +33,4 @@ Halverwege het vorige seizoen maakte hij de overstap naar SVV Scheveningen. Daar
 
 ‘Op dit moment wil ik het allebei niet weggeven’, vertelt Jansen. Een stap hogerop in het voetbal lijkt hem nog steeds interessant. Mocht hij uiteindelijk toch moeten kiezen, dan is zijn beslissing duidelijk: ‘Dan kies ik natuurlijk wel gewoon voor mijn bedrijf. Dat kan je natuurlijk ook veel langer doen dan voetbal.’ 
 
-![Sven die Julian Jansen interviewt via Teams](schermafbeelding-2026-10-21-143134.webp)
+![Sven die Julian Jansen interviewt via Teams](schermafbeelding-2026-10-21-150448.webp)
