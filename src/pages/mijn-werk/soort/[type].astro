@@ -1,16 +1,17 @@
 ---
 import WorkIndex from '../../../components/WorkIndex.astro';
-import { getWork } from '../../../lib/content';
-import { WORK_TYPE_KEYS, type WorkType } from '../../../lib/work-types';
+import { getCategories, getWork } from '../../../lib/content';
 
 export async function getStaticPaths() {
   const work = await getWork();
-  return WORK_TYPE_KEYS.filter((type) => work.some((entry) => entry.data.type === type)).map((type) => ({
-    params: { type },
+  // Only categories with at least one project get a page.
+  const categories = await getCategories();
+  return categories.filter((category) => work.some((entry) => entry.data.type === category.key)).map((category) => ({
+    params: { type: category.key },
   }));
 }
 
-const type = Astro.params.type as WorkType;
+const { type } = Astro.params;
 ---
 
 <WorkIndex type={type} />

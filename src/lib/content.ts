@@ -25,6 +25,32 @@ export function coverOf(entry: Work) {
   return entry.data.cover ?? parseEmbed(entry.data.media_url)?.thumbnail;
 }
 
+export interface Category {
+  /** The file name in src/content/categories/, stored in each project's `type`. */
+  key: string;
+  label: string;
+  plural: string;
+}
+
+/** "videoreportage" → "Videoreportage", for a category without a name or one that was deleted. */
+const nameFromKey = (key: string) => key.charAt(0).toUpperCase() + key.slice(1).replace(/-/g, ' ');
+
+/** All categories, in the order the editor dragged them into in the CMS. */
+export async function getCategories(): Promise<Category[]> {
+  const entries = await getCollection('categories');
+  return entries
+    .sort((a, b) => a.data.order - b.data.order || a.id.localeCompare(b.id))
+    .map(({ id, data }) => {
+      const label = data.name ?? nameFromKey(id);
+      return { key: id, label, plural: data.plural ?? label };
+    });
+}
+
+/** A project's category. If it was deleted in the CMS the project still builds and shows a name. */
+export function categoryOf(categories: Category[], key: string): Category {
+  return categories.find((category) => category.key === key) ?? { key, label: nameFromKey(key), plural: nameFromKey(key) };
+}
+
 /** Each page singleton is one file in src/content/site/. */
 function only<T>(entries: T[], name: string): T {
   if (!entries[0]) throw new Error(`Missing the file for "${name}" in src/content/site/`);

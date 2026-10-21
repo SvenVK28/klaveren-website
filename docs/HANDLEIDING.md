@@ -65,6 +65,19 @@ De volgorde volgt de **datum** (nieuwste eerst). Wil je een project hoger of lag
 de datum aan. Staat de juiste datum er niet op? Zet dan *Datum tonen* uit; de datum bepaalt dan
 alleen nog de volgorde. Wil je iets altijd op de homepage, zet dan *Uitlichten op de homepage* aan.
 
+### Categorieën toevoegen
+
+Mist er een categorie, bijvoorbeeld *Podcast* of *Fotografie*? Klik links op **Categorieën** en
+daarna op **Nieuw**. Vul de **Naam** in (één project, zoals "Podcast") en eventueel de naam in het
+**meervoud** ("Podcasts", die staat op de filterknop). Sla op. Daarna kun je hem bij elk project
+kiezen onder **Categorie**.
+
+- Een categorie staat pas op de site als er minstens één project in zit.
+- Met **Volgorde wijzigen** sleep je de categorieën in de volgorde van de filterknoppen op *Mijn werk*.
+- De naam kun je later nog veranderen; het webadres ligt vast na de eerste keer opslaan.
+- Verwijder je een categorie die nog bij projecten hoort? Dan blijven die projecten gewoon op de
+  site staan. Kies voor die projecten wel even een andere categorie.
+
 ---
 
 ## 3. Iets aanpassen of verwijderen
