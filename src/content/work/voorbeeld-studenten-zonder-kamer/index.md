@@ -19,6 +19,8 @@ Door het werk van zijn vader bij Shell groeide Jansen op in verschillende landen
 
 Zijn jeugd in het buitenland bracht hem op verschillende plekken. In Wenen zat Jansen op een internationale school en voetbalde hij korte tijd bij Rapid Wien in de jeugd. Later woonde hij ongeveer vier jaar in Singapore, dat was volgens hem de beste tijd van zijn jeugd. 
 
+![Sven die Julian Jansen interviewt via Teams](schermafbeelding-2026-10-21-150448.webp)
+
 **Eenzaam op Sicilië** 
 
 Tussen zijn Engelse clubs speelde Jansen een halfjaar op Sicilië bij Sancataldese Calcio. Daar maakte hij bijzondere dingen mee. ‘Niemand sprak Engels, dus ik liep daar rond met mijn Google Translate’, vertelt hij. De club waarvoor hij speelde, was volgens Jansen in handen van de maffia. Spelers kregen hun salaris contant in enveloppen. 
@@ -31,6 +33,4 @@ Terug in Nederland speelde Jansen bij Rijnvogels en later Ter Leede. Omdat hij b
 
 Halverwege het vorige seizoen maakte hij de overstap naar SVV Scheveningen. Daar kan hij zijn voetbal en onderneming voorlopig goed combineren. Toch weet hij dat er mogelijk een moment komt waarop hij moet kiezen. 
 
-‘Op dit moment wil ik het allebei niet weggeven’, vertelt Jansen. Een stap hogerop in het voetbal lijkt hem nog steeds interessant. Mocht hij uiteindelijk toch moeten kiezen, dan is zijn beslissing duidelijk: ‘Dan kies ik natuurlijk wel gewoon voor mijn bedrijf. Dat kan je natuurlijk ook veel langer doen dan voetbal.’ 
-
-![Sven die Julian Jansen interviewt via Teams](schermafbeelding-2026-10-21-150448.webp)
+‘Op dit moment wil ik het allebei niet weggeven’, vertelt Jansen. Een stap hogerop in het voetbal lijkt hem nog steeds interessant. Mocht hij uiteindelijk toch moeten kiezen, dan is zijn beslissing duidelijk: ‘Dan kies ik natuurlijk wel gewoon voor mijn bedrijf. Dat kan je natuurlijk ook veel langer doen dan voetbal.’
