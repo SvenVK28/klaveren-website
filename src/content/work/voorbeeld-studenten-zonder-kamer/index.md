@@ -2,10 +2,10 @@
 title: 'Van vier jaar in Singapore tot maffiapraktijken in Italië: de bijzondere route van SVV Scheveningen speler Julian Jansen (23)'
 type: artikel
 summary: Voorbeeld van een artikel. Wachtlijsten van twee jaar, kamers van 700 euro en hospiteeravonden met zestig kandidaten. Hoe de kamernood eruitziet voor eerstejaars.
-cover: cover.webp
-cover_alt: Opengevouwen krant in een streep zonlicht
-cover_credit: Tijdelijke foto (CC0)
-role: Onderzoek en tekst
+cover: julian-jansen-foto-artikel.webp
+cover_alt: Voetbalspeler Julian Jansen die de bal kopt in een wedstrijd
+cover_credit: Julian Jansen
+role: Interview afgenomen met Julian en daar een artikel van geschreven
 date: 2026-09-22
 show_date: true
 project_type: studieopdracht
