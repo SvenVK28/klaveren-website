@@ -1,11 +1,11 @@
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
-import { getSettings, getWork, workUrl } from '../lib/content';
-import { WORK_TYPES } from '../lib/work-types';
+import { categoryOf, getCategories, getSettings, getWork, workUrl } from '../lib/content';
 
 export async function GET(context: APIContext) {
   const settings = await getSettings();
   const work = await getWork();
+  const categories = await getCategories();
   return rss({
     title: settings.name,
     description: settings.description ?? '',
@@ -16,7 +16,7 @@ export async function GET(context: APIContext) {
       description: entry.data.summary,
       pubDate: entry.data.date,
       link: workUrl(entry),
-      categories: [WORK_TYPES[entry.data.type].label],
+      categories: [categoryOf(categories, entry.data.type).label],
     })),
     customData: '<language>nl-nl</language>',
   });
