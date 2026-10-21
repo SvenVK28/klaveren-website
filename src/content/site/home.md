@@ -3,8 +3,7 @@ eyebrow: SCVK Media • Sven van Klaveren
 headline: Al mijn werk in één website
 intro: Van interviews en artikelen tot video's en reportages. Op deze website vind je al het werk dat ik maak, de verhalen die ik uitzoek en de producties die ik zelf oplever.
 primary_button: Bekijk mijn werk
-secondary_button: Over mij
-hero_image: images/home-hero.webp
+secondary_button: Meer over mij
 work_eyebrow: Uitgelicht werk
 work_title: Een greep uit mijn recente werk
 work_count: 6
