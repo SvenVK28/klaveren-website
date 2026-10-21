@@ -1,11 +1,12 @@
 ---
 import { url } from '../lib/url';
-import { WORK_TYPES, type WorkType } from '../lib/work-types';
+import type { Category } from '../lib/content';
 
 interface Props {
   /** Categories that have at least one entry; others are hidden. */
-  available: WorkType[];
-  current?: WorkType;
+  available: Category[];
+  /** Key of the selected category. */
+  current?: string;
 }
 
 const { available, current } = Astro.props;
@@ -20,10 +21,10 @@ const { available, current } = Astro.props;
             Alles
           </a>
         </li>
-        {available.map((type) => (
+        {available.map((category) => (
           <li>
-            <a href={url(`mijn-werk/soort/${type}/`)} aria-current={type === current ? 'page' : undefined}>
-              {WORK_TYPES[type].plural}
+            <a href={url(`mijn-werk/soort/${category.key}/`)} aria-current={category.key === current ? 'page' : undefined}>
+              {category.plural}
             </a>
           </li>
         ))}

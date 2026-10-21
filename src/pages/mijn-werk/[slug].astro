@@ -5,11 +5,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import MediaEmbed from '../../components/MediaEmbed.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import Icon from '../../components/Icon.astro';
-import { coverOf, getSettings, getWork, workUrl, type Work } from '../../lib/content';
+import { categoryOf, coverOf, getCategories, getSettings, getWork, workUrl, type Work } from '../../lib/content';
 import { parseEmbed } from '../../lib/embed';
 import { formatDate } from '../../lib/format';
 import { url } from '../../lib/url';
-import { PROJECT_TYPES, WORK_TYPES } from '../../lib/work-types';
+import { PROJECT_TYPES } from '../../lib/work-types';
 import type { IconName } from '../../lib/icons';
 
 export async function getStaticPaths() {
@@ -32,7 +32,8 @@ const { data } = entry;
 const { Content } = await render(entry);
 const settings = await getSettings();
 
-const type = WORK_TYPES[data.type];
+const categories = await getCategories();
+const type = categoryOf(categories, data.type);
 const embed = parseEmbed(data.media_url);
 // Video and audio lead with the player (the cover becomes its still); otherwise the cover photo.
 const showCover = data.cover && !embed;
@@ -159,7 +160,7 @@ const facts = [
                       ) : null}
                     </span>
                     <span class="more-text">
-                      <span class="eyebrow category">{WORK_TYPES[other.data.type].label}</span>
+                      <span class="eyebrow category">{categoryOf(categories, other.data.type).label}</span>
                       <a href={workUrl(other)}>{other.data.title}</a>
                       <Icon name="arrow" />
                     </span>

@@ -3,13 +3,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import TypeFilter from './TypeFilter.astro';
 import WorkGrid from './WorkGrid.astro';
 import CtaBand from './CtaBand.astro';
-import { getPortfolio, getSettings, getWork } from '../lib/content';
+import { categoryOf, getCategories, getPortfolio, getSettings, getWork } from '../lib/content';
 import { url } from '../lib/url';
-import { WORK_TYPES, WORK_TYPE_KEYS, type WorkType } from '../lib/work-types';
 
 interface Props {
   /** Selected category, or all work. */
-  type?: WorkType;
+  type?: string;
 }
 
 // "Mijn werk" with and without a category filter. Each filter is its own page
@@ -19,9 +18,10 @@ const { type } = Astro.props;
 const page = await getPortfolio();
 const settings = await getSettings();
 const work = await getWork();
-const available = WORK_TYPE_KEYS.filter((key) => work.some((entry) => entry.data.type === key));
+const categories = await getCategories();
+const available = categories.filter((category) => work.some((entry) => entry.data.type === category.key));
 const entries = type ? work.filter((entry) => entry.data.type === type) : work;
-const title = type ? `${WORK_TYPES[type].plural} | ${page.title}` : page.title;
+const title = type ? `${categoryOf(categories, type).plural} | ${page.title}` : page.title;
 ---
 
 <BaseLayout title={title} description={page.description ?? page.intro}>
