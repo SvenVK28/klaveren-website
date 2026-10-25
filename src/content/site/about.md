@@ -1,41 +1,29 @@
 ---
 eyebrow: Over mij
 title: Sven van Klaveren
-intro: Ik studeer journalistiek aan de Hogeschool van Amsterdam. Ik schrijf artikelen, neem interviews af en film en monteer video's. Ik ben nieuwsgierig en werk graag met mensen en hun verhalen.
-photo: images/portret-placeholder.png
-photo_alt: Plek voor een portretfoto
+intro: Ik ben Sven, 19 jaar en student journalistiek aan Fontys Hogeschool in Tilburg. Ik vind het leuk om met mensen in gesprek te gaan, nieuwe dingen te ontdekken en door te vragen als ik ergens meer over wil weten. Dat doe ik door interviews af te nemen, artikelen te schrijven en video's te maken. Op deze website verzamel ik mijn werk, zodat je kunt zien wat ik maak en hoe ik me als journalist ontwikkel.
+photo: images/portretfoto-sven-vierkant.webp
+photo_alt: portretfoto van Sven
 highlights:
-  - icon: graduation
-    title: Opleiding
-    text: Ik studeer journalistiek en heb daarvoor de opleiding tot redactiemedewerker afgerond.
-  - icon: document
-    title: Ervaring
-    text: Ik heb ervaring met het schrijven van artikelen, het afnemen van interviews en het filmen en monteren van video's.
-  - icon: compass
-    title: Interesses
-    text: 'Voorbeeldtekst: welke onderwerpen en soorten verhalen interesseren je het meest?'
-  - icon: camera
-    title: Vaardigheden
-    text: Artikelen schrijven, interviews voorbereiden en afnemen, monteren in Adobe Premiere Pro en voice-overs inspreken.
-work_eyebrow: Ervaring & producties
-work_title: Wat ik heb gedaan
-work_text: Tijdens mijn studie en mijn opleiding tot redactiemedewerker heb ik aan verschillende redactionele en audiovisuele projecten gewerkt, van artikelen en interviews tot het filmen en monteren van video's.
-work_items:
-  - title: Video en montage
-    text: Filmen, monteren en het verhaal in beeld vertellen.
-    image: images/over-mij-video.webp
-  - title: Interviews
-    text: Vragen stellen, luisteren en de kern boven water halen.
-    image: images/over-mij-interviews.webp
-  - title: Artikelen
-    text: Verhalen uitwerken tot een helder en leesbaar artikel.
-    image: images/over-mij-artikelen.webp
+  - title: Opleiding
+    text: Ik heb de mbo-niveau 4 opleiding Redactiemedewerker afgerond aan het Grafisch Lyceum Rotterdam. Inmiddels studeer ik journalistiek aan Fontys Hogeschool in Tilburg.
+    icon: graduation
+  - title: Ervaring
+    text: Tijdens mijn stage bij team Communicatie van de Provincie Zuid-Holland heb ik aan verschillende projecten gewerkt. Ik hield me bezig met het voorbereiden en afnemen van interviews, het schrijven van artikelen, en het monteren van video's in Adobe Première Pro. Ook leerde ik samenwerken met verschillende collega's en hoe het er in een professionele werkomgeving aan toegaat.
+    icon: document
+  - title: Mijn aanpak
+    text: Ik ben nieuwsgierig en vraag graag door. Als ik iets niet begrijp of het gevoel heb dat er meer achter een verhaal zit, stel ik aanvullende vragen. Ik vind het belangrijk om me goed voor te bereiden, me in een onderwerp te verdiepen en niet zomaar genoegen te nemen met het eerste antwoord.
+    icon: compass
+  - title: Wat ik kan
+    text: "Van interviews afnemen en artikelen schrijven tot video's monteren in Adobe Premiere Pro: ik help graag mee aan verschillende journalistieke producties. Ook voor andere ideeën en opdrachten denk ik graag mee. Weet je niet zeker of ik je kan helpen? Stuur gerust een mailtje. Dan kijken we samen wat ik voor je kan betekenen."
+    icon: microphone
 next_eyebrow: Waar ik naartoe wil
 next_title: Samen aan sterke verhalen werken
-next_image: images/over-mij-toekomst.webp
 next_text: Ik wil me verder ontwikkelen als journalist en sta open voor samenwerkingen, stages en freelanceopdrachten. Heb je een vraag of een idee? Stuur gerust een bericht.
+next_image: images/over-mij-toekomst.webp
 cta:
-  title: Laten we in contact komen
+  title: Contact?
   text: Heb je een vraag, een idee of een opdracht? Ik denk graag met je mee.
   button: Neem contact op
+description: SCVK Media is het portfolio van journalistiekstudent Sven van Klaveren. Bekijk artikelen, interviews, videoreportages en andere producties of neem contact op voor freelanceopdrachten.
 ---
