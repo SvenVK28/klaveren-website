@@ -17,9 +17,6 @@ highlights:
   - title: Wat ik kan
     text: "Van interviews afnemen en artikelen schrijven tot video's monteren in Adobe Premiere Pro: ik help graag mee aan verschillende journalistieke producties. Ook denk ik graag mee over andere ideeën en opdrachten. Weet je niet zeker of ik je kan helpen? Stuur gerust een mailtje. Dan kijken we samen naar de mogelijkheden."
     icon: microphone
-next_eyebrow: Waar ik naartoe wil
-next_title: Samen aan sterke verhalen werken
-next_text: Ik wil me verder ontwikkelen als journalist en sta open voor samenwerkingen en freelanceopdrachten. Heb je een vraag of een idee? Stuur gerust een mail naar scvkmedia@gmail.com.
 cta:
   title: Contact?
   text: Heb je een vraag, een idee of een opdracht? Ik denk graag met je mee.
