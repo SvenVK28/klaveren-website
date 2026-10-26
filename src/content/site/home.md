@@ -4,7 +4,7 @@ headline: Al mijn werk in één website
 intro: Van interviews en artikelen tot video's en reportages. Op deze website vind je al het werk dat ik maak, de verhalen die ik uitzoek en de producties die ik zelf oplever.
 primary_button: Bekijk mijn werk
 secondary_button: Meer over mij
-hero_image: images/wipe-result-5.webp
+hero_image: images/63995-kopie.webp
 work_eyebrow: Uitgelicht werk
 work_title: Recent werk
 work_count: 6
