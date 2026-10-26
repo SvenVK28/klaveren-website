@@ -2,7 +2,7 @@
 eyebrow: Over mij
 title: Sven van Klaveren
 intro: Ik ben Sven, 19 jaar en student journalistiek aan Fontys Hogeschool in Tilburg. Ik vind het leuk om met mensen in gesprek te gaan, nieuwe dingen te ontdekken en door te vragen als ik ergens meer over wil weten. Dat doe ik door interviews af te nemen, artikelen te schrijven en video's te maken. Op deze website verzamel ik mijn werk, zodat je kunt zien wat ik maak en hoe ik me als journalist ontwikkel.
-photo: images/65230-pixohub-2.webp
+photo: images/65230.webp
 photo_alt: portretfoto van Sven
 highlights:
   - title: Opleiding
