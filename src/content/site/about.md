@@ -19,11 +19,10 @@ highlights:
     icon: microphone
 next_eyebrow: Waar ik naartoe wil
 next_title: Samen aan sterke verhalen werken
-next_text: Ik wil me verder ontwikkelen als journalist en sta open voor samenwerkingen, stages en freelanceopdrachten. Heb je een vraag of een idee? Stuur gerust een bericht.
-next_image: images/over-mij-toekomst.webp
+next_text: Ik wil me verder ontwikkelen als journalist en sta open voor samenwerkingen en freelanceopdrachten. Heb je een vraag of een idee? Stuur gerust een mail naar scvkmedia@gmail.com.
 cta:
   title: Contact?
   text: Heb je een vraag, een idee of een opdracht? Ik denk graag met je mee.
   button: Neem contact op
-description: SCVK Media is het portfolio van journalistiekstudent Sven van Klaveren. Bekijk artikelen, interviews, videoreportages en andere producties of neem contact op voor freelanceopdrachten.
+description: SCVK Media is het portfolio van journalistiekstudent Sven van Klaveren. Bekijk artikelen, interviews, videoreportages en andere producties of neem contact op voor samenwerkingen/freelanceopdrachten.
 ---
