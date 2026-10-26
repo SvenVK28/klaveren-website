@@ -11,12 +11,30 @@ interface Props {
   imageAlt?: string;
   /** The homepage hero: taller, with a bigger headline. */
   large?: boolean;
+  about?: boolean;
 }
 
-const { eyebrow, title, intro, image, imageAlt, large = false } = Astro.props;
+const {
+  eyebrow,
+  title,
+  intro,
+  image,
+  imageAlt,
+  large = false,
+  about = false
+} = Astro.props;
 ---
 
-<section class:list={['hero', { 'hero--image': image, 'hero--large': large }]}>
+<section
+  class:list={[
+    'hero',
+    {
+      'hero--image': image,
+      'hero--large': large,
+      'hero--about': about
+    }
+  ]}
+>
   {
     image && (
       <div class="media">
@@ -32,6 +50,7 @@ const { eyebrow, title, intro, image, imageAlt, large = false } = Astro.props;
       </div>
     )
   }
+
   <div class="container inner">
     <div class="text">
       {eyebrow && <p class="eyebrow">{eyebrow}</p>}
@@ -92,20 +111,23 @@ const { eyebrow, title, intro, image, imageAlt, large = false } = Astro.props;
     background: var(--color-placeholder);
   }
 
-.media :global(img) {
+  .media :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
   }
 
-  /* Wider screens: the photo fills the right side and fades into the page. */
   @media (min-width: 48rem) {
     .hero--image .media {
       position: absolute;
       inset: 0 0 0 auto;
-    width: var(--hero-width, 62%);
+      width: 62%;
       aspect-ratio: auto;
+    }
+
+    .hero--about .media {
+      width: 50%;
     }
 
     .hero--image .media::after {
@@ -126,7 +148,6 @@ const { eyebrow, title, intro, image, imageAlt, large = false } = Astro.props;
     }
   }
 
-  /* Phones: text first, then the photo full width. */
   @media (max-width: 47.99rem) {
     .hero--image {
       display: flex;
