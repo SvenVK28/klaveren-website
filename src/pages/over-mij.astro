@@ -17,7 +17,14 @@ const [lead, ...tiles] = data.work_items;
 ---
 
 <BaseLayout title={data.eyebrow ?? 'Over mij'} description={data.description ?? data.intro} image={shareImage}>
-  <PageHero eyebrow={data.eyebrow} title={data.title} intro={data.intro} image={data.photo} imageAlt={data.photo_alt}>
+<PageHero
+  eyebrow={data.eyebrow}
+  title={data.title}
+  intro={data.intro}
+  image={data.photo}
+  imageAlt={data.photo_alt}
+  style="--hero-width: 50%;"
+>
     {
       data.cv && (
         <p class="actions">
