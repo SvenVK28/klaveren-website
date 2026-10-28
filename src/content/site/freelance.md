@@ -9,7 +9,8 @@ services:
   - title: Artikelen schrijven
     summary: Heldere artikelen op basis van aangeleverde informatie, research of gesprekken.
     description: Ik schrijf artikelen op basis van aangeleverde informatie, research en/of gesprekken. We bespreken vooraf het onderwerp, de insteek, de gewenste lengte en de deadline.
-    image: images/63992.webp
+    image: images/65688.webp
+    image_alt: Sven die een artikel aan het schrijven is
     icon: document
     price: Prijs in overleg
   - title: Interviews afnemen
@@ -27,20 +28,8 @@ services:
   - title: Video monteren in Adobe Premiere Pro
     summary: Aangeleverd beeldmateriaal monteren tot een samenhangende video.
     description: Ik monteer aangeleverd beeldmateriaal in Adobe Premiere Pro tot een samenhangende video. Denk aan het selecteren en ordenen van beelden, het monteren van interviews, het toevoegen van voice-over en ondertiteling als we dat afspreken.
-    image: images/dienst-montage.webp
+    image: images/65694.webp
     icon: timeline
-    price: Prijs in overleg
-  - title: Interviews uitwerken tot een artikel
-    summary: Van gesprek naar een helder artikel.
-    description: Ik werk een interview uit tot een helder artikel waarin de belangrijkste uitspraken en inzichten centraal staan. Vooraf bespreken we het doel, de doelgroep en de gewenste lengte.
-    image: images/dienst-uitwerken.webp
-    icon: pen
-    price: Prijs in overleg
-  - title: Voice-overs inspreken
-    summary: Een voice-overtekst schrijven of een aangeleverde tekst inspreken.
-    description: Ik schrijf een voice-overtekst bij je video of spreek een aangeleverde tekst in.
-    image: images/dienst-voice-over.webp
-    icon: waveform
     price: Prijs in overleg
 price_note: De prijs hangt af van de omvang, de voorbereiding en de gewenste oplevering.
 agreements_title: Vooraf maken we duidelijke afspraken over
@@ -55,5 +44,4 @@ cta:
   title: Liever iets anders bespreken?
   text: Heb je een andere vraag of opdracht in gedachten? Neem gerust contact op, dan denk ik graag met je mee.
   button: Neem contact op
-  image: images/freelance-cta.webp
 ---
