@@ -33,7 +33,9 @@ Naarmate het niveau hoger wordt, merkt Boel dat ook zijn uitstraling steeds bela
 
 Daarbij speelt ook zijn lichaamstaal een belangrijke rol. “Ik kan verbaal iets tegen jou zeggen, maar als ik non-verbaal ook even zo’n gebaar maak, dan is het klaar.” Boel gebruikt dus niet alleen woorden om duidelijk te maken wat hij bedoelt. 
 
-![Boel maakt zijn beslissing duidelijk met zijn uitstraling](8h6a3153.webp "Boel maakt zijn beslissing duidelijk met zijn uitstraling")
+![](8h6a3153.webp)
+
+_Boel maakt zijn beslissing duidelijk met zijn uitstraling_
 
 Duidelijkheid is erg belangrijk als scheidsrechter, zodat de spelers weten waar ze aan toe zijn. Als een scheidsrechter niet duidelijk communiceert, kan een speler bijvoorbeeld niet goed inschatten hoe dicht hij bij een volgende kaart zit. Een duidelijke houding en communicatie kunnen daardoor veel onzekerheid op het veld veroorzaken. 
 
