@@ -6,7 +6,7 @@ summary: |-
   niemand het over hem heeft. Niels Boel (28) weet daar alles van. De 
   Zeeuw fluit betaald voetbal en vertelt over de druk, fouten en kritiek die 
   bij het vak komen kijken.
-cover: niels-boel.webp
+cover: vierkant-niels-boel.webp
 cover_alt: Niels Boel die een wedstrijd fluit als scheidsrechter
 cover_credit: Instagram / Niels Boel
 role: Interview afgenomen en uitgewerkt tot een artikel.
