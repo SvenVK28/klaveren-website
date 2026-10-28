@@ -11,7 +11,7 @@ work_count: 6
 about_eyebrow: Over mij
 about_title: Sven van Klaveren
 about_text: Ik studeer journalistiek aan de Hogeschool van Amsterdam en heb daarvoor de opleiding tot redactiemedewerker afgerond. Ik schrijf artikelen, neem interviews af en film en monteer video's.
-about_photo: images/portretfoto-sven-vierkant.webp
+about_photo: images/65230.webp
 about_photo_alt: vierkante portretfoto Sven
 services_eyebrow: Freelance
 services_title: Wat ik voor je kan doen
