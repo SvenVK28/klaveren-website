@@ -6,9 +6,9 @@ summary: |-
   niemand het over hem heeft. Niels Boel (28) weet daar alles van. De 
   Zeeuw fluit betaald voetbal en vertelt over de druk, fouten en kritiek die 
   bij het vak komen kijken.
-cover: niels-boel-3-2.webp
+cover: 8h6a2958.webp
 cover_alt: Niels Boel die een wedstrijd fluit als scheidsrechter
-cover_credit: Instagram / Niels Boel
+cover_credit: Jessy Domenie Photography
 role: Interview afgenomen en uitgewerkt tot een artikel.
 date: 2026-10-03
 show_date: true
@@ -29,9 +29,11 @@ Boel heeft in de afgelopen jaren geleerd om beter met kritiek en fouten om te ga
 
 **Uitstraling** 
 
-Naarmate het niveau hoger wordt, merkt Boel dat ook zijn uitstraling steeds belangrijker wordt. Een beslissing nemen is volgens hem één ding, maar hij moet die beslissing ook duidelijk overbrengen naar de spelers en het publiek. “Ik kan wel tegen jou zeggen dat ik het vervelend vind dat jij een overtreding maakt. Maar dat moet ik ook wel uitstralen voor het hele stadion.” 
+Naarmate het niveau hoger wordt, merkt Boel dat ook zijn uitstraling steeds belangrijker wordt. Een beslissing nemen is volgens hem één ding, maar hij moet die beslissing ook duidelijk overbrengen naar de spelers en het publiek. “Ik kan wel tegen jou zeggen dat ik het vervelend vind dat jij een overtreding maakt. Maar dat moet ik ook wel uitstralen voor het hele stadion.”
 
 Daarbij speelt ook zijn lichaamstaal een belangrijke rol. “Ik kan verbaal iets tegen jou zeggen, maar als ik non-verbaal ook even zo’n gebaar maak, dan is het klaar.” Boel gebruikt dus niet alleen woorden om duidelijk te maken wat hij bedoelt. 
+
+![Boel maakt zijn beslissing duidelijk met zijn uitstraling](8h6a3153.webp "Boel maakt zijn beslissing duidelijk met zijn uitstraling")
 
 Duidelijkheid is erg belangrijk als scheidsrechter, zodat de spelers weten waar ze aan toe zijn. Als een scheidsrechter niet duidelijk communiceert, kan een speler bijvoorbeeld niet goed inschatten hoe dicht hij bij een volgende kaart zit. Een duidelijke houding en communicatie kunnen daardoor veel onzekerheid op het veld veroorzaken. 
 
