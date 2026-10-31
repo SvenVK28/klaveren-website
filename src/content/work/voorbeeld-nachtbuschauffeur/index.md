@@ -8,7 +8,7 @@ role: Camera, interviews en montage
 date: 2026-09-08
 show_date: true
 project_type: studieopdracht
-media_url: https://www.youtube.com/watch?v=aqz-KE-bpKQ
+media_url: https://www.youtube.com/watch?v=5arqHIwOYes
 context: Opdracht videojournalistiek, jaar 1
 credits: 'Camera: naam medestudent'
 featured: true
