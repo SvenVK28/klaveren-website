@@ -19,6 +19,8 @@ featured: false
 draft: false
 ---
 
+**Voor een scheidsrechter is een wedstrijd pas echt geslaagd als niemand het over hem heeft. Niels Boel (28) weet daar alles van. De Zeeuw fluit betaald voetbal en vertelt over de druk, fouten en kritiek die bij het vak komen kijken.**
+
 Een scheidsrechter staat tijdens een wedstrijd volop in de aandacht, maar kritiek hoort daar ook bij. Dat merkt Boel zelf ook, want kritiek laat hem niet volledig koud. “Tuurlijk ben ik ook niet van steen, dus ik kan niet ontkennen dat dat af en toe wat met je doet.” zegt hij.  
 
 Een beslissing van de scheidsrechter kan bij iedereen tijdens een wedstrijd veel losmaken. “Iedereen handelt op zo’n moment wel uit een bepaalde emotie, waarin denk ik heel veel mensen niet echt honderd procent zichzelf zijn.”  Daar houdt de Zeeuw dus wel rekening mee. 
