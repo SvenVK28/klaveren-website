@@ -114,8 +114,9 @@ collections:
       - name: summary
         label: Korte omschrijving
         widget: text
+        required: false
         maxlength: 300
-        hint: Eén of twee zinnen. Staat op de kaartjes en verschijnt als je de link deelt (WhatsApp, LinkedIn…).
+        hint: Optioneel. Je hoeft dit veld niet in te vullen.
 
       - name: cover
         label: Foto
