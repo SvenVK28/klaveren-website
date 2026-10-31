@@ -1,7 +1,6 @@
 ---
 title: 'Van vier jaar in Singapore tot maffiapraktijken in Italië: de bijzondere route van SVV Scheveningen speler Julian Jansen (23)'
 type: interviewartikel
-summary: .
 cover: julian-jansen-foto-artikel.webp
 cover_alt: Voetbalspeler Julian Jansen die de bal kopt in een wedstrijd
 cover_credit: Julian Jansen
