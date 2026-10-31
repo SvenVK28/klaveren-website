@@ -1,17 +1,18 @@
 ---
 title: 'Voorbeeld: Een nacht mee met de buschauffeur'
-date: 2026-09-08
 type: videoreportage
-summary: Voorbeeld van een videoreportage. Plak een YouTube- of Vimeo-link in het beheerpaneel en de speler verschijnt bovenaan de pagina.
 cover: cover.webp
 cover_alt: Perron van een treinstation
 cover_credit: Tijdelijke foto (CC0)
-media_url: https://www.youtube.com/watch?v=aqz-KE-bpKQ
 role: Camera, interviews en montage
+date: 2026-09-08
+show_date: true
 project_type: studieopdracht
+media_url: https://www.youtube.com/watch?v=aqz-KE-bpKQ
 context: Opdracht videojournalistiek, jaar 1
 credits: 'Camera: naam medestudent'
 featured: true
+draft: false
 ---
 
 *Voorbeeldinhoud. De video hierboven is een tijdelijke placeholder (Big Buck Bunny, Blender Foundation).*
