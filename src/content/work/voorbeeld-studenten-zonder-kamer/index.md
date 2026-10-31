@@ -1,7 +1,7 @@
 ---
 title: 'Van vier jaar in Singapore tot maffiapraktijken in Italië: de bijzondere route van SVV Scheveningen speler Julian Jansen (23)'
 type: interviewartikel
-summary: 'Van een Engelse kostschool tot een Italiaans voetbalavontuur met maffiapraktijken: de 23-jarige Julian Jansen heeft een bijzondere route afgelegd. Inmiddels speelt de in Engeland geboren voetballer bij SVV Scheveningen, waar hij zijn voetbalcarrière combineert met een eigen supplementenbedrijf.'
+summary: .
 cover: julian-jansen-foto-artikel.webp
 cover_alt: Voetbalspeler Julian Jansen die de bal kopt in een wedstrijd
 cover_credit: Julian Jansen
@@ -14,6 +14,8 @@ credits: Eigen productie
 featured: true
 draft: false
 ---
+
+**Van een Engelse kostschool tot een Italiaans voetbalavontuur met maffiapraktijken: de 23-jarige Julian Jansen heeft een bijzondere route afgelegd. Inmiddels speelt de in Engeland geboren voetballer bij SVV Scheveningen, waar hij zijn voetbalcarrière combineert met een eigen supplementenbedrijf.**
 
 Door het werk van zijn vader bij Shell groeide Jansen op in verschillende landen, waaronder Engeland, Oostenrijk, Singapore en Nederland. Op zijn vijftiende vertrok hij alleen naar Engeland om voetbal en onderwijs te combineren op een kostschool. Daar kreeg hij de kans om zich verder te ontwikkelen bij de jeugdopleiding van Bolton Wanderers. 
 
