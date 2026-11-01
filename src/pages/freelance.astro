@@ -1,6 +1,6 @@
+
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHero from '../components/PageHero.astro';
 import SectionHead from '../components/SectionHead.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import CtaBand from '../components/CtaBand.astro';
@@ -11,20 +11,16 @@ import { url } from '../lib/url';
 const { data } = await getFreelance();
 ---
 
-<BaseLayout title={data.eyebrow ?? 'Freelance'} description={data.description ?? data.intro}>
-  <PageHero eyebrow={data.eyebrow} title={data.title} intro={data.intro} image={data.hero_image} imageAlt={data.hero_image_alt}>
-    <p class="actions">
-      <a class="button button--primary" href={url('contact/')}>
-        Neem contact op
-        <Icon name="arrow" />
-      </a>
-    </p>
-  </PageHero>
+<BaseLayout title={data.services_title ?? 'Mijn diensten'} description={data.description ?? data.intro}>
 
   {
     data.services.length > 0 && (
       <section class="container section" aria-labelledby="services-title">
-        <SectionHead id="services-title" eyebrow={data.services_eyebrow} title={data.services_title} />
+        <SectionHead
+          id="services-title"
+          eyebrow={data.services_eyebrow}
+          title={data.services_title}
+        />
         <ul class="services">
           {data.services.map((service, i) => (
             <li>
@@ -62,6 +58,7 @@ const { data } = await getFreelance();
     href={url('contact/')}
     image={data.cta.image}
   />
+
 </BaseLayout>
 
 <style>
@@ -130,3 +127,4 @@ const { data } = await getFreelance();
     }
   }
 </style>
+
