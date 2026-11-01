@@ -1,8 +1,5 @@
 ---
-eyebrow: Freelance
-title: Op zoek naar journalistieke ondersteuning?
-intro: Ik help graag bij het maken van artikelen, interviews en video's. Vertel kort wat je nodig hebt, dan bespreken we samen of en hoe ik kan helpen.
-hero_image: images/freelance-hero.webp
+title: Freelance
 services_eyebrow: Mijn diensten
 services_title: Wat ik voor je kan doen
 services:
