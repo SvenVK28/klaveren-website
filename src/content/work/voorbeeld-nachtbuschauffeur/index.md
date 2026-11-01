@@ -1,7 +1,7 @@
 ---
 title: Toerisme door de ogen van Scheveningers
 type: videoreportage
-cover: hoe-ervaren-bewoners-toerisme-in-scheveningen_.webp
+cover: schermafbeelding-2026-11-01-235716.webp
 cover_alt: Woningen in Scheveningen
 cover_credit: SCVK Media
 role: Camera, interviews en montage
