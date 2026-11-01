@@ -1,20 +1,22 @@
 ---
-title: 'Voorbeeld: Een nacht mee met de buschauffeur'
+title: Toerisme door de ogen van Scheveningers
 type: videoreportage
-cover: cover.webp
-cover_alt: Perron van een treinstation
-cover_credit: Tijdelijke foto (CC0)
+cover: hoe-ervaren-bewoners-toerisme-in-scheveningen_.webp
+cover_alt: Woningen in Scheveningen
+cover_credit: SCVK Media
 role: Camera, interviews en montage
-date: 2026-09-08
+date: 2026-10-05
 show_date: true
 project_type: studieopdracht
 media_url: https://www.youtube.com/watch?v=5arqHIwOYes
-context: Opdracht videojournalistiek, jaar 1
-credits: 'Camera: naam medestudent'
+context: Voor deze opdracht moest ik op pad in onze uitgekozen wijk Scheveningen om een journalistiek nieuwsitem op beeld te maken. Hiervoor verzamelde ik nieuws, filmde ik beelden en interviewde ik betrokken bronnen. Het kortje moest normaal gesproken 30 seconden duren, maar de docent gaf in de les aan dat studenten met ervaring in dit soort producties ervoor mochten kiezen om een uitgebreidere versie van 1,5 minuut te maken in plaats van 30 seconden.
+credits: 'Camera: medestudent'
 featured: true
 draft: false
 ---
 
-*Voorbeeldinhoud. De video hierboven is een tijdelijke placeholder (Big Buck Bunny, Blender Foundation).*
+Scheveningen trekt ieder jaar veel toeristen. Dat brengt levendigheid en gezelligheid met zich mee, maar heeft ook invloed op het dagelijks leven van de mensen die er wonen. Hoe kijken zij eigenlijk naar het toerisme in hun eigen omgeving?
 
-Hier kun je een korte toelichting op de video schrijven: waarom je het onderwerp koos, hoe je te werk ging en wat je ervan leerde.
+Voor deze reportage ben ik Scheveningen in gegaan om met bewoners in gesprek te gaan. Ik vroeg hen hoe zij het toerisme ervaren, wat zij ervan vinden en welke invloed het heeft op hun woonomgeving.
+
+De antwoorden laten verschillende kanten van het verhaal zien. Bekijk de reportage en ontdek hoe bewoners zelf tegen het toerisme aankijken.
