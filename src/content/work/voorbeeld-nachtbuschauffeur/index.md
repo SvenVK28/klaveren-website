@@ -10,7 +10,7 @@ show_date: true
 project_type: studieopdracht
 media_url: https://www.youtube.com/watch?v=5arqHIwOYes
 context: Voor deze opdracht moest ik op pad in onze uitgekozen wijk Scheveningen om een journalistiek nieuwsitem op beeld te maken. Hiervoor verzamelde ik nieuws, filmde ik beelden en interviewde ik betrokken bronnen. Het kortje moest normaal gesproken 30 seconden duren, maar de docent gaf in de les aan dat studenten met ervaring in dit soort producties ervoor mochten kiezen om een uitgebreidere versie van 1,5 minuut te maken in plaats van 30 seconden.
-credits: 'Interviews: ik Sfeerbeelden gefilmd: ik, Voice-over: ik, Montage: ik, Interviews gefilmd: medestudent'
+credits: 'Interviews voorbereid: ik    Interviews afgenomen: ik    Interviews gefilmd: medestudent    Sfeerbeelden gefilmd: ik    Voice-over geschreven en ingesproken: ik    Montage in Première Pro: ik'
 featured: true
 draft: false
 ---
