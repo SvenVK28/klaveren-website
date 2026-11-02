@@ -1,6 +1,6 @@
+
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PageHero from '../../components/PageHero.astro';
 import ContactForm from '../../components/ContactForm.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import Icon from '../../components/Icon.astro';
@@ -15,13 +15,18 @@ const topics = freelance.services.map((service) => service.title);
 ---
 
 <BaseLayout title="Contact" description={data.description ?? data.intro}>
-  <PageHero eyebrow={data.eyebrow} title={data.title} intro={data.intro} image={data.hero_image} imageAlt={data.hero_image_alt} />
 
   <div class="container section layout">
     <section id="formulier" aria-labelledby="form-title">
       {data.form_eyebrow && <p class="eyebrow">{data.form_eyebrow}</p>}
       <h2 id="form-title">{data.form_title}</h2>
-      <ContactForm formKey={settings.form_key} email={settings.email} topics={topics} successMessage={data.success_message} siteName={settings.name} />
+      <ContactForm
+        formKey={settings.form_key}
+        email={settings.email}
+        topics={topics}
+        successMessage={data.success_message}
+        siteName={settings.name}
+      />
     </section>
 
     <aside class="aside" aria-labelledby="direct-title">
@@ -96,6 +101,7 @@ const topics = freelance.services.map((service) => service.title);
       />
     )
   }
+
 </BaseLayout>
 
 <style>
