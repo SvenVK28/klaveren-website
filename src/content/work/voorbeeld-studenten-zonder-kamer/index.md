@@ -9,7 +9,6 @@ date: 2026-10-15
 show_date: true
 project_type: studieopdracht
 context: Voor deze opdracht moest ik individueel nieuws verzamelen dat verband hield met onze gekozen wijk Scheveningen, een relevante bron interviewen en op basis daarvan een journalistiek nieuwsartikel schrijven.
-credits: 'Onderzoeksinformatie verzameld: ik    Interview voorbereid: ik    Interview afgenomen: ik   Artikel geschreven: ik'
 featured: true
 draft: false
 ---
