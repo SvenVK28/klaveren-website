@@ -54,7 +54,7 @@ const facts = [
   data.project_type && { icon: 'folder', label: 'Soort project', value: PROJECT_TYPES[data.project_type] },
   data.publication && { icon: 'newspaper', label: 'Gepubliceerd bij', value: data.publication },
   data.context && { icon: 'document', label: 'Context', value: data.context },
-  data.credits && { icon: 'videocamera', label: 'Gemaakt met', value: data.credits },
+data.credits && { icon: 'users', label: 'Hulp van anderen', value: data.credits },
 ].filter(Boolean) as { icon: IconName; label: string; value: string }[];
 ---
 
