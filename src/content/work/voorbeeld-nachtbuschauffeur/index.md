@@ -1,6 +1,7 @@
 ---
 title: Toerisme door de ogen van Scheveningers
 type: videoreportage
+summary: Scheveningen trekt ieder jaar veel toeristen. Dat brengt levendigheid en gezelligheid met zich mee, maar heeft het ook invloed op het dagelijks leven van de mensen die er wonen? Hoe kijken zij eigenlijk naar het toerisme in hun eigen woonplaats?
 cover: 67420.webp
 cover_alt: Woningen in Scheveningen
 cover_credit: SCVK Media
@@ -15,7 +16,7 @@ featured: true
 draft: false
 ---
 
-Scheveningen trekt ieder jaar veel toeristen. Dat brengt levendigheid en gezelligheid met zich mee, maar heeft ook invloed op het dagelijks leven van de mensen die er wonen. Hoe kijken zij eigenlijk naar het toerisme in hun eigen omgeving?
+Scheveningen trekt ieder jaar veel toeristen. Dat brengt levendigheid en gezelligheid met zich mee, maar heeft het ook invloed op het dagelijks leven van de mensen die er wonen? Hoe kijken zij eigenlijk naar het toerisme in hun eigen woonplaats?
 
 Voor deze reportage ben ik Scheveningen in gegaan om met bewoners in gesprek te gaan. Ik vroeg hen hoe zij het toerisme ervaren, wat zij ervan vinden en welke invloed het heeft op hun woonomgeving.
 
