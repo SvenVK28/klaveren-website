@@ -10,7 +10,7 @@ date: 2026-10-03
 show_date: true
 project_type: eigen-project
 context: Het leek me erg interessant om eens een scheidsrechter uit het betaalde voetbal te interviewen. Dat idee kwam in me op, waarna ik zelf een mail stuurde naar de persvoorlichting van de KNVB. Niels Boel stond open voor een interview, dat ik vervolgens heb uitgewerkt tot een artikel. Het was geen schoolopdracht, maar ik kan het wel mooi gebruiken voor mijn portfolio.
-credits: Eigen productie
+credits: Geen, alle werkzaamheden zelfstandig uitgevoerd.
 featured: false
 draft: false
 ---
