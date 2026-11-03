@@ -1,4 +1,5 @@
 ---
+eyebrow: Freelance
 title: Freelance
 services_eyebrow: Mijn diensten
 services_title: Wat ik voor je kan doen
@@ -28,17 +29,17 @@ services:
     image: images/65694.webp
     icon: timeline
     price: Prijs in overleg
-price_note: De prijs hangt af van de omvang, de voorbereiding en de gewenste oplevering.
 agreements_title: Vooraf maken we duidelijke afspraken over
 agreements:
-  - Wat ik precies oplever
-  - Of research, interviews, filmen en montage erbij horen
-  - De deadline en het aantal feedbackrondes
-  - De prijs en de betaling
-  - Publicatie- en gebruiksrechten
-  - Eventuele reis- of andere kosten
+  - De opdracht en werkzaamheden
+  - Oplevering en verwachtingen
+  - Planning en deadlines
+  - Prijs en betaling
+  - Feedback en aanpassingen
+  - Gebruik en rechten
 cta:
-  title: Liever iets anders bespreken?
-  text: Heb je een andere vraag of opdracht in gedachten? Neem gerust contact op, dan denk ik graag met je mee.
+  title: Heb je een vraag of wil je een freelanceopdracht bespreken?
+  text: Stuur gerust een bericht.
   button: Neem contact op
+description: Ontdek mijn freelance diensten op het gebied van artikelen schrijven, interviews afnemen, videoreportages maken en videomontage in Adobe Premiere Pro. Bekijk wat ik kan betekenen en neem contact op.
 ---
