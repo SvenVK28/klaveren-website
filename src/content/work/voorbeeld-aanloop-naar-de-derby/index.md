@@ -1,6 +1,7 @@
 ---
 title: Niels Boel groeit als voetbalscheidsrechter in het betaald voetbal en leert omgaan met  de momenten die daarbij horen
 type: interviewartikel
+summary: Voor een scheidsrechter is een wedstrijd pas echt geslaagd als niemand het over hem heeft. Niels Boel (28) weet daar alles van. De Zeeuw fluit betaald voetbal en vertelt over de druk, fouten en kritiek die bij het vak komen kijken.
 cover: 8h6a2958.webp
 cover_alt: Niels Boel die een wedstrijd fluit als scheidsrechter
 cover_credit: Jessy Domenie Photography
@@ -13,8 +14,6 @@ credits: Eigen productie
 featured: false
 draft: false
 ---
-
-**Voor een scheidsrechter is een wedstrijd pas echt geslaagd als niemand het over hem heeft. Niels Boel (28) weet daar alles van. De Zeeuw fluit betaald voetbal en vertelt over de druk, fouten en kritiek die bij het vak komen kijken.**
 
 Een scheidsrechter staat tijdens een wedstrijd volop in de aandacht, maar kritiek hoort daar ook bij. Dat merkt Boel zelf ook, want kritiek laat hem niet volledig koud. “Tuurlijk ben ik ook niet van steen, dus ik kan niet ontkennen dat dat af en toe wat met je doet.” zegt hij.  
 
