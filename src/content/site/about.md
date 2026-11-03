@@ -18,8 +18,8 @@ highlights:
     text: "Van interviews afnemen en artikelen schrijven tot video's monteren in Adobe Premiere Pro: ik help graag mee aan verschillende journalistieke producties. Ook denk ik graag mee over andere ideeën en opdrachten. Weet je niet zeker of ik je kan helpen? Stuur gerust een mailtje. Dan kijken we samen naar de mogelijkheden."
     icon: microphone
 cta:
-  title: Contact?
-  text: Heb je een vraag, een idee of een opdracht? Ik denk graag met je mee.
+  title: Heb je een vraag of wil je een freelanceopdracht bespreken?
+  text: Stuur gerust een bericht.
   button: Neem contact op
 description: SCVK Media is het portfolio van journalistiekstudent Sven van Klaveren. Bekijk artikelen, interviews, videoreportages en andere producties of neem contact op voor samenwerkingen/freelanceopdrachten.
 ---
