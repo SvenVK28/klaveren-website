@@ -37,7 +37,7 @@ Duidelijkheid is erg belangrijk als scheidsrechter, zodat de spelers weten waar 
 
 **Volgende stap** 
 
-Boel kijkt ondertussen vooral vooruit. Zijn loopbaan als scheidsrechter begon bij Talenttrack Zuid, een opleidingstraject voor jonge scheidsrechters. Van daaruit stroomde hij door naar Talenttrack Landelijk en uiteindelijk naar het betaald voetbal.  
+Boel kijkt ondertussen vooral vooruit. Zijn loopbaan als scheidsrechter begon bij Talententraject Zuid, een opleidingstraject voor jonge scheidsrechters. Van daaruit stroomde hij door naar Talententraject Landelijk en uiteindelijk naar het betaald voetbal.  
 
 Ruim een jaar geleden maakte Boel zijn debuut in de Keuken Kampioen Divisie. Inmiddels kijkt hij alweer naar wat daarna komt. “Ik probeer het wel heel erg stap voor stap te bekijken. Ik heb nu mijn debuut gemaakt in de KKD en de volgende stap is mijn debuut in de Eredivisie. Dus dat is op dit moment mijn ambitie.” 
 
