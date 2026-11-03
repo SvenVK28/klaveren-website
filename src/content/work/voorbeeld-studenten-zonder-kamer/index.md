@@ -1,7 +1,7 @@
 ---
 title: 'Van vier jaar in Singapore tot maffiapraktijken in Italië: de bijzondere route van SVV Scheveningen speler Julian Jansen (23)'
 type: interviewartikel
-summary: Een verblijf bij een club met maffiabanden, eenzaamheid op Sicilië en een eigen onderneming. De voetbalreis van Jansen verliep allesbehalve vanzelfsprekend.
+summary: 'Opgevoed in Engeland, een club met maffiabanden, eenzaam wonen in Sicilië en een eigen onderneming: Jansen maakte het allemaal mee.'
 cover: julian-jansen-foto-artikel.webp
 cover_alt: Voetbalspeler Julian Jansen die de bal kopt in een wedstrijd
 cover_credit: Julian Jansen
