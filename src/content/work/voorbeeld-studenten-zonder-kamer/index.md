@@ -17,7 +17,7 @@ draft: false
 
 **Van een Engelse kostschool tot een Italiaans voetbalavontuur met maffiapraktijken: de 23-jarige Julian Jansen heeft een bijzondere route afgelegd. Inmiddels speelt de in Engeland geboren voetballer bij SVV Scheveningen, waar hij zijn voetbalcarrière combineert met een eigen supplementenbedrijf.**
 
-Door het werk van zijn vader bij Shell groeide Jansen op in verschillende landen, waaronder Engeland, Oostenrijk, Singapore en Nederland. Op zijn vijftiende vertrok hij alleen naar Engeland om voetbal en onderwijs te combineren op een kostschool. Daar kreeg hij de kans om zich verder te ontwikkelen bij de jeugdopleiding van Bolton Wanderers. 
+Door het werk van zijn vader bij Shell groeide Jansen op in verschillende landen, waaronder Engeland, Oostenrijk, Singapore en Nederland. Op zijn vijftiende vertrok hij alleen naar Engeland om daar voetbal en onderwijs te combineren op een kostschool. Hij kreeg daar de kans om zich verder te gaan ontwikkelen in de jeugdopleiding van Bolton Wanderers.
 
 Zijn jeugd in het buitenland bracht hem op verschillende plekken. In Wenen zat Jansen op een internationale school en voetbalde hij korte tijd bij Rapid Wien in de jeugd. Later woonde hij ongeveer vier jaar in Singapore, dat was volgens hem de beste tijd van zijn jeugd. 
 
