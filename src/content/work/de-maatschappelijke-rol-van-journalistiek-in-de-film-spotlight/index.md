@@ -1,7 +1,7 @@
 ---
 title: De maatschappelijke rol van journalistiek in de film Spotlight (2015)
 type: verslag
-summary: Hoe bracht een team journalisten jarenlang verzwegen misbruik binnen de katholieke kerk aan het licht? Ontdek het in de waargebeurde film *Spotlight*.
+summary: Hoe legden journalisten misbruik binnen de katholieke kerk bloot? Lees mijn verslag over de journalistiek in Spotlight.
 cover: 70602.webp
 cover_credit: SCVK Media. Beeld uit de film Spotlight (2015)
 role: Het bekijken en analyseren van de film en het schrijven van een verslag over de maatschappelijke rol en verantwoordelijkheid van journalistiek.
