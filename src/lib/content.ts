@@ -10,12 +10,10 @@ export async function getWork(): Promise<Work[]> {
   return entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }
 
-/** Work for the homepage: featured items first, topped up with the rest. */
+/** Work for the homepage: newest items first. */
 export async function getHomeWork(count: number): Promise<Work[]> {
   const work = await getWork();
-  const featured = work.filter((entry) => entry.data.featured);
-  const rest = work.filter((entry) => !entry.data.featured);
-  return [...featured, ...rest].slice(0, count);
+  return work.slice(0, count);
 }
 
 export const workUrl = (entry: Work) => url(`mijn-werk/${entry.id}/`);
