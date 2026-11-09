@@ -1,11 +1,13 @@
 ---
-title: De maatschappelijke rol van journalistiek in de film Spotlight
+title: De maatschappelijke rol van journalistiek in de film Spotlight (2015)
 type: verslag
 summary: Hoe legde een team journalisten jarenlang verzwegen misbruik binnen de katholieke kerk bloot? Ontdek de kracht van journalistiek in de waargebeurde film Spotlight.
-cover: 2419.webp
-cover_credit: The Guardian
+cover: 70602.webp
+cover_credit: SCVK Media. Beeld uit de film Spotlight (2015)
+role: Het bekijken en analyseren van de film en het schrijven van een verslag over de maatschappelijke rol en verantwoordelijkheid van journalistiek.
 date: 2026-11-02
 show_date: true
+context: "Voor mijn portfolio heb ik dit verslag geschreven naar aanleiding van het kijken van de film *Spotlight*. Met dit verslag wil ik laten zien welke verschillende rollen journalistiek heeft in de samenleving en waarom deze zo belangrijk zijn. Dit sluit aan bij de leeruitkomst: 'Met vakliteratuur te onderbouwen welke rollen de journalistiek in de samenleving heeft' voor mijn portfolio."
 featured: false
 draft: false
 ---
